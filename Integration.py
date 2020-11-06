@@ -33,6 +33,11 @@ socketio.init_app(game, cors_allowed_origins="*")
 #@game.route("/game")
 #def index():
   #  return flask.render_template("main_game.html")
+  
+ #Landing page
+@game.route('/')
+def index(): 
+    return flask.render_template('index.html')
 
 
 # RUNS ON THIS HOST AND PORT
