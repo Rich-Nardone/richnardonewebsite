@@ -9,7 +9,7 @@ from player import Player
 def progress(user, player, checkpoint):
     """ Method for saving progress """
     # TODO Implement with PSQL
-    print("Username "+user+" with",player,"at "+checkpoint) # DEBUG
+    print("DEBUG: Username "+user+" with",player,"at "+checkpoint) # DEBUG
 
 def prompt_in():
     """ Method for receiving input """
@@ -20,4 +20,4 @@ def prompt_in():
 def send_out(msg):
     """ Method for sending reply """
     # TODO Use socket.io and work with JS
-    print(msg)
+    print(">"+msg)

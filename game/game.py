@@ -25,29 +25,45 @@ def scenario(player, scenario_id):
         action = prompt_in()
         looted = False
         while action:
-            if action == "loot" and not looted:
-                send_out("You find $20 in people's bags.")
-                player.money += 20
-                looted = True
-            if action == "look":
+            if "loot" in action or "steal" in action:
+                if not looted:
+                    send_out("You find $20 in people's bags.")
+                    player.money += 20
+                    looted = True
+                else:
+                    send_out("You've already looted everything!")
+            if "look" in action:
                 send_out("It seems dark outside...")
-            if action == "leave":
+            if "leave" in action:
                 send_out("You leave the room.")
                 return (player, 'intro_hall')
             action = prompt_in()
     # TODO story_file
     if scenario_id == 'intro_hall':
         send_out("As you leave the room, you notice that the hallway is empty as well, with some strange gray trails all heading either towards or from the main entrance.")
+        send_out("Where do you go?")
         action = prompt_in()
         next_area = None
         while not next_area:
-            if action == "classroom":
-                next_area = "end"
-            if action == "entrance":
-                next_area = "end"
+            if "classroom" in action or "away" in action:
+                next_area = "classroom"
+                break
+            if "entrance" in action or "towards" in action:
+                next_area = "entrance"
+                break
             action = prompt_in()
+        send_out("As you approach, there is a slow and constant squishing sound, like the noises of an oversaturated bath towel.")
         return (player, next_area)
     # TODO story_file
+    if scenario_id == "classroom":
+        send_out("Peeking in, you find a strange gray mass that rests on top of the trail. The stranger thing is that the room itself seems to lack color wherever this mass goes.")
+        action = prompt_in()
+        while action:
+            if "fight" in action:
+                send_out("You begin combat with the gray slime!")
+                # TODO do combat
+            if "leave" in action:
+                return (player, "entrance")
     return (player, scenario_id)
 
 def game(user):
