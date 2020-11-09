@@ -31,32 +31,29 @@ db.create_all()
 db.session.commit()
 
 import models
+#===================================================================================
 
 
 
-
-
-
-#Landing page
-@game.route('/')
-def index(): 
-    return flask.render_template('index.html')
-
-#Route for the main game atm.
-
-#@game.route("/game")
-#def index():
-  #  return flask.render_template("main_game.html")
 
 
 @socketio.on('google login')
 def google_login(data):
     # idinfo contains dictionary of user info
     userdat = data["UserInfo"]
-    print("It works!")
+    profiledat = userdat["profileObj"]
+    em=profiledat["email"]
+    user1 = models.username(email=em)
+    db.session.add(user1)
+    db.session.commit()
     
     
-    
+
+#======================================================================================
+@game.route('/')
+def index(): 
+    return flask.render_template('index.html')
+#=======================================================================================   
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":
     socketio.run(
