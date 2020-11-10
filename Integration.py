@@ -43,18 +43,19 @@ def create_character(data):
     # data includes character attributes: name, gender and stats
     player.id = data['name']
     player.gen = data['gen']
-    # Strength: Used for slapping and stronging things
+    # Strength:
     player.str = int(data['str'])
-    # Dexterity: Used for going fast and being fast
+    # Dexterity:
     player.dex = int(data['dex'])
-    # Constitution: Healthiness and not-die ability
+    # Constitution:
     player.con = int(data['con'])
-    # Intelligence: The BIG BRAIN
+    # Intelligence:
     player.int = int(data['int'])
-    # Charisma: How likeable or punchable you are
+    # Charisma:
     player.cha = int(data['cha'])
-    # Luck: Lucky you, huh?
+    # Luck:
     player.luk = int(data['luk'])
+    
 
 @socketio.on('google login')
 def google_login(data):
