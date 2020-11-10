@@ -16,11 +16,10 @@ import requests
 from google.oauth2 import id_token
 from google.auth.transport import requests
 #---------------------------------
-
+import Player
 
 #Init of Flask
 game = flask.Flask(__name__)
-
 
 #SocketIO Init
 socketio = flask_socketio.SocketIO(game)
@@ -38,6 +37,24 @@ def index():
 #def index():
   #  return flask.render_template("main_game.html")
 
+@socketio.on('create character')
+def create_character(data):
+    player = Player()
+    # data includes character attributes: name, gender and stats
+    player.id = data['name']
+    player.gen = data['gen']
+    # Strength: Used for slapping and stronging things
+    player.str = int(data['str'])
+    # Dexterity: Used for going fast and being fast
+    player.dex = int(data['dex'])
+    # Constitution: Healthiness and not-die ability
+    player.con = int(data['con'])
+    # Intelligence: The BIG BRAIN
+    player.int = int(data['int'])
+    # Charisma: How likeable or punchable you are
+    player.cha = int(data['cha'])
+    # Luck: Lucky you, huh?
+    player.luk = int(data['luk'])
 
 @socketio.on('google login')
 def google_login(data):
