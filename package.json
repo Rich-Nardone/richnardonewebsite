@@ -7,11 +7,9 @@
     "heroku-postbuild": "webpack --progress -d --config webpack.config.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "^8.0.5",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
     "css-loader": "^3.4.2",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
@@ -30,6 +28,8 @@
     ]
   },
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-loader": "^8.1.0",
     "react-google-login": "^5.1.22",
     "socket.io-client": "^2.3.1"
   }

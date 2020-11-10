@@ -19,4 +19,23 @@
 
 ### Npm packages 
 
-    npm install socket.io-client --save                                                                                                                                                                   
+    npm install socket.io-client --save     
+
+
+WARNING: If you receive an error from the command "npm run watch" regarding a missing "babel-loader", run the following:
+     npm install babel-loader
+------------------------------------------------------------------
+!!TO RESOLVE GOOGLEOAUTH LOGIN FAILURE ISSUE!!
+
+1. Touch a file in the repository called ClientID.
+2. Make sure you have a client id from the Google API Console, https://developers.google.com/identity/protocols/oauth2 for instructions.
+2. Copy and paste this code into it:
+
+    import * as React from 'react';
+    import * as ReactDOM from 'react-dom';
+
+    let ClientID = INSERT CLIENT ID HERE
+
+    export {ClientID};
+
+3. Place the file in the "scripts" folder.
