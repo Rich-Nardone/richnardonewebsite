@@ -3,6 +3,9 @@
         THE TEXT RPG ADVENTURE GAME!
             FULL OF FUN AND WONDER!
 ----------------------------------------------------
+
+Credit to https://www.youtube.com/watch?v=mHBHHEoJ_WA 
+
 ### Python install packages 
 
     pip install Flask
@@ -19,11 +22,16 @@
 
 ### Npm packages 
 
-    npm install socket.io-client --save     
+    npm install socket.io-client --save  
+    npm install --save react-google-button
+
+
 
 
 WARNING: If you receive an error from the command "npm run watch" regarding a missing "babel-loader", run the following:
-     npm install babel-loader
+    npm install --save-dev @babel/core
+    npm install --save-dev @babel/preset-react
+    npm install babel-loader
 ------------------------------------------------------------------
 !!TO RESOLVE GOOGLEOAUTH LOGIN FAILURE ISSUE!!
 
