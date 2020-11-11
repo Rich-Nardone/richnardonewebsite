@@ -1,7 +1,8 @@
 # Precompiled python files
-__pycache__/
+Integration.cpython-36.pyc
+models.cpython-36.pyc
 node_modules/
 package-lock.json
-static/script.js
+script.js
 sql.env
 ClientID.jsx
