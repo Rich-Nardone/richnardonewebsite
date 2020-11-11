@@ -1,6 +1,5 @@
 # Precompiled python files
 __pycache__/
-=======
 node_modules/
 package-lock.json
 static/script.js
