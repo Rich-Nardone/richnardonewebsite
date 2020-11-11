@@ -4,6 +4,20 @@ import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 import { ClientID } from './ClientID'
 
+const log_style={
+    textAlign:'center',
+    fontWeight:'bold',
+    fontStyle:'italic',
+    background: 'linear-gradient(darkviolet,darkblue)',
+    padding: 5,
+    margin: 5,
+    borderRadius:10,
+    fontSize:18,
+    width:1500,
+    
+};
+
+
 function handleLoginSuccess(response){
     console.log("Successful Login")
     let userData=response
@@ -24,10 +38,18 @@ export function GoogleLoginButton(){
     return(
         <GoogleLogin 
             clientId={ClientID}
-            buttonText="Login"
+            render={renderProps => (
+            <button onClick={renderProps.onClick} style={log_style}>Newcomer? Enter if you dare...</button>
+            )}
+            buttonText="REGISTER"
             onSuccess={handleLoginSuccess}
             onFailure={handleLoginFail}
             cookiePolicy={'single_host_origin'}
+            theme='dark'
+            style={log_style}
+            
+            
+            
         />
     );
 }

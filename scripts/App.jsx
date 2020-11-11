@@ -11,7 +11,7 @@ const h1={
     fontWeight: 'bold',
     fontStyle: 'italic',
     borderWidth: 5,
-    background: 'linear-gradient(darkred,red)',
+    background: 'linear-gradient(darkviolet,darkblue)',
     borderRadius:10,
 };
 const image_style={
@@ -26,7 +26,7 @@ const h3={
     textAlign:'center',
     fontWeight:'bold',
     fontStyle:'italic',
-    background: 'linear-gradient(darkred,red)',
+    background: 'linear-gradient(darkviolet,darkblue)',
     padding: 5,
     margin: 5,
     borderRadius:10,
@@ -41,11 +41,7 @@ export function App(){
             <h1 style={h1}>Welcome to Text RPG</h1>
             <img  style={image_style} src='/static/Fog.gif' alt="image"/>
             <hr></hr>
-            <h3 style={h3}>Newcomer? Enter if you dare...</h3> 
             <GoogleLoginButton /> 
-            <hr></hr>
-            <h3 style={h3}>Returning "guest"? Join us once again...</h3>
-            <GoogleLoginButton />
             <hr></hr>
         </div>
         
