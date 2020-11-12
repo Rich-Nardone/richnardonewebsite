@@ -3,39 +3,37 @@
 #---------------------------------
 #Libraries to be used
 #---------------------------------
-from os.path import join, dirname
-from dotenv import load_dotenv
 import os
+from os.path import join, dirname
 import flask
 import flask_sqlalchemy
 import flask_socketio
+from player import Player
+from dotenv import load_dotenv
 
-import random
-import json
-import requests
-from google.oauth2 import id_token
-from google.auth.transport import requests
 #---------------------------------
-import Player
 
-#Init of Flask
 game = flask.Flask(__name__)
 
-#SocketIO Init
+
 socketio = flask_socketio.SocketIO(game)
 socketio.init_app(game, cors_allowed_origins="*")
 
+dotenv_path = join(dirname(__file__), "sql.env")
+load_dotenv(dotenv_path)
 
-#Landing page
-@game.route('/')
-def index(): 
-    return flask.render_template('index.html')
+database_uri = os.environ["DATABASE_URL"]
+game.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 
-#Route for the main game atm.
+db = flask_sqlalchemy.SQLAlchemy(game)
+db.init_app(game)
+db.app = game
 
-#@game.route("/game")
-#def index():
-  #  return flask.render_template("main_game.html")
+db.create_all()
+db.session.commit()
+
+import models
+
 
 @socketio.on('create character')
 def create_character(data):
@@ -56,18 +54,26 @@ def create_character(data):
     # Luck:
     player.luk = int(data['luk'])
     
+    socketio.emit('character created')
+    
 
 @socketio.on('google login')
 def google_login(data):
     # idinfo contains dictionary of user info
-    idinfo = id_token.verify_oauth2_token(
-        data['tokenId'],
-        requests.Request(),
-        "656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com",
-    )
+    userdat = data["UserInfo"]
+    profiledat = userdat["profileObj"]
+    em=profiledat["email"]
+    user1 = models.username(email=em)
+    db.session.add(user1)
+    db.session.commit()
     
-    #print(idinfo) pull data from idinfo into database
     
+
+#======================================================================================
+@game.route('/')
+def index(): 
+    return flask.render_template('index.html')
+#=======================================================================================   
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":
     socketio.run(
