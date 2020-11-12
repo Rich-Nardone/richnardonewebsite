@@ -8,7 +8,6 @@ from os.path import join, dirname
 import flask
 import flask_sqlalchemy
 import flask_socketio
-from player import Player
 from dotenv import load_dotenv
 
 #---------------------------------
@@ -34,29 +33,6 @@ db.session.commit()
 
 import models
 
-
-@socketio.on('create character')
-def create_character(data):
-    player = Player()
-    # data includes character attributes: name, gender and stats
-    player.id = data['name']
-    player.gen = data['gen']
-    # Strength:
-    player.str = int(data['str'])
-    # Dexterity:
-    player.dex = int(data['dex'])
-    # Constitution:
-    player.con = int(data['con'])
-    # Intelligence:
-    player.int = int(data['int'])
-    # Charisma:
-    player.cha = int(data['cha'])
-    # Luck:
-    player.luk = int(data['luk'])
-    
-    socketio.emit('character created')
-    
-
 @socketio.on('google login')
 def google_login(data):
     # idinfo contains dictionary of user info
@@ -66,8 +42,6 @@ def google_login(data):
     user1 = models.username(email=em)
     db.session.add(user1)
     db.session.commit()
-    
-    
 
 #======================================================================================
 @game.route('/')

@@ -9,13 +9,34 @@ from player import Player
 # should probably read prompts from another file...
 #  Marked with TODO story_file
 
+def describe_character():
+    player = Player()
+    # possibly move these prompts to the storyfile/script
+    send_out('What is your name?')
+    player.id = prompt_in()
+    send_out('What Gender do you identify as?')
+    player.gen = prompt_in()
+    send_out('What is your level of Strength (0-100]?')
+    player.str = prompt_in()
+    send_out('What is your level of Dexterity (0-100]?')
+    player.dex = prompt_in()
+    send_out('What is your level of Constitution (0-100]?')
+    player.con = prompt_in()
+    send_out('What is your level of Intelligence (0-100]?')
+    player.int = prompt_in()
+    send_out('What is your level of Charisma (0-100]?')
+    player.cha = prompt_in()
+    send_out('What is your level of Luck (0-100]?')
+    player.luk = prompt_in()
+    return player
+    
 # START
 def start_scenario():
     # TODO story_file
     start_text = 'You are in a white, bare room with nothing but a mirror with a few words on it. Upon further inspection the mirror seems to be asking you a question, “Who are you?”'
     send_out(start_text)
     # character creation
-    player = Player()
+    player = describe_character()
     return player
 
 def scenario(player, scenario_id):
