@@ -22,9 +22,10 @@ function handleLoginSuccess(response){
     console.log("Successful Login")
     let userData=response
     Socket.emit('google login', {'UserInfo':userData});
-    
-    
+    return(
+        window.location = "main_chat.html")
 }
+
 function handleLoginFail(){
     alert('Google Login in Error');
 }

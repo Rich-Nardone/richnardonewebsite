@@ -53,7 +53,15 @@ def google_login(data):
 @game.route('/')
 def index(): 
     return flask.render_template('index.html')
+    
 #=======================================================================================   
+@game.route('/main_chat.html')
+def main():
+   return flask.render_template('main_chat.html')
+    
+#=======================================================================================
+
+
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":
     socketio.run(
