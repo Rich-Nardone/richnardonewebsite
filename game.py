@@ -69,7 +69,7 @@ def scenario(player, scenario_id):
 def game(user):
     # player character
     player = start_scenario()
-    progress(user, player, "start")
+    progress(user, player, "intro")
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
     while state_tuple[1] != "end":
@@ -77,22 +77,4 @@ def game(user):
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
 
-def deconstructPlayer():
-    player = start_scenario()
-    name = player.id
-    strength = player.str
-    dex = player.dex
-    con = player.con
-    int = player.int
-    cha = player.cha
-    luck = player.luk
-    max_health = player.max_health
-    health = player.health
-    max_mana = player.max_mana
-    mana = player.mana
-    money = player.money
-    checkpoint = player.checkpoint
-    statslist = [name,strength,dex,con,int,cha,luck,max_health,health,max_mana,mana,money,checkpoint]
-    return statslist
-    
 #game('test')

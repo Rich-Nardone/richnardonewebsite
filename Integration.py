@@ -14,8 +14,11 @@ import random
 import json
 import requests
 import models
-from game import deconstructPlayer
+from game_io import deconstructPlayer
 from sqlalchemy import update
+from player import Player
+from game import scenario
+from game import game
 #---------------------------------
 
 
@@ -41,33 +44,29 @@ game.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 DB = flask_sqlalchemy.SQLAlchemy(game)
 DB.init_app(game)
 DB.app = game
-
-userlist = [1]
-@socketio.on('google login')
-def google_login(data):
-    # idinfo contains dictionary of user info
-    userdat = data["UserInfo"]
-    profiledat = userdat["profileObj"]
-    em=profiledat["email"]
-    all_email = [username.email for username in DB.session.query(models.username).all()]
-    if em not in all_email:
-        user = models.username(email=em)
-        DB.session.add(user)
-        DB.session.commit()
-    userid = DB.session.query(models.username).filter_by(email=em).first()
-    userlist.append(userid.id)
-#Landing page
-@game.route('/')
-def index():
+#function that marks and saves progress, either inserting a new character into database or updating an existing one.
+def saveProgress():
     FLAG="INSERT"
     USER = userlist[-1]
-    print(USER)
     all_character = [character.characterName for character in DB.session.query(models.character).all()]
     all_userid = [user_id.user_id for user_id in DB.session.query(models.character).all()]
     dict = {}
     for i in range(len(all_character)):
         dict[all_userid[i]] = all_character[i]
-    statslist = deconstructPlayer()
+        
+        
+    USER=userlist[-1]
+    email = DB.session.query(models.username).filter_by(id=USER).first()
+    key = email.id
+    characterList = DB.session.query(models.character).filter_by(user_id=key)    
+    
+    player = Player()
+    #needs to pick character by user choice
+    for char in characterList:
+        if char.characterName == "popo":
+            player = char
+
+    statslist = deconstructPlayer(player)
 
     for x,y in dict.items():
         if USER == x and statslist[0] == y:
@@ -97,15 +96,45 @@ def index():
         DB.session.commit()
     else:
         print("weird error")
+#to load we first need to get email + character name to find which character entry to load from
+def loadProgress():
+    USER=userlist[-1]
+    email = DB.session.query(models.username).filter_by(id=USER).first()
+    key = email.id
+    characterList = DB.session.query(models.character).filter_by(user_id=key)
+    #gets all the character names tied to userID. Need to display all names and allowed use to select or create new
+    player = Player()
+    for char in characterList:
+        if char.characterName == "popo":
+            player = char
+    game(player)
 
-    
+userlist = [1]
+@socketio.on('google login')
+def google_login(data):
+    # idinfo contains dictionary of user info
+    userdat = data["UserInfo"]
+    profiledat = userdat["profileObj"]
+    em=profiledat["email"]
+    all_email = [username.email for username in DB.session.query(models.username).all()]
+    if em not in all_email:
+        user = models.username(email=em)
+        DB.session.add(user)
+        DB.session.commit()
+    userid = DB.session.query(models.username).filter_by(email=em).first()
+    userlist.append(userid.id)
+#Landing page
+@game.route('/')
+def index():
     return flask.render_template('index.html')
 
 #Route for the main game atm.
 
-#@game.route("/game")
-#def index():
-  #  return flask.render_template("main_game.html")
+@game.route("/main_chat.html")
+def index2():
+    loadProgress()
+    #saveProgress()
+    return flask.render_template("main_chat.html")
     
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":
