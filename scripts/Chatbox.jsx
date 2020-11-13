@@ -1,26 +1,18 @@
 import React, {useState, useEffect} from 'react'; 
 import {Socket} from './Socket.jsx';
-export function Chatbox(){
+
+export function Chatbox(props){
     const [userInput, setInput] = useState("");
-    const [chatLog, setLog] = useState([]);
     
     function submitInput(event){
         event.preventDefault();
         Socket.emit('user input', {'input': userInput});
-        document.getElementById('user_text_box').value = ""
+        document.getElementById('user_text_box').value = "";
     }
-    
-    function retrieve_chatlog(){
-        useEffect(()=>{
-           Socket.on('user chatlog', (data)=>{
-               setLog(data);
-           }); 
-        });    
-    }
-    const display_log = chatLog.map((log,index)=>
+    const display_log = props.user_content.map((log,index)=>
         <li key={index}> {log} </li>
     );
-    retrieve_chatlog();
+    
     return(
         <div>
             <div id='chatbox'>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Socket } from './Socket';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
-import { ClientID } from './ClientID'
+
 
 const log_style={
     textAlign:'center',
@@ -18,13 +18,7 @@ const log_style={
 };
 
 
-function handleLoginSuccess(response){
-    console.log("Successful Login")
-    let userData=response
-    Socket.emit('google login', {'UserInfo':userData});
-    return(
-        window.location = "main_chat.html")
-}
+
 
 function handleLoginFail(){
     alert('Google Login in Error');
@@ -36,9 +30,15 @@ function handleLogoutFail(){
     alert('Google logot failed');
 }
 export function GoogleLoginButton(){
+    function handleLoginSuccess(response){
+        console.log("Successful Login")
+        let userData=response
+        Socket.emit('google login', {'UserInfo':userData});
+        return(window.location = "main_chat.html")
+    }
     return(
         <GoogleLogin 
-            clientId={ClientID}
+            clientId='656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com'
             render={renderProps => (
             <button onClick={renderProps.onClick} style={log_style}>Newcomer? Enter if you dare...</button>
             )}
@@ -58,7 +58,7 @@ export function GoogleLoginButton(){
 export function GoogleLogoutButton(){
     return(
         <GoogleLogout
-            clientId={ClientID}
+            clientId='656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com'
             buttonText="Logout"
             onLogoutSuccess={handleLogoutSuccess}
             onFailure = {handleLogoutFail}
