@@ -11,12 +11,13 @@ if(loginElement){
     ReactDOM.render(<App />, document.getElementById('login'));
 }
 
+const creationElement = document.getElementById('create_ui'); 
+if(creationElement){
+    ReactDOM.render(<CreationUI />, document.getElementById('create_ui'));
+}
+
 const uiElement = document.getElementById('main_ui');
 if(uiElement){
     ReactDOM.render(<MainUI />, document.getElementById('main_ui'))
 }
 
-const creationElement = document.getElementById('create_ui'); 
-if(creationElement){
-    ReactDOM.render(<CreationUI />, document.getElementById('create_ui'));
-}

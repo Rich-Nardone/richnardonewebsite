@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Socket } from './Socket';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
+import { ClientID } from './ClientID.jsx';
 
 
 const log_style={
@@ -34,11 +35,11 @@ export function GoogleLoginButton(){
         console.log("Successful Login")
         let userData=response
         Socket.emit('google login', {'UserInfo':userData});
-        return(window.location = "main_chat.html")
+        return(window.location = "character_creation.html")
     }
     return(
         <GoogleLogin 
-            clientId='656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com'
+            clientId={ClientID}
             render={renderProps => (
             <button onClick={renderProps.onClick} style={log_style}>Newcomer? Enter if you dare...</button>
             )}
@@ -58,7 +59,7 @@ export function GoogleLoginButton(){
 export function GoogleLogoutButton(){
     return(
         <GoogleLogout
-            clientId='656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com'
+            clientId={ClientID}
             buttonText="Logout"
             onLogoutSuccess={handleLogoutSuccess}
             onFailure = {handleLogoutFail}

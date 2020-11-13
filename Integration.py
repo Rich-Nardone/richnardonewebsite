@@ -69,6 +69,10 @@ def character_creation(data):
 @game.route('/')
 def index(): 
     return flask.render_template('index.html')
+#======================================================================================
+@game.route('/character_creation.html')
+def char_create(): 
+    return flask.render_template('character_creation.html')
     
 #=======================================================================================   
 @game.route('/main_chat.html')
@@ -76,9 +80,7 @@ def main():
    return flask.render_template('main_chat.html')
     
 #=======================================================================================
-@game.route('/create')
-def char_create(): 
-    return flask.render_template('character_creation.html')
+
 
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":

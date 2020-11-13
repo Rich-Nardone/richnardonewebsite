@@ -5,6 +5,8 @@
 ----------------------------------------------------
 
 Credit to https://www.youtube.com/watch?v=mHBHHEoJ_WA 
+Credit to https://www.youtube.com/watch?v=KZZKzJTGI9E&list=PLC0C2A6BCA6040BC8&index=13 and https://www.youtube.com/watch?v=BYP6wlg3MdA for conversion to mp3, 
+    Credit to Interplay and Mark Morgan for the soundtrack found in Fallout 1.
 
 ### Python install packages 
 
