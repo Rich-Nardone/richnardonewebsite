@@ -13,8 +13,6 @@ import flask_socketio
 import random
 import json
 import requests
-#from google.oauth2 import id_token
-#from google.auth.transport import requests
 import models
 from game import deconstructPlayer
 from sqlalchemy import update
@@ -44,12 +42,26 @@ DB = flask_sqlalchemy.SQLAlchemy(game)
 DB.init_app(game)
 DB.app = game
 
-
-USER=2
+userlist = [1]
+@socketio.on('google login')
+def google_login(data):
+    # idinfo contains dictionary of user info
+    userdat = data["UserInfo"]
+    profiledat = userdat["profileObj"]
+    em=profiledat["email"]
+    all_email = [username.email for username in DB.session.query(models.username).all()]
+    if em not in all_email:
+        user = models.username(email=em)
+        DB.session.add(user)
+        DB.session.commit()
+    userid = DB.session.query(models.username).filter_by(email=em).first()
+    userlist.append(userid.id)
 #Landing page
 @game.route('/')
 def index():
     FLAG="INSERT"
+    USER = userlist[-1]
+    print(USER)
     all_character = [character.characterName for character in DB.session.query(models.character).all()]
     all_userid = [user_id.user_id for user_id in DB.session.query(models.character).all()]
     dict = {}
@@ -83,7 +95,6 @@ def index():
         chara.money = statslist[11]
         chara.checkpoint = statslist[12]
         DB.session.commit()
-        print("cool.")
     else:
         print("weird error")
 
@@ -95,18 +106,6 @@ def index():
 #@game.route("/game")
 #def index():
   #  return flask.render_template("main_game.html")
-
-
-@socketio.on('google login')
-def google_login(data):
-    # idinfo contains dictionary of user info
-    idinfo = id_token.verify_oauth2_token(
-        data['tokenId'],
-        requests.Request(),
-        "656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com",
-    )
-    
-    print(idinfo) #pull data from idinfo into database
     
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":

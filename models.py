@@ -17,7 +17,6 @@ class character(DB.Model):
     __tablename__ = 'character'
     id = DB.Column(DB.Integer, primary_key=True)
     user_id = DB.Column(DB.Integer, DB.ForeignKey('username.id'))
-    
     characterName = DB.Column(DB.String(400))
     strength = DB.Column(DB.Integer)
     dex = DB.Column(DB.Integer)
@@ -30,6 +29,7 @@ class character(DB.Model):
     max_mana = DB.Column(DB.Integer)
     mana = DB.Column(DB.Integer)
     money = DB.Column(DB.Integer)
+    checkpoint = DB.Column(DB.String(400))
     
     child = DB.relationship("inventory", backref="characterid")
     
