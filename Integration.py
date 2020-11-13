@@ -14,6 +14,7 @@ import random
 import json
 import requests
 import models
+from game_io import progress, prompt_in, send_out
 from game_io import deconstructPlayer
 from sqlalchemy import update
 from player import Player
@@ -53,7 +54,6 @@ def saveProgress():
     dict = {}
     for i in range(len(all_character)):
         dict[all_userid[i]] = all_character[i]
-        
         
     USER=userlist[-1]
     email = DB.session.query(models.username).filter_by(id=USER).first()
