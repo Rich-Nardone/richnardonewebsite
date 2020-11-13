@@ -18,15 +18,15 @@ def start_scenario(user):
     # character creation
     player = Player()
     #TODO fetch player info for user 'user' from the database need player name, gender and class
-    progress = report_progress(user)
+    progress = load_progress(user)
     player.gen = progress[1].gen
     characterClass = progress[1].characterClass
-    if(characterClass=='Rogue'):
-        player.make_rogue()
-    elif(characterClass=='Barbarian'):
-        player.make_barbarian()
-    elif(characterClass=='Sourcer'):
-        player.make_sourcer()
+    if(characterClass=='Jock'):
+        player.make_jock()
+    elif(characterClass=='Bookworm'):
+        player.make_bookworm()
+    elif(characterClass=='NEET'):
+        player.make_neet()
     return player
 
 def scenario(player, scenario_id):

@@ -43,7 +43,7 @@ class Player:
             return True # trigger death stuff
         return None # return nothing
         
-    def make_rogue(self):
+    def make_neet(self):
         # Strength: Used for slapping and stronging things
         self.str = 65
         # Dexterity: Used for going fast and being fast
@@ -65,7 +65,7 @@ class Player:
         # money
         self.money = self.luk*5
         
-    def make_sourcer(self):
+    def make_bookworm(self):
         # Strength: Used for slapping and stronging things
         self.str = 35
         # Dexterity: Used for going fast and being fast
@@ -87,7 +87,7 @@ class Player:
         # money
         self.money = self.luk*5
         
-    def make_barbarian(self):
+    def make_jock(self):
         # Strength: Used for slapping and stronging things
         self.str = 90
         # Dexterity: Used for going fast and being fast

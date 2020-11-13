@@ -11,7 +11,7 @@ def progress(user, player, checkpoint):
     # TODO Implement with PSQL
     print("DEBUG: Username "+user+" with",player,"at "+checkpoint) # DEBUG
 
-def report_progress(user):
+def load_progress(user):
     """ Method for saving progress """
     # TODO Implement with PSQL
     player = Player()
