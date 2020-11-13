@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Socket } from './Socket';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
-import { ClientID } from './ClientID'
+import { ClientID } from './ClientID.jsx';
+
 
 const log_style={
     textAlign:'center',
@@ -18,13 +19,8 @@ const log_style={
 };
 
 
-function handleLoginSuccess(response){
-    console.log("Successful Login")
-    let userData=response
-    Socket.emit('google login', {'UserInfo':userData});
-    
-    
-}
+
+
 function handleLoginFail(){
     alert('Google Login in Error');
 }
@@ -35,6 +31,12 @@ function handleLogoutFail(){
     alert('Google logot failed');
 }
 export function GoogleLoginButton(){
+    function handleLoginSuccess(response){
+        console.log("Successful Login")
+        let userData=response
+        Socket.emit('google login', {'UserInfo':userData});
+        return(window.location = "character_creation.html")
+    }
     return(
         <GoogleLogin 
             clientId={ClientID}
