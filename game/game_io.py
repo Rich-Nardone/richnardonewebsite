@@ -11,6 +11,13 @@ def progress(user, player, checkpoint):
     # TODO Implement with PSQL
     print("DEBUG: Username "+user+" with",player,"at "+checkpoint) # DEBUG
 
+def report_progress(user):
+    """ Method for saving progress """
+    # TODO Implement with PSQL
+    player = Player()
+    checkpoint = ''
+    return (user,player,checkpoint) # DEBUG
+
 def prompt_in():
     """ Method for receiving input """
     # TODO Use socket.io listening and work with JS
@@ -21,3 +28,4 @@ def send_out(msg):
     """ Method for sending reply """
     # TODO Use socket.io and work with JS
     print(">"+msg)
+

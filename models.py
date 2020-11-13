@@ -11,14 +11,14 @@ class username(db.Model):
     email = db.Column(db.String(400))
     child = db.relationship("character", backref="userid")
     
-
 class character(db.Model):
     __tablename__ = 'character'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('username.id'))
+    characterClass = db.Column(db.String(400))
     characterName = db.Column(db.String(400))
+    gender = db.Column(db.String(400))
     child = db.relationship("inventory", backref="characterid")
-    
     
 class inventory(db.Model):
     __tablename__ = 'inventory'
