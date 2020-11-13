@@ -7,18 +7,16 @@
     "heroku-postbuild": "webpack --progress -d --config webpack.config.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "^8.0.5",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
     "css-loader": "^3.4.2",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "jquery": "^3.2.1",
-    "react": "^16.12.0",
+    "react": "^16.14.0",
     "react-bootstrap": "^0.31.0",
-    "react-dom": "^16.12.0",
+    "react-dom": "^16.14.0",
     "style-loader": "^0.18.2",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
@@ -30,7 +28,12 @@
     ]
   },
   "dependencies": {
+<<<<<<< HEAD
     "google-oauth2": "^0.1.0",
+=======
+    "babel": "^6.23.0",
+    "babel-loader": "^8.2.1",
+>>>>>>> 28ccc9f687de837e19f46273f5c4002c8a654afe
     "react-google-button": "^0.7.1",
     "react-google-login": "^5.1.22",
     "socket.io-client": "^2.3.1"
