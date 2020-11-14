@@ -1,5 +1,4 @@
 """
-    TODO :
     - use socket.io for prompt_in and send_out
     - include PSQL additions, likely in another method
         called report_progress
@@ -9,41 +8,43 @@ from .player import Player
 def progress(user, player, checkpoint):
     """ Method for saving progress """
     # TODO Implement with PSQL
-    print("DEBUG: Username "+user+" with",player.id,"at "+ player.checkpoint) # DEBUG
+    print("DEBUG: Username "+user+" with", player.id, "at "+ player.checkpoint) # DEBUG
 
 def load_progress(user):
     """ Method for saving progress """
     # TODO Implement with PSQL
     player = Player()
     checkpoint = ''
-    return (user,player,checkpoint) # DEBUG
+    return (user, player, checkpoint) # DEBUG
 
 def prompt_in():
     """ Method for receiving input """
-    # TODO Use socket.io listening and work with JS
+    # Changes in combat-and-death branch
     text = input()
     return text
 
 def send_out(msg):
     """ Method for sending reply """
-    # TODO Use socket.io and work with JS
+    # Changes in combat-and-death branch
     print(">"+msg)
-    
-def deconstructPlayer(player):
-    name = player.id
-    strength = player.str
-    dex = player.dex
-    con = player.con
-    int = player.int
-    cha = player.cha
-    luck = player.luk
-    max_health = player.max_health
-    health = player.health
-    max_mana = player.max_mana
-    mana = player.mana
-    money = player.money
-    checkpoint = player.checkpoint
-    gender = player.gen
-    characterClass = player.characterClass
-    statslist = [name,strength,dex,con,int,cha,luck,max_health,health,max_mana,mana,money,checkpoint,gender,characterClass]
+
+def deconstruct_player(player):
+    """ Deconstructing player object for PSQL """
+    statslist = [
+        player.id,
+        player.str,
+        player.dex,
+        player.con,
+        player.int,
+        player.cha,
+        player.luk,
+        player.max_health,
+        player.health,
+        player.max_mana,
+        player.mana,
+        player.money,
+        player.checkpoint,
+        player.gen,
+        player.character_class,
+    ]
     return statslist
