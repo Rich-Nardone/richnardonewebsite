@@ -1,9 +1,13 @@
-# Precompiled python files
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+# all env files
+*.env
+# coverage
+.coverage
+# js-based
 node_modules/
 package-lock.json
-package.json
 static/script.js
-sql.env
 lib/
-.pyc
