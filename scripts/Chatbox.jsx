@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react'; 
+import React, {useState} from 'react'; 
 import {Socket} from './Socket.jsx';
+import PropTypes from 'prop-types';
 
 
 const div={
@@ -62,14 +63,6 @@ const body={
     background:'grey',
 }
 
-const items={
-    fontWeight:'bold',
-    textAlign:'center',
-    margin: 0,
-}
-
-
-
 
 export function Chatbox(props){
     const [userInput, setInput] = useState("");
@@ -91,8 +84,8 @@ export function Chatbox(props){
         else{
         setMoney(money-500)
         Socket.emit('item purchased')
-        };
-    };
+        }
+    }
     
     return(
         <div style={div}>
@@ -101,14 +94,14 @@ export function Chatbox(props){
                     {display_log}
                 </ul>
             </div> 
-            <p style={p}>Possible Actions: "Say", "Do", "Attack"</p>
+            <p style={p}>{'Possible Actions: "Say", "Do", "Attack"'}</p>
             <details>
                 <summary style={details}>Pssst..click me for goods</summary>
                 <body style={body}>
-                <p style={secret_p}> Welcome to Ghosty's Emporium! What can I get ye?</p>
+                <p style={secret_p}> {"Welcome to Ghosty's Emporium! What can I get ye?"}</p>
                 <p style={secret_p}>Current Money: {money} Bucks</p>
                 <br></br>
-                <button id="Health" onClick={submitPayment}>Health Pack: 500 Bucks</button>
+                <button id='Health' onClick={submitPayment}>Health Pack: 500 Bucks</button>
                 </body>
                 
             </details>
@@ -122,3 +115,7 @@ export function Chatbox(props){
         </div>
     )
 }
+
+Chatbox.propTypes = {
+    user_content: PropTypes.array,
+};
