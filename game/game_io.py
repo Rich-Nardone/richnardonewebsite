@@ -4,7 +4,7 @@
     - include PSQL additions, likely in another method
         called report_progress
 """
-from player import Player
+from .player import Player
 
 def progress(user, player, checkpoint):
     """ Method for saving progress """

@@ -12,12 +12,12 @@ import random
 import json
 import requests
 import models
-from game_io import progress, prompt_in, send_out
-from game_io import deconstructPlayer
+import game.game
+import game.game_io
+from game.game import game, scenario
+from game.game_io import progress, prompt_in, send_out, deconstructPlayer
+from game.player import Player
 from sqlalchemy import update
-from player import Player
-from game import scenario
-from game import game
 from dotenv import load_dotenv
 
 game = flask.Flask(__name__)
@@ -69,15 +69,15 @@ def saveProgress():
             FLAG = "INSERT"
     
     if FLAG == "INSERT":
-        chara = models.character(user_id=USER,characterName=statslist[0],strength=statslist[1],dex=statslist[2],con=statslist[3],intel=statslist[4],cha=statslist[5],luck=statslist[6],max_health=statslist[7],health=statslist[8],max_mana=statslist[9],mana=statslist[10],money=statslist[11], checkpoint=statslist[12])
+        chara = models.character(user_id=USER,characterName=statslist[0],str=statslist[1],dex=statslist[2],con=statslist[3],int=statslist[4],cha=statslist[5],luck=statslist[6],max_health=statslist[7],health=statslist[8],max_mana=statslist[9],mana=statslist[10],money=statslist[11], checkpoint=statslist[12])
         DB.session.add(chara)
         DB.session.commit()
     elif FLAG == "UPDATE":
         chara = DB.session.query(models.character).filter_by(user_id=USER, characterName=statslist[0]).first()
-        chara.strength = statslist[1]
+        chara.str = statslist[1]
         chara.dex = statslist[2]
         chara.con = statslist[3]
-        chara.intel = statslist[4]
+        chara.int = statslist[4]
         chara.cha = statslist[5]
         chara.luck = statslist[6]
         chara.max_health = statslist[7]
