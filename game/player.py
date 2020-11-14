@@ -8,7 +8,7 @@ class Player:
     def __init__(self):
         self.id = "name"
         self.gen = "gender"
-        self.characterClass = ""
+        self.characterClass = "class"
         # stats
         # Strength: Used for slapping and stronging things
         self.str = 0
