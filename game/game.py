@@ -76,5 +76,6 @@ def game(user):
         progress(user, state_tuple[0], state_tuple[1])
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
+    return user
 
 game('test')
