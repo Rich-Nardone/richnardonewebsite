@@ -7,24 +7,30 @@ from .game_io import progress, prompt_in, send_out
 from .player import Player
 
 # should probably read prompts from another file...
-#  Marked with TODO story_file
+# fix this in all the scenarios
 
-  
 # START
 def start_scenario(user):
-    # TODO story_file
-    start_text = 'You are in a white, bare room with nothing but a mirror with a few words on it. Upon further inspection the mirror seems to be asking you a question, “Who are you?”'
+    """ Tries to find a player for the user, otherwise creates new """
+    start_text = "You are in a white, bare room with nothing but a mirror with a few words on it."
+    start_text = (
+        start_text
+        + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”"
+    )
     send_out(start_text)
     # character creation
     player = Player()
-    #TODO fetch player info for user 'user' from the database need player name, gender and class
+    # TODO fetch player info for user 'user' from the database need player name, gender and class
     return player
-    
+
 
 def scenario(player, scenario_id):
-    # TODO story_file
-    if scenario_id == 'intro':
-        send_out("You wake up at your desk in class, with no one in sight. Strangely enough, it looks like everyone has left only recently and forgotten their things.")
+    """ Loads into the scenario """
+    if scenario_id == "intro":
+        send_out(
+            "You wake up at your desk in class, with no one in sight. Strangely enough, "
+            + "it looks like everyone has left only recently and forgotten their things."
+        )
         action = prompt_in()
         looted = False
         while action:
@@ -39,11 +45,13 @@ def scenario(player, scenario_id):
                 send_out("It seems dark outside...")
             if "leave" in action:
                 send_out("You leave the room.")
-                return (player, 'intro_hall')
+                return (player, "intro_hall")
             action = prompt_in()
-    # TODO story_file
-    if scenario_id == 'intro_hall':
-        send_out("As you leave the room, you notice that the hallway is empty as well, with some strange gray trails all heading either towards or from the main entrance.")
+    if scenario_id == "intro_hall":
+        send_out(
+            "As you leave the room, you notice that the hallway is empty as well,"
+            + "with some strange gray trails all heading either towards or from the main entrance."
+        )
         send_out("Where do you go?")
         action = prompt_in()
         next_area = None
@@ -55,21 +63,28 @@ def scenario(player, scenario_id):
                 next_area = "entrance"
                 break
             action = prompt_in()
-        send_out("As you approach, there is a slow and constant squishing sound, like the noises of an oversaturated bath towel.")
+        send_out(
+            "As you approach, there is a slow and constant squishing sound,"
+            + "like the noises of an oversaturated bath towel."
+        )
         return (player, next_area)
-    # TODO story_file
     if scenario_id == "classroom":
-        send_out("Peeking in, you find a strange gray mass that rests on top of the trail. The stranger thing is that the room itself seems to lack color wherever this mass goes.")
+        send_out(
+            "Peeking in, you find a strange gray mass that rests on top of the trail. The stra"
+            + "nger thing is that the room itself seems to lack color wherever this mass goes."
+        )
         action = prompt_in()
         while action:
             if "fight" in action:
                 send_out("You begin combat with the gray slime!")
-                # TODO do combat
+                # Changes in combat-and-death branch
             if "leave" in action:
                 return (player, "entrance")
     return (player, scenario_id)
 
+
 def game(user):
+    """ Runs the game, given a user """
     # player character
     player = start_scenario(user)
     progress(user, player, "start")
@@ -80,5 +95,3 @@ def game(user):
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
     return user
-
-#game('test')
