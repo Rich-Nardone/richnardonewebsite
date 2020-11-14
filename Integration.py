@@ -61,24 +61,39 @@ def saveProgress():
 
     statslist = deconstructPlayer(player)
 
-#THESE FUNCTION SEND DUMMY DATA AT THE MOMENT. WILL UPDATE WITH DATABSE INFO EVENTUALLY
+    for x,y in dict.items():
+        if USER == x and statslist[0] == y:
+            FLAG = "UPDATE"
+            break
+        else:
+            FLAG = "INSERT"
+    
+    if FLAG == "INSERT":
+        chara = models.character(user_id=USER,characterName=statslist[0],strength=statslist[1],dex=statslist[2],con=statslist[3],intel=statslist[4],cha=statslist[5],luck=statslist[6],max_health=statslist[7],health=statslist[8],max_mana=statslist[9],mana=statslist[10],money=statslist[11], checkpoint=statslist[12])
+        DB.session.add(chara)
+        DB.session.commit()
+    elif FLAG == "UPDATE":
+        chara = DB.session.query(models.character).filter_by(user_id=USER, characterName=statslist[0]).first()
+        chara.strength = statslist[1]
+        chara.dex = statslist[2]
+        chara.con = statslist[3]
+        chara.intel = statslist[4]
+        chara.cha = statslist[5]
+        chara.luck = statslist[6]
+        chara.max_health = statslist[7]
+        chara.health = statslist[8]
+        chara.max_mana = statslist[9]
+        chara.mana = statslist[10]
+        chara.money = statslist[11]
+        chara.checkpoint = statslist[12]
+        DB.session.commit()
+    else:
+        print("weird error")
+
 def player_info():
     #player_info = 'lol'
     player_info = {'user_party': ['player1', 'player2', 'player10'], 'user_inventory': ['coins', 'sword', 'shield'], 'user_chatlog': ['welcome to the world', 'attack', 'user attacks, hitting the blob for 10pts']}
     socketio.emit('player info', player_info)
-
-#to load we first need to get email + character name to find which character entry to load from
-def loadProgress():
-    USER=userlist[-1]
-    email = DB.session.query(models.username).filter_by(id=USER).first()
-    key = email.id
-    characterList = DB.session.query(models.character).filter_by(user_id=key)
-    #gets all the character names tied to userID. Need to display all names and allowed use to select or create new
-    player = Player()
-    for char in characterList:
-        if char.characterName == "popo":
-            player = char
-    #game(player)
 
 userlist = [1]
 @socketio.on('google login')
@@ -103,7 +118,6 @@ def index():
 
 @game.route("/main_chat.html")
 def index2():
-    #loadProgress()
     saveProgress()
     return flask.render_template("main_chat.html")
     

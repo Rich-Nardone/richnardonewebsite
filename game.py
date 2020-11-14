@@ -69,7 +69,7 @@ def scenario(player, scenario_id):
 def game(user):
     # player character
     player = start_scenario()
-    progress(user, player, "intro")
+    progress(user, player, "start")
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
     while state_tuple[1] != "end":

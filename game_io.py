@@ -36,6 +36,5 @@ def deconstructPlayer(player):
     mana = player.mana
     money = player.money
     checkpoint = player.checkpoint
-    name = "popo"
     statslist = [name,strength,dex,con,int,cha,luck,max_health,health,max_mana,mana,money,checkpoint]
     return statslist
