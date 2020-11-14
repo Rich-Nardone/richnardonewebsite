@@ -38,12 +38,14 @@ db.app = game
 
 #===================================================================================
 
-<<<<<<< HEAD
+
+
+
 #For shop, checks if item has been purchased.
 item=0
 #Used to check if user bought item again.
 times=1
-=======
+
 #function that marks and saves progress, either inserting a new character into database or updating an existing one.
 def saveProgress():
     FLAG="INSERT"
@@ -97,7 +99,6 @@ def saveProgress():
         db.session.commit()
     else:
         print("weird error")
->>>>>>> ad908922370b61a8b7087d5e9d4b67577138b57a
 
 def player_info():
     #player_info = 'lol'

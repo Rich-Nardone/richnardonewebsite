@@ -28,12 +28,9 @@
     ]
   },
   "dependencies": {
-<<<<<<< HEAD
     "google-oauth2": "^0.1.0",
-=======
     "babel": "^6.23.0",
     "babel-loader": "^8.2.1",
->>>>>>> 28ccc9f687de837e19f46273f5c4002c8a654afe
     "react-google-button": "^0.7.1",
     "react-google-login": "^5.1.22",
     "socket.io-client": "^2.3.1"
