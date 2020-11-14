@@ -47,11 +47,6 @@ db.app = game
 
 
 #THESE FUNCTION SEND DUMMY DATA AT THE MOMENT. WILL UPDATE WITH DATABSE INFO EVENTUALLY
-def player_info():
-    #player_info = 'lol'
-    player_info = {'user_party': ['player1', 'player2', 'player10'], 'user_inventory': ['coins', 'sword', 'shield'], 'user_chatlog': ['welcome to the world', 'attack', 'user attacks, hitting the blob for 10pts']}
-    socketio.emit('player info', player_info)
-
 #For shop, checks if item has been purchased.
 item=0
 #Used to check if user bought item again.
@@ -173,15 +168,17 @@ def character_creation(data):
         player.make_bookworm()
     elif(data['classType']=='NEET'):
         player.make_neet()
-    userid = ''                                         #TODO users unique id
+    USER = userlist[-1]
+    email = db.session.query(models.username).filter_by(id=USER).first()
+    userid = email.id
     dbplayer = models.character(user_id=userid,
         characterClass=data['classType'],
         characterName=data['name'],
         gender=data['gen'],
-        strength=player.str,
+        str=player.str,
         dex=player.dex,
         con=player.con,
-        intel=player.int,
+        int=player.int,
         cha=player.cha,
         luck=player.luk,
         max_health=player.max_health,
@@ -201,8 +198,7 @@ def index():
 @game.route('/character_creation.html')
 def char_create(): 
     return flask.render_template('character_creation.html')
-    
-#=======================================================================================   
+#===============================================================   
 @game.route('/main_chat.html')
 def main():
    saveProgress()
