@@ -9,14 +9,17 @@ from .player import Player
 # should probably read prompts from another file...
 #  Marked with TODO story_file
 
+  
 # START
-def start_scenario():
+def start_scenario(user):
     # TODO story_file
     start_text = 'You are in a white, bare room with nothing but a mirror with a few words on it. Upon further inspection the mirror seems to be asking you a question, “Who are you?”'
     send_out(start_text)
     # character creation
     player = Player()
+    #TODO fetch player info for user 'user' from the database need player name, gender and class
     return player
+    
 
 def scenario(player, scenario_id):
     # TODO story_file
@@ -68,7 +71,7 @@ def scenario(player, scenario_id):
 
 def game(user):
     # player character
-    player = start_scenario()
+    player = start_scenario(user)
     progress(user, player, "start")
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")

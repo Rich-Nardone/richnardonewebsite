@@ -11,6 +11,13 @@ def progress(user, player, checkpoint):
     # TODO Implement with PSQL
     print("DEBUG: Username "+user+" with",player.id,"at "+ player.checkpoint) # DEBUG
 
+def load_progress(user):
+    """ Method for saving progress """
+    # TODO Implement with PSQL
+    player = Player()
+    checkpoint = ''
+    return (user,player,checkpoint) # DEBUG
+
 def prompt_in():
     """ Method for receiving input """
     # TODO Use socket.io listening and work with JS

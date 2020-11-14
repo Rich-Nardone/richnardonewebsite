@@ -9,22 +9,23 @@ import flask
 import flask_sqlalchemy
 import flask_socketio
 from dotenv import load_dotenv
-
-#For shop, checks if item has been purchased.
-item=0
-#Used to check if user bought item again.
-times=1
-
+from sqlalchemy import update
 import random
 import json
 import requests
+# local imports
 import models
+# game logic
 import game.game
 import game.game_io
 from game.game import game, scenario
 from game.game_io import progress, prompt_in, send_out, deconstructPlayer
 from game.player import Player
-from sqlalchemy import update
+
+#For shop, checks if item has been purchased.
+item=0
+#Used to check if user bought item again.
+times=1
 
 game = flask.Flask(__name__)
 
@@ -45,7 +46,11 @@ db.app = game
 #===================================================================================
 
 
-
+#THESE FUNCTION SEND DUMMY DATA AT THE MOMENT. WILL UPDATE WITH DATABSE INFO EVENTUALLY
+def player_info():
+    #player_info = 'lol'
+    player_info = {'user_party': ['player1', 'player2', 'player10'], 'user_inventory': ['coins', 'sword', 'shield'], 'user_chatlog': ['welcome to the world', 'attack', 'user attacks, hitting the blob for 10pts']}
+    socketio.emit('player info', player_info)
 
 #For shop, checks if item has been purchased.
 item=0
@@ -131,7 +136,6 @@ def google_login(data):
     userdat = data["UserInfo"]
     profiledat = userdat["profileObj"]
     em=profiledat["email"]
-    
     all_email = [username.email for username in db.session.query(models.username).all()]
     if em not in all_email:
         user = models.username(email=em)
@@ -140,17 +144,14 @@ def google_login(data):
     userid = db.session.query(models.username).filter_by(email=em).first()
     userlist.append(userid.id)
     
-    
 @socketio.on('user input')
 def parse_user_input(data):
     print(data['input']) #This is what user inputs into the chat command page. Parse data in order to interact with game logic
-    
-    
+ 
 @socketio.on('user onchat')
 def user_arrived(): 
     #THIS IS JUST TEST INPUT THAT IS RECIEVED ON THE FRONTEND SOCKET
     player_info()
-    
 
 #Test atm for the shop
 @socketio.on('item purchased')
@@ -159,16 +160,43 @@ def item_purchased():
     item=1
     player_info()
     
-        
-    
 @socketio.on('user new character')
 def character_creation(data):
-    print(data)
+    player = Player()
+    player.id = data['name'] 
+    player.gen = data['gen']
+    player.characterClass = data['classType']
+    # data includes character attributes: name, gender and character class
+    if(data['classType']=='Jock'):
+        player.make_jock()
+    elif(data['classType']=='Bookworm'):
+        player.make_bookworm()
+    elif(data['classType']=='NEET'):
+        player.make_neet()
+    userid = ''                                         #TODO users unique id
+    dbplayer = models.character(user_id=userid,
+        characterClass=data['classType'],
+        characterName=data['name'],
+        gender=data['gen'],
+        strength=player.str,
+        dex=player.dex,
+        con=player.con,
+        intel=player.int,
+        cha=player.cha,
+        luck=player.luk,
+        max_health=player.max_health,
+        health=player.health,
+        max_mana=player.max_mana,
+        mana=player.mana,
+        money=player.money)
+    db.session.add(dbplayer)
+    db.session.commit()
     
 #======================================================================================
 @game.route('/')
 def index(): 
     return flask.render_template('index.html')
+  
 #======================================================================================
 @game.route('/character_creation.html')
 def char_create(): 
@@ -181,7 +209,6 @@ def main():
    return flask.render_template('main_chat.html')
     
 #=======================================================================================
-
 
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":

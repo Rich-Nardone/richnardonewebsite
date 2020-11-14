@@ -35,7 +35,6 @@ class character(db.Model):
     
     child = db.relationship("inventory", backref="characterid")
     
-    
 class inventory(db.Model):
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)

@@ -7,6 +7,8 @@ class Player:
 
     def __init__(self):
         self.id = "name"
+        self.gen = "gender"
+        self.characterClass = "class"
         # stats
         # Strength: Used for slapping and stronging things
         self.str = 0
@@ -43,3 +45,69 @@ class Player:
         if self.is_dead():
             return True # trigger death stuff
         return None # return nothing
+        
+    def make_neet(self):
+        # Strength: Used for slapping and stronging things
+        self.str = 65
+        # Dexterity: Used for going fast and being fast
+        self.dex = 80
+        # Constitution: Healthiness and not-die ability
+        self.con = 50
+        # Intelligence: The BIG BRAIN
+        self.int = 75
+        # Charisma: How likeable or punchable you are
+        self.cha = 70
+        # Luck: Lucky you, huh?
+        self.luk = 50
+        # totals
+        # Health: Your life.
+        self.max_health = 100 + self.con*10
+        self.health = self.max_health
+        # Mana: Magic is a thing?
+        self.max_mana = self.int*5
+        # money
+        self.money = self.luk*5
+        
+    def make_bookworm(self):
+        # Strength: Used for slapping and stronging things
+        self.str = 35
+        # Dexterity: Used for going fast and being fast
+        self.dex = 75
+        # Constitution: Healthiness and not-die ability
+        self.con = 80
+        # Intelligence: The BIG BRAIN
+        self.int = 90
+        # Charisma: How likeable or punchable you are
+        self.cha = 25
+        # Luck: Lucky you, huh?
+        self.luk = 60
+        # totals
+        # Health: Your life.
+        self.max_health = 100 + self.con*10
+        self.health = self.max_health
+        # Mana: Magic is a thing?
+        self.max_mana = self.int*5
+        # money
+        self.money = self.luk*5
+        
+    def make_jock(self):
+        # Strength: Used for slapping and stronging things
+        self.str = 90
+        # Dexterity: Used for going fast and being fast
+        self.dex = 40
+        # Constitution: Healthiness and not-die ability
+        self.con = 20
+        # Intelligence: The BIG BRAIN
+        self.int = 35
+        # Charisma: How likeable or punchable you are
+        self.cha = 50
+        # Luck: Lucky you, huh?
+        self.luk = 50
+        # totals
+        # Health: Your life.
+        self.max_health = 100 + self.con*10
+        self.health = self.max_health
+        # Mana: Magic is a thing?
+        self.max_mana = self.int*5
+        # money
+        self.money = self.luk*5
