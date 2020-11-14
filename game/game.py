@@ -3,7 +3,7 @@
 """
 
 # local imports
-from game_io import progress, report_progress, prompt_in, send_out
+from game_io import progress, load_progress, prompt_in, send_out
 from player import Player
 
 # should probably read prompts from another file...
@@ -18,16 +18,8 @@ def start_scenario(user):
     # character creation
     player = Player()
     #TODO fetch player info for user 'user' from the database need player name, gender and class
-    progress = load_progress(user)
-    player.gen = progress[1].gen
-    characterClass = progress[1].characterClass
-    if(characterClass=='Jock'):
-        player.make_jock()
-    elif(characterClass=='Bookworm'):
-        player.make_bookworm()
-    elif(characterClass=='NEET'):
-        player.make_neet()
     return player
+    
 
 def scenario(player, scenario_id):
     # TODO story_file

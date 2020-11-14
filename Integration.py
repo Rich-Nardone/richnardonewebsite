@@ -9,7 +9,7 @@ import flask
 import flask_sqlalchemy
 import flask_socketio
 from dotenv import load_dotenv
-
+from .player import Player
 
 game = flask.Flask(__name__)
 
@@ -64,23 +64,33 @@ def user_arrived():
     
 @socketio.on('user new character')
 def character_creation(data):
+    player = Player()
+    player.id = data['name'] 
+    player.gen = data['gen']
+    player.characterClass = data['classType']
     # data includes character attributes: name, gender and character class
-    userid = '' #TODO users unique id
+    if(data['classType']=='Jock'):
+        player.make_jock()
+    elif(data['classType']=='Bookworm'):
+        player.make_bookworm()
+    elif(data['classType']=='NEET'):
+        player.make_neet()
+    userid = ''                                         #TODO users unique id
     dbplayer = models.character(user_id=userid,
         characterClass=data['classType'],
         characterName=data['name'],
         gender=data['gen'],
-        strength=0,
-        dex=0,
-        con=0,
-        intel=0,
-        cha=0,
-        luck=0,
-        max_health=0,
-        health=0,
-        max_mana=0,
-        mana=0,
-        money=0)
+        strength=player.str,
+        dex=player.dex,
+        con=player.con,
+        intel=player.int,
+        cha=player.cha,
+        luck=player.luk,
+        max_health=player.max_health,
+        health=player.health,
+        max_mana=player.max_mana,
+        mana=player.mana,
+        money=player.money)
     db.session.add(dbplayer)
     db.session.commit()
     
