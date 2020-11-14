@@ -2,5 +2,7 @@
 __pycache__/
 node_modules/
 package-lock.json
+package.json
 static/script.js
 sql.env
+lib/
