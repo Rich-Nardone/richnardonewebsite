@@ -30,6 +30,8 @@ class character(DB.Model):
     mana = DB.Column(DB.Integer)
     money = DB.Column(DB.Integer)
     checkpoint = DB.Column(DB.String(400))
+    gender = DB.Column(DB.String(400))
+    characterClass = DB.Column(DB.String(400))
     
     child = DB.relationship("inventory", backref="characterid")
     

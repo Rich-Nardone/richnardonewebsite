@@ -78,7 +78,7 @@ def loadProgress():
     for char in characterList:
         if char.characterName == "popo":
             player = char
-    game(player)
+    #game(player)
 
 userlist = [1]
 @socketio.on('google login')
@@ -103,8 +103,8 @@ def index():
 
 @game.route("/main_chat.html")
 def index2():
-    loadProgress()
-    #saveProgress()
+    #loadProgress()
+    saveProgress()
     return flask.render_template("main_chat.html")
     
 @socketio.on('user input')
