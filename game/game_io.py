@@ -36,5 +36,7 @@ def deconstructPlayer(player):
     mana = player.mana
     money = player.money
     checkpoint = player.checkpoint
-    statslist = [name,strength,dex,con,int,cha,luck,max_health,health,max_mana,mana,money,checkpoint]
+    gender = player.gen
+    characterClass = player.characterClass
+    statslist = [name,strength,dex,con,int,cha,luck,max_health,health,max_mana,mana,money,checkpoint,gender,characterClass]
     return statslist

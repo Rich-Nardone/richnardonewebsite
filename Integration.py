@@ -69,7 +69,7 @@ def saveProgress():
             FLAG = "INSERT"
     
     if FLAG == "INSERT":
-        chara = models.character(user_id=USER,characterName=statslist[0],str=statslist[1],dex=statslist[2],con=statslist[3],int=statslist[4],cha=statslist[5],luck=statslist[6],max_health=statslist[7],health=statslist[8],max_mana=statslist[9],mana=statslist[10],money=statslist[11], checkpoint=statslist[12])
+        chara = models.character(user_id=USER,characterName=statslist[0],str=statslist[1],dex=statslist[2],con=statslist[3],int=statslist[4],cha=statslist[5],luck=statslist[6],max_health=statslist[7],health=statslist[8],max_mana=statslist[9],mana=statslist[10],money=statslist[11], checkpoint=statslist[12], gender=statslist[13],characterClass=statslist[14])
         db.session.add(chara)
         db.session.commit()
     elif FLAG == "UPDATE":
@@ -86,6 +86,8 @@ def saveProgress():
         chara.mana = statslist[10]
         chara.money = statslist[11]
         chara.checkpoint = statslist[12]
+        chara.gender = statslist[13]
+        chara.characterClass = statslist[14]
         db.session.commit()
     else:
         print("weird error")
@@ -137,6 +139,7 @@ def char_create():
 #=======================================================================================   
 @game.route('/main_chat.html')
 def main():
+   saveProgress()
    return flask.render_template('main_chat.html')
     
 #=======================================================================================
