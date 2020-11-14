@@ -10,6 +10,11 @@ import flask_sqlalchemy
 import flask_socketio
 from dotenv import load_dotenv
 
+#For shop, checks if item has been purchased.
+item=0
+#Used to check if user bought item again.
+times=1
+
 
 game = flask.Flask(__name__)
 
@@ -33,10 +38,7 @@ db.session.commit()
 import models
 #===================================================================================
 
-#For shop, checks if item has been purchased.
-item=0
-#Used to check if user bought item again.
-times=1
+
 
 #THESE FUNCTION SEND DUMMY DATA AT THE MOMENT. WILL UPDATE WITH DATABSE INFO EVENTUALLY
 def player_info():
