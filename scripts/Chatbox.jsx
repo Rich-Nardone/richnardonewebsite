@@ -41,10 +41,39 @@ const p={
     
 }
 
+const secret_p={
+    textAlign:'center',
+    fontWeight:'bold',
+    fontStyle:'italic',
+    background:'grey',
+    
+    
+    
+    
+}
+
+const details={
+    fontWeight:'bold',
+    textAlign:'center',
+    fontStyle:'italic',
+}
+
+const body={
+    background:'grey',
+}
+
+const items={
+    fontWeight:'bold',
+    textAlign:'center',
+    margin: 0,
+}
+
+
 
 
 export function Chatbox(props){
     const [userInput, setInput] = useState("");
+    const[money,setMoney] = useState(1000);
     
     function submitInput(event){
         event.preventDefault();
@@ -55,6 +84,16 @@ export function Chatbox(props){
         <li key={index}> {log} </li>
     );
     
+    function submitPayment(){
+        if(money===0){
+            setMoney(0)
+        }
+        else{
+        setMoney(money-500)
+        Socket.emit('item purchased')
+        };
+    };
+    
     return(
         <div style={div}>
             <div id='chatbox'>
@@ -63,6 +102,16 @@ export function Chatbox(props){
                 </ul>
             </div> 
             <p style={p}>Possible Actions: "Say", "Do", "Attack"</p>
+            <details>
+                <summary style={details}>Pssst..click me for goods</summary>
+                <body style={body}>
+                <p style={secret_p}> Welcome to Ghosty's Emporium! What can I get ye?</p>
+                <p style={secret_p}>Current Money: {money} Bucks</p>
+                <br></br>
+                <button id="Health" onClick={submitPayment}>Health Pack: 500 Bucks</button>
+                </body>
+                
+            </details>
             <br></br>
             <div id='user_buttons'>
                 <form onSubmit={submitInput}>

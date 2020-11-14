@@ -17,6 +17,7 @@ export function MainUI(){
         }, []);    
     }
     
+    
     retrieve_player_info()
     
     console.log(player_info);

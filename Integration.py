@@ -33,11 +33,27 @@ db.session.commit()
 import models
 #===================================================================================
 
+#For shop, checks if item has been purchased.
+item=0
+#Used to check if user bought item again.
+times=1
 
 #THESE FUNCTION SEND DUMMY DATA AT THE MOMENT. WILL UPDATE WITH DATABSE INFO EVENTUALLY
 def player_info():
     #player_info = 'lol'
     player_info = {'user_party': ['player1', 'player2', 'player10'], 'user_inventory': ['coins', 'sword', 'shield'], 'user_chatlog': ['welcome to the world', 'attack', 'user attacks, hitting the blob for 10pts']}
+    if item==1:
+        x=player_info['user_inventory']
+        global times
+        if times==0:
+            x.extend(["Health Pack"])
+            times+=1
+        else:
+            x.extend(["Health Pack"]*times)
+            times+=1
+            
+        print(x)
+        player_info['user_inventory']=x
     socketio.emit('player info', player_info)
 
 
@@ -62,9 +78,20 @@ def user_arrived():
     #THIS IS JUST TEST INPUT THAT IS RECIEVED ON THE FRONTEND SOCKET
     player_info()
     
+
+#Test atm for the shop
+@socketio.on('item purchased')
+def item_purchased():
+    global item
+    item=1
+    player_info()
+    
+        
+    
 @socketio.on('user new character')
 def character_creation(data):
     print(data)
+    
 #======================================================================================
 @game.route('/')
 def index(): 
