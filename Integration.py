@@ -23,21 +23,21 @@ item = 0
 # Used to check if user bought item again.
 times = 1
 
-game = flask.Flask(__name__)
+app = flask.Flask(__name__)
 
 
-socketio = flask_socketio.SocketIO(game)
-socketio.init_app(game, cors_allowed_origins="*")
+socketio = flask_socketio.SocketIO(app)
+socketio.init_app(app, cors_allowed_origins="*")
 
-#dotenv_path = join(dirname(__file__), "sql.env")
-#load_dotenv(dotenv_path)
+dotenv_path = join(dirname(__file__), "sql.env")
+load_dotenv(dotenv_path)
 
 database_uri = os.environ["DATABASE_URL"]
-game.config["SQLALCHEMY_DATABASE_URI"] = database_uri
+app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 
-db = flask_sqlalchemy.SQLAlchemy(game)
-db.init_app(game)
-db.app = game
+db = flask_sqlalchemy.SQLAlchemy(app)
+db.init_app(app)
+db.app = app
 
 # ===================================================================================
 
@@ -88,10 +88,10 @@ def saveProgress():
         chara = models.character(
             user_id=USER,
             character_name=statslist[0],
-            str=statslist[1],
+            strength=statslist[1],
             dex=statslist[2],
             con=statslist[3],
-            int=statslist[4],
+            intel=statslist[4],
             cha=statslist[5],
             luck=statslist[6],
             max_health=statslist[7],
@@ -111,10 +111,10 @@ def saveProgress():
             .filter_by(user_id=USER, character_name=statslist[0])
             .first()
         )
-        chara.str = statslist[1]
+        chara.strength = statslist[1]
         chara.dex = statslist[2]
         chara.con = statslist[3]
-        chara.int = statslist[4]
+        chara.intel = statslist[4]
         chara.cha = statslist[5]
         chara.luck = statslist[6]
         chara.max_health = statslist[7]
@@ -218,13 +218,13 @@ def character_creation(data):
     userid = email.id
     dbplayer = models.character(
         user_id=userid,
-        characterClass=data["classType"],
-        characterName=data["name"],
+        character_class=data["classType"],
+        character_name=data["name"],
         gender=data["gen"],
-        strength=player.str,
+        strength=player.strength,
         dex=player.dex,
         con=player.con,
-        intel=player.int,
+        intel=player.intel,
         cha=player.cha,
         luck=player.luk,
         max_health=player.max_health,
@@ -238,21 +238,21 @@ def character_creation(data):
 
 
 # ======================================================================================
-@game.route("/")
+@app.route("/")
 def index():
     """ main page """
     return flask.render_template("index.html")
 
 
 # ======================================================================================
-@game.route("/character_creation.html")
+@app.route("/character_creation.html")
 def char_create():
     """ character creation page """
     return flask.render_template("character_creation.html")
 
 
 # =======================================================================================
-@game.route("/main_chat.html")
+@app.route("/main_chat.html")
 def main():
     """ main chat window """
     saveProgress()

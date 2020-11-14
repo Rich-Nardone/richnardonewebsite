@@ -10,13 +10,13 @@ class Player:
         self.id = "name"
         # stats
         # Strength: Used for slapping and stronging things
-        self.str = 0
+        self.strength = 0
         # Dexterity: Used for going fast and being fast
         self.dex = 0
         # Constitution: Healthiness and not-die ability
         self.con = 0
         # Intelligence: The BIG BRAIN
-        self.int = 0
+        self.intel = 0
         # Charisma: How likeable or punchable you are
         self.cha = 0
         # Luck: Lucky you, huh?
@@ -26,7 +26,7 @@ class Player:
         self.max_health = 100 + self.con * 10
         self.health = self.max_health
         # Mana: Magic is a thing?
-        self.max_mana = self.int * 5
+        self.max_mana = self.intel * 5
         self.mana = 0
         # money
         self.money = self.luk * 5
@@ -48,13 +48,13 @@ class Player:
     def make_neet(self):
         """ Create 'neet' archetype character. """
         # Strength: Used for slapping and stronging things
-        self.str = 65
+        self.strength = 65
         # Dexterity: Used for going fast and being fast
         self.dex = 80
         # Constitution: Healthiness and not-die ability
         self.con = 50
         # Intelligence: The BIG BRAIN
-        self.int = 75
+        self.intel = 75
         # Charisma: How likeable or punchable you are
         self.cha = 70
         # Luck: Lucky you, huh?
@@ -64,20 +64,20 @@ class Player:
         self.max_health = 100 + self.con * 10
         self.health = self.max_health
         # Mana: Magic is a thing?
-        self.max_mana = self.int * 5
+        self.max_mana = self.intel * 5
         # money
         self.money = self.luk * 5
 
     def make_bookworm(self):
         """ Create 'bookworm' archetype character. """
         # Strength: Used for slapping and stronging things
-        self.str = 35
+        self.strength = 35
         # Dexterity: Used for going fast and being fast
         self.dex = 75
         # Constitution: Healthiness and not-die ability
         self.con = 80
         # Intelligence: The BIG BRAIN
-        self.int = 90
+        self.intel = 90
         # Charisma: How likeable or punchable you are
         self.cha = 25
         # Luck: Lucky you, huh?
@@ -87,20 +87,20 @@ class Player:
         self.max_health = 100 + self.con * 10
         self.health = self.max_health
         # Mana: Magic is a thing?
-        self.max_mana = self.int * 5
+        self.max_mana = self.intel * 5
         # money
         self.money = self.luk * 5
 
     def make_jock(self):
         """ Create 'jock' archetype character. """
         # Strength: Used for slapping and stronging things
-        self.str = 90
+        self.strength = 90
         # Dexterity: Used for going fast and being fast
         self.dex = 40
         # Constitution: Healthiness and not-die ability
         self.con = 20
         # Intelligence: The BIG BRAIN
-        self.int = 35
+        self.intel = 35
         # Charisma: How likeable or punchable you are
         self.cha = 50
         # Luck: Lucky you, huh?
@@ -110,6 +110,6 @@ class Player:
         self.max_health = 100 + self.con * 10
         self.health = self.max_health
         # Mana: Magic is a thing?
-        self.max_mana = self.int * 5
+        self.max_mana = self.intel * 5
         # money
         self.money = self.luk * 5

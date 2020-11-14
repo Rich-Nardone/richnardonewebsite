@@ -21,11 +21,11 @@ class character(db.Model):
     __tablename__ = 'character'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("username.id"))
-    characterName = db.Column(db.String(400))
-    str = db.Column(db.Integer)
+    character_name = db.Column(db.String(400))
+    strength = db.Column(db.Integer)
     dex = db.Column(db.Integer)
     con = db.Column(db.Integer)
-    int = db.Column(db.Integer)
+    intel = db.Column(db.Integer)
     cha = db.Column(db.Integer)
     luck = db.Column(db.Integer)
     max_health = db.Column(db.Integer)
@@ -35,7 +35,7 @@ class character(db.Model):
     money = db.Column(db.Integer)
     checkpoint = db.Column(db.String(400))
     gender = db.Column(db.String(400))
-    characterClass = db.Column(db.String(400))
+    character_class = db.Column(db.String(400))
     child = db.relationship("inventory", backref="characterid")
 
 class inventory(db.Model):

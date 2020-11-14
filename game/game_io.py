@@ -32,10 +32,10 @@ def deconstruct_player(player):
     """ Deconstructing player object for PSQL """
     statslist = [
         player.id,
-        player.str,
+        player.strength,
         player.dex,
         player.con,
-        player.int,
+        player.intel,
         player.cha,
         player.luk,
         player.max_health,
