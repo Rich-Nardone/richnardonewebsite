@@ -264,7 +264,7 @@ def main():
 # RUNS ON THIS HOST AND PORT
 if __name__ == "__main__":
     socketio.run(
-        game,
+        app,
         host=os.getenv("IP", "0.0.0.0"),
         port=int(os.getenv("PORT", 8080)),
         debug=True
