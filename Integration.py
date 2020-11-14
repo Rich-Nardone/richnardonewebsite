@@ -45,7 +45,7 @@ db.app = app
 item = 0
 # Used to check if user bought item again.
 times = 1
-
+#plesae
 
 # function that marks and saves progress,
 #  either inserting a new character into database or updating an existing one.
