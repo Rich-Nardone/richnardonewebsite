@@ -9,7 +9,12 @@ import flask
 import flask_sqlalchemy
 import flask_socketio
 from dotenv import load_dotenv
-<<<<<<< HEAD
+
+#For shop, checks if item has been purchased.
+item=0
+#Used to check if user bought item again.
+times=1
+
 import random
 import json
 import requests
@@ -20,14 +25,6 @@ from game.game import game, scenario
 from game.game_io import progress, prompt_in, send_out, deconstructPlayer
 from game.player import Player
 from sqlalchemy import update
-=======
-
-#For shop, checks if item has been purchased.
-item=0
-#Used to check if user bought item again.
-times=1
-
->>>>>>> Shop
 
 game = flask.Flask(__name__)
 
@@ -48,15 +45,13 @@ db.app = game
 #===================================================================================
 
 
-<<<<<<< HEAD
 
 
 #For shop, checks if item has been purchased.
 item=0
 #Used to check if user bought item again.
 times=1
-=======
->>>>>>> Shop
+
 
 #function that marks and saves progress, either inserting a new character into database or updating an existing one.
 def saveProgress():
