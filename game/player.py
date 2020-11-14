@@ -31,6 +31,9 @@ class Player:
         self.mana = 0
         # money
         self.money = self.luk*5
+        self.gen = "gender"
+        self.characterClass = "class"
+        self.checkpoint = "start"
     
     def is_dead(self):
         """ Has the player died? """

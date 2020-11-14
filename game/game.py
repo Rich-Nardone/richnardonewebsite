@@ -3,8 +3,8 @@
 """
 
 # local imports
-from game_io import progress, load_progress, prompt_in, send_out
-from player import Player
+from .game_io import progress, prompt_in, send_out
+from .player import Player
 
 # should probably read prompts from another file...
 #  Marked with TODO story_file
@@ -79,5 +79,6 @@ def game(user):
         progress(user, state_tuple[0], state_tuple[1])
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
+    return user
 
-game('test')
+#game('test')

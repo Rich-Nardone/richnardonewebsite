@@ -28,6 +28,7 @@
     ]
   },
   "dependencies": {
+    "google-oauth2": "^0.1.0",
     "babel": "^6.23.0",
     "babel-loader": "^8.2.1",
     "react-google-button": "^0.7.1",

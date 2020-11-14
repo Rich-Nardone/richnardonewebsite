@@ -12,4 +12,9 @@ sys.path.insert(0, parentdir)
 from game import game_io
 
 class GameIOTestCase(unittest.TestCase):
-    # not even writing the test for it rn
+    # Cannot be tested until changes are made with Integration.py
+    def test_all(self):
+        self.assertTrue(True)
+
+if __name__ == "__main__":
+    unittest.main()
