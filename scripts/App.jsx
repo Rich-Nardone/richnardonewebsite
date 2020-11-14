@@ -22,16 +22,6 @@ const image_style={
     height:300,
 };
 
-const h3={
-    textAlign:'center',
-    fontWeight:'bold',
-    fontStyle:'italic',
-    background: 'linear-gradient(darkviolet,darkblue)',
-    padding: 5,
-    margin: 5,
-    borderRadius:10,
-    
-};
 
 
 

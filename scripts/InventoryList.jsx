@@ -1,5 +1,7 @@
 //Displayes inventory list. Inventory list is retrieved from database
-import React from 'react'; 
+import React from 'react';
+import PropTypes from 'prop-types';
+
 
 
 const div={
@@ -39,3 +41,7 @@ export function InventoryList(props){
         </div> 
     );
 }
+
+InventoryList.propTypes = {
+    user_content: PropTypes.array,
+};

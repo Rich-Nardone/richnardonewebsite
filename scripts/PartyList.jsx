@@ -1,6 +1,5 @@
-  
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 const div={
     width:200,
@@ -45,3 +44,8 @@ export function PartyList(props){
         </div> 
     );
 }
+
+
+PartyList.propTypes = {
+    user_content: PropTypes.array,
+};
