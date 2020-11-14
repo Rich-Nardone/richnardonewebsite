@@ -9,6 +9,5 @@ __pycache__/
 # js-based
 node_modules/
 package-lock.json
-package.json
 static/script.js
 lib/
