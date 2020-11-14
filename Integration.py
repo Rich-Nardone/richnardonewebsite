@@ -36,10 +36,6 @@ db = flask_sqlalchemy.SQLAlchemy(game)
 db.init_app(game)
 db.app = game
 
-db.create_all()
-db.session.commit()
-
-import models
 #===================================================================================
 
 #function that marks and saves progress, either inserting a new character into database or updating an existing one.
