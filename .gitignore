@@ -6,3 +6,4 @@ package.json
 static/script.js
 sql.env
 lib/
+.pyc
