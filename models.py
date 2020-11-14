@@ -8,6 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from Integration import db
 
+
 class username(db.Model):
     """ Stores username from login """
     __tablename__ = 'username'
@@ -19,7 +20,7 @@ class character(db.Model):
     """ Stores character info """
     __tablename__ = 'character'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('username.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("username.id"))
     characterName = db.Column(db.String(400))
     str = db.Column(db.Integer)
     dex = db.Column(db.Integer)
@@ -41,5 +42,5 @@ class inventory(db.Model):
     """ Stores character inventory """
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)
-    character_id = db.Column(db.Integer, db.ForeignKey('character.id'))
+    character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
     items = db.Column(db.String(400))

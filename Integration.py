@@ -29,8 +29,8 @@ game = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(game)
 socketio.init_app(game, cors_allowed_origins="*")
 
-dotenv_path = join(dirname(__file__), "sql.env")
-load_dotenv(dotenv_path)
+#dotenv_path = join(dirname(__file__), "sql.env")
+#load_dotenv(dotenv_path)
 
 database_uri = os.environ["DATABASE_URL"]
 game.config["SQLALCHEMY_DATABASE_URI"] = database_uri
@@ -40,7 +40,6 @@ db.init_app(game)
 db.app = game
 
 # ===================================================================================
-
 
 # For shop, checks if item has been purchased.
 item = 0
@@ -130,6 +129,7 @@ def saveProgress():
     else:
         print("weird error")
 
+
 def player_info():
     """ Send playerinfo to js. Currently sends dummy data. """
     player_info = {
@@ -213,11 +213,13 @@ def character_creation(data):
         player.make_bookworm()
     elif data["classType"] == "NEET":
         player.make_neet()
-    userid = ""  # TODO users unique id
+    USER = userlist[-1]
+    email = db.session.query(models.username).filter_by(id=USER).first()
+    userid = email.id
     dbplayer = models.character(
         user_id=userid,
-        character_class=data["classType"],
-        character_name=data["name"],
+        characterClass=data["classType"],
+        characterName=data["name"],
         gender=data["gen"],
         strength=player.str,
         dex=player.dex,

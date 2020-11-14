@@ -1,10 +1,14 @@
 {
   "scripts": {
+    "build-css": "node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
     "build": "webpack -p --progress --config webpack.config.js",
     "dev-build": "webpack --progress -d --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --progress -d --config webpack.config.js --watch",
-    "heroku-postbuild": "webpack --progress -d --config webpack.config.js"
+    "heroku-postbuild": "webpack --progress -d --config webpack.config.js",
+    "start": "react-scripts start",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -12,9 +16,11 @@
     "@babel/preset-react": "^7.12.5",
     "css-loader": "^3.4.2",
     "eslint": "^7.13.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "jquery": "^3.2.1",
@@ -30,6 +36,10 @@
       "@babel/preset-env",
       "@babel/preset-react"
     ]
+  },
+    "engines": {
+    "node": "10.22.0",
+    "npm": "6.14.6"
   },
   "dependencies": {
     "babel": "^6.23.0",
