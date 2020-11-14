@@ -1,10 +1,14 @@
 {
   "scripts": {
+    "build-css": "node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
     "build": "webpack -p --progress --config webpack.config.js",
     "dev-build": "webpack --progress -d --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --progress -d --config webpack.config.js --watch",
-    "heroku-postbuild": "webpack --progress -d --config webpack.config.js"
+    "heroku-postbuild": "webpack --progress -d --config webpack.config.js",
+    "start": "react-scripts start",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
