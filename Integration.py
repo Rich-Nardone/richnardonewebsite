@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 # local imports
 import models
-#test
+#tests
 # game logic
 import game.game
 import game.game_io
