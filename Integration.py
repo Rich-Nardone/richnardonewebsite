@@ -10,13 +10,15 @@ from dotenv import load_dotenv
 
 # local imports
 import models
-#tests
+
+# tests
 # game logic
 import game.game
 import game.game_io
 from game.game import game
 from game.game_io import deconstruct_player
 from game.player import Player
+import user_input
 
 # For shop, checks if item has been purchased.
 item = 0
@@ -41,11 +43,14 @@ db.app = app
 
 # ===================================================================================
 
+# user input object
+user_in = user_input.UserInput()
+
 # For shop, checks if item has been purchased.
 item = 0
 # Used to check if user bought item again.
 times = 1
-#plesae
+# please
 
 # function that marks and saves progress,
 #  either inserting a new character into database or updating an existing one.
@@ -178,9 +183,8 @@ def google_login(data):
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
-    print(
-        data["input"]
-    )
+    print(data["input"])
+    user_in.update(data["input"])
 
 
 @socketio.on("user onchat")
@@ -267,5 +271,5 @@ if __name__ == "__main__":
         app,
         host=os.getenv("IP", "0.0.0.0"),
         port=int(os.getenv("PORT", 8080)),
-        debug=True
+        debug=True,
     )
