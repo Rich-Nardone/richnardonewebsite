@@ -156,11 +156,6 @@ def player_info():
         player_info["user_inventory"] = x
     socketio.emit("player info", player_info)
 
-def addshit():
-    item = models.inventory(items="dddddd",character_id="3")
-    db.session.add(item)
-    db.session.commit()
-
 def item_sort_asc():
     db.session.query(models.inventory_asc).delete()
     db.session.commit()
@@ -265,8 +260,6 @@ def character_creation(data):
 @app.route("/")
 def index():
     """ main page """
-    #addshit()
-    item_sort_dsc()
     return flask.render_template("index.html")
 
 
