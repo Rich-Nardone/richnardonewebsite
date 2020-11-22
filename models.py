@@ -44,3 +44,17 @@ class inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
     items = db.Column(db.String(400))
+
+class inventory_asc(db.Model):
+    """ Stores character inventory """
+    __tablename__ = 'inventory_asc'
+    id = db.Column(db.Integer, primary_key=True)
+    character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
+    items = db.Column(db.String(400))
+
+class inventory_dsc(db.Model):
+    """ Stores character inventory """
+    __tablename__ = 'inventory_dsc'
+    id = db.Column(db.Integer, primary_key=True)
+    character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
+    items = db.Column(db.String(400))

@@ -156,40 +156,29 @@ def player_info():
         player_info["user_inventory"] = x
     socketio.emit("player info", player_info)
 
-def item_sort():
-    #item = models.inventory(items="coffee",character_id="1")
-    #db.session.add(item)
-    #db.session.commit()
-    #this should sort and save a new copy of inventory in order
-    #instead of using a list should use a dict to keep track of character_id as well, the id should be key while value is items
-    items_list = []
-    inventory = {}
+def addshit():
+    item = models.inventory(items="dddddd",character_id="3")
+    db.session.add(item)
+    db.session.commit()
+
+def item_sort_asc():
+    db.session.query(models.inventory_asc).delete()
+    db.session.commit()
     #test is a sorted ascending dump of the items column
-    test = db.session.query(models.inventory).order_by(models.inventory.items.asc())
-    #this loop fills items list with values to be used later
-    for value in test:
-        items_list.append(value.items)
-    #this loop goes through each value in test and creates a key value pair with key being charcter_id and values being a list of items
-    for value in test:
-        inventory[value.character_id] = value.items
-    #this properly deletes the contents of inventory
-    db.session.query(models.inventory).delete()
-    
-    for key, value in inventory.items():
-        print(str(key) + " , " + str(value))
-    
-    #for i in range(0,len(inventory)):
-    #    print(inventory)
-    
-    #for i in range(0,len(inventory)):
-    #    print(inventory)
-        #sorted_item = models.inventory(items=items_list[i], character_id=111111)
-        #print(items_list[i])
-        #db.session.add(sorted_item)
-        #db.session.commit()
-    
+    unsorted = db.session.query(models.inventory).order_by(models.inventory.items.asc())
+    for value in unsorted:
+        sorted_item = models.inventory_asc(items=value.items, character_id= value.character_id)
+        db.session.add(sorted_item)
+        db.session.commit()
 
-
+def item_sort_dsc():
+    db.session.query(models.inventory_dsc).delete()
+    db.session.commit()
+    unsorted = db.session.query(models.inventory).order_by(models.inventory.items.desc())
+    for value in unsorted:
+        sorted_item = models.inventory_dsc(items=value.items, character_id=value.character_id)
+        db.session.add(sorted_item)
+        db.session.commit()
 
 userlist = [1]
 
@@ -276,7 +265,8 @@ def character_creation(data):
 @app.route("/")
 def index():
     """ main page """
-    item_sort()
+    #addshit()
+    item_sort_dsc()
     return flask.render_template("index.html")
 
 
