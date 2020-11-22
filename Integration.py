@@ -135,32 +135,6 @@ def saveProgress():
         print("weird error")
 
 
-def player_info():
-    """ Send playerinfo to js. Currently sends dummy data. """
-    player_info = {
-        "user_party": ["player1", "player2", "player10"],
-        "user_inventory": ["coins", "sword", "shield"],
-        "user_chatlog": [
-            "welcome to the world",
-            "attack",
-            "user attacks, hitting the blob for 10pts",
-        ],
-    }
-    if item == 1:
-        x = player_info["user_inventory"]
-        global times
-        if times == 0:
-            x.extend(["Health Pack"])
-            times += 1
-        else:
-            x.extend(["Health Pack"] * times)
-            times += 1
-
-        print(x)
-        player_info["user_inventory"] = x
-    socketio.emit("player info", player_info)
-
-
 userlist = [1]
 
 
@@ -178,8 +152,44 @@ def google_login(data):
         db.session.commit()
     userid = db.session.query(models.username).filter_by(email=em).first()
     userlist.append(userid.id)
+    
+    #Used to distinguish users, for database user calls 
+    flask.session['user_id'] = userid
+    flask.session['socket_id'] = flask.request.sid
+    
+    
+def send_party(): 
+    #TODO get party from database 
+    
+    #DUMMY DATA
+    user_party=["player1", "player2", "player10"]
+    socketio.emit('user party', user_party)
 
+def send_inventory(inventory):
+    socketio.emit('user inventory', inventory)
 
+def get_user_inventory(): 
+    #TODO get log from database
+    
+    #DUMMY DATA
+    return([
+            "coins",
+            "shield",
+            "sword"
+    ])
+    
+def send_chatlog():
+    #TODO get chatlog from database
+    
+    #DUMMY DATA
+    user_chatlog=[
+            "welcome to the world",
+            "attack",
+            "user attacks, hitting the blob for 10pts"
+    ]
+    socketio.emit('user chatlog', user_chatlog)
+
+    
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
@@ -187,12 +197,26 @@ def parse_user_input(data):
     user_in.update(data["input"])
 
 
-@socketio.on("user onchat")
-def user_arrived():
-    """ Ensure that the user has arrived safely """
-    # THIS IS JUST TEST INPUT THAT IS RECIEVED ON THE FRONTEND SOCKET
-    player_info()
+@socketio.on("get party")
+def get_party():
+    send_party()
+    
+@socketio.on("get inventory")
+def get_inventory():
+    inventory = get_user_inventory()
+    send_inventory(inventory)
 
+@socketio.on("get chatlog")
+def get_chatlog():
+    #TODO get chatlog from database
+    
+    #DUMMY DATA
+    user_chatlog=[
+            "welcome to the world",
+            "attack",
+            "user attacks, hitting the blob for 10pts"
+    ]
+    send_chatlog()
 
 # Test atm for the shop
 @socketio.on("item purchased")
@@ -200,7 +224,12 @@ def item_purchased():
     """ Purchase item """
     global item
     item = 1
-    player_info()
+    inventory = get_user_inventory()
+    inventory.append('health pack')
+    send_inventory(inventory)
+    
+    
+    
 
 
 @socketio.on("user new character")
