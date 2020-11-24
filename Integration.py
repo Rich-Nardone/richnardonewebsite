@@ -189,9 +189,19 @@ def item_sort_dsc():
     for item in personal_items:
         print(item.items)
 
+def filter_by_type():
+    """
+    itemType is hard coded for now, should actually be fetched from front end. key is also hard coded, same as it is for item sort asc/dsc
+    """
+    itemType = "weapon"
+    key = 1
+    filtered_items = db.session.query(models.inventory).filter_by(item_type=itemType, character_id=key)
+    
+    for item in filtered_items:
+        print(item.items)
+
+
 userlist = [1]
-
-
 @socketio.on("google login")
 def google_login(data):
     """ Google Login """
@@ -274,7 +284,6 @@ def character_creation(data):
 @app.route("/")
 def index():
     """ main page """
-    item_sort_dsc()
     return flask.render_template("index.html")
 
 
