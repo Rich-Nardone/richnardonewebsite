@@ -165,6 +165,13 @@ def item_sort_asc():
         sorted_item = models.inventory_asc(items=value.items, character_id= value.character_id)
         db.session.add(sorted_item)
         db.session.commit()
+    """
+    this key value is hard coded for now
+    """
+    key = 1
+    personal_items = db.session.query(models.inventory_asc).filter_by(character_id=key)
+    for item in personal_items:
+        print(item.items)
 
 def item_sort_dsc():
     db.session.query(models.inventory_dsc).delete()
@@ -174,6 +181,13 @@ def item_sort_dsc():
         sorted_item = models.inventory_dsc(items=value.items, character_id=value.character_id)
         db.session.add(sorted_item)
         db.session.commit()
+    """
+    this key value is hard coded for now
+    """
+    key = 1
+    personal_items = db.session.query(models.inventory_dsc).filter_by(character_id=key)
+    for item in personal_items:
+        print(item.items)
 
 userlist = [1]
 
@@ -260,6 +274,7 @@ def character_creation(data):
 @app.route("/")
 def index():
     """ main page """
+    item_sort_dsc()
     return flask.render_template("index.html")
 
 
