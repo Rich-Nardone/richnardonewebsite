@@ -1,13 +1,10 @@
 """
-    Handles most of the game logic
+    Handles the game logic
 """
 
 # local imports
 from .game_io import progress, prompt_in, send_out
 from .scenario import scenario, start_scenario
-
-# should probably read prompts from another file...
-# fix this in all the scenarios
 
 # COMBAT COMBAT COMBAT
 def combat(player, enemy):
