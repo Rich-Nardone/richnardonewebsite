@@ -31,9 +31,9 @@ class Player:
         self.mana = 0
         # money
         self.money = self.luk * 5
+        self.checkpoint = "start"
         self.gen = "gender"
         self.character_class = "class"
-        self.checkpoint = "start"
 
     def attack(self, type, target):
         """ Attack the target """

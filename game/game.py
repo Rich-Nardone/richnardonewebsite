@@ -3,7 +3,7 @@
 """
 
 # local imports
-from .game_io import progress, prompt_in, send_out
+from .game_io import g_save_progress, prompt_in, send_out
 from .scenario import scenario, start_scenario
 
 # COMBAT COMBAT COMBAT
@@ -38,11 +38,11 @@ def game(user):
     """ Runs the game, given a user """
     # player character
     player = start_scenario(user)
-    progress(user, player, "start")
+    g_save_progress(user, player, "start") #move to within the game
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
     while state_tuple[1] != "end":
-        progress(user, state_tuple[0], state_tuple[1])
+        g_save_progress(user, state_tuple[0], state_tuple[1])
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
     return user
