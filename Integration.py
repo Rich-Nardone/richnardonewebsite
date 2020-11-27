@@ -157,10 +157,12 @@ def player_info():
     socketio.emit("player info", player_info)
 
 def item_sort_asc():
+    #empties the "sorted" item table
     db.session.query(models.inventory_asc).delete()
     db.session.commit()
-    #test is a sorted ascending dump of the items column
+    #creates a dump of sorted values from the inventory table
     unsorted = db.session.query(models.inventory).order_by(models.inventory.items.asc())
+    #loops through the dump and grabs all the items for the current character, adds them to the sorted items table
     for value in unsorted:
         sorted_item = models.inventory_asc(items=value.items, character_id= value.character_id)
         db.session.add(sorted_item)
@@ -170,13 +172,17 @@ def item_sort_asc():
     """
     key = 1
     personal_items = db.session.query(models.inventory_asc).filter_by(character_id=key)
+    #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
     for item in personal_items:
         print(item.items)
 
 def item_sort_dsc():
+    #empties the "sorted" item table
     db.session.query(models.inventory_dsc).delete()
     db.session.commit()
+    #creates a dump of sorted values from the inventory table
     unsorted = db.session.query(models.inventory).order_by(models.inventory.items.desc())
+    #loops through the dump and grabs all the items for the current character, adds them to the sorted items table
     for value in unsorted:
         sorted_item = models.inventory_dsc(items=value.items, character_id=value.character_id)
         db.session.add(sorted_item)
@@ -186,6 +192,7 @@ def item_sort_dsc():
     """
     key = 1
     personal_items = db.session.query(models.inventory_dsc).filter_by(character_id=key)
+    #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
     for item in personal_items:
         print(item.items)
 
@@ -200,6 +207,13 @@ def filter_by_type():
     for item in filtered_items:
         print(item.items)
 
+def search_bar():
+    items = db.session.query(models.inventory)
+    search = "a"
+    #this is a substring search function for the inventory, right now a is hardcoded but what should be done is fetching a search field and inserting it in as a variable
+    for item in items:
+        if search in item.items:
+            print(item.items)
 
 userlist = [1]
 @socketio.on("google login")
@@ -284,6 +298,7 @@ def character_creation(data):
 @app.route("/")
 def index():
     """ main page """
+    search_bar()
     return flask.render_template("index.html")
 
 
