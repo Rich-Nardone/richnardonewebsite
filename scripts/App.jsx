@@ -1,5 +1,5 @@
 import React from 'react'; 
-import {GoogleLoginButton} from './GoogleButton.jsx'
+import {GoogleLoginButton} from './GoogleButton.jsx';
 
 
 
@@ -21,13 +21,6 @@ const image_style={
     width:1485,
     height:300,
 };
-
-
-
-
- 
-
-
 
 export function App(){
     return(

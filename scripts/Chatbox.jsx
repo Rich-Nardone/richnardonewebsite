@@ -1,6 +1,6 @@
-import React, {useState} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import {Socket} from './Socket.jsx';
-import PropTypes from 'prop-types';
+
 
 
 const div={
@@ -67,13 +67,23 @@ const body={
 export function Chatbox(props){
     const [userInput, setInput] = useState("");
     const[money,setMoney] = useState(1000);
+    const [chatlog, setChatlog] = useState([]); 
+    
+    function retrieve_player_chatlog(){
+        useEffect(()=>{
+            Socket.emit('get chatlog');
+            Socket.on('user chatlog', (data)=>{
+                setChatlog(data);
+            });
+        }, []);    
+    }
     
     function submitInput(event){
         event.preventDefault();
         Socket.emit('user input', {'input': userInput});
         document.getElementById('user_text_box').value = "";
     }
-    const display_log = props.user_content.map((log,index)=>
+    const display_log = chatlog.map((log,index)=>
         <li key={index}> {log} </li>
     );
     
@@ -87,6 +97,7 @@ export function Chatbox(props){
         }
     }
     
+    retrieve_player_chatlog();
     return(
         <div style={div}>
             <div id='chatbox'>
@@ -115,7 +126,3 @@ export function Chatbox(props){
         </div>
     )
 }
-
-Chatbox.propTypes = {
-    user_content: PropTypes.array,
-};
