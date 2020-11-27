@@ -1,5 +1,7 @@
 import React from 'react'; 
 import {GoogleLoginButton} from './GoogleButton.jsx'
+import Sound from 'react-sound';
+
 
 
 
@@ -36,6 +38,10 @@ export function App(){
             <img  style={image_style} src='/static/Fog.gif' alt="image"/>
             <hr></hr>
             <GoogleLoginButton /> 
+            <Sound
+                    url='/static/Index_LoginTheme.mp3'
+                    playStatus={Sound.status.PLAYING}
+            />
             <hr></hr>
         </div>
         

@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Chatbox } from './Chatbox.jsx';
 import { InventoryList } from './InventoryList.jsx'; 
 import { PartyList } from './PartyList.jsx';
-import {Socket} from './Socket.jsx'; 
+import {Socket} from './Socket.jsx';
+import Sound from 'react-sound';
 
 
 export function MainUI(){
