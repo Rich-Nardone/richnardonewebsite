@@ -12,3 +12,5 @@ package-lock.json
 static/script.js
 lib/
 .eslintrc.js
+# vscode
+.vscode/
