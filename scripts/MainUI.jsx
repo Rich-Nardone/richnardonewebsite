@@ -24,6 +24,10 @@ export function MainUI(){
     console.log(player_info);
     return(
         <div>
+            <Sound
+                    url='static/MainChatTheme.mp3'
+                    playStatus={Sound.status.PLAYING}
+            />
             <PartyList user_content={player_info.user_party} /> 
             <InventoryList user_content={player_info.user_inventory} />
             <Chatbox user_content={player_info.user_chatlog} /> 
