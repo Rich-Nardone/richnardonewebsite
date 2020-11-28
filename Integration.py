@@ -160,6 +160,13 @@ def player_info():
         player_info["user_inventory"] = x
     socketio.emit("player info", player_info)
 
+def show_inventory():
+        dump = db.session.query(models.inventory).filter_by(character_id="1")
+        inventory = []
+        for item in dump:
+            inventory.append(item.items)
+        return inventory
+
 def item_sort_asc():
     #empties the "sorted" item table
     db.session.query(models.inventory_asc).delete()
@@ -251,14 +258,7 @@ def send_inventory(inventory):
     socketio.emit('user inventory', inventory)
 
 def get_user_inventory(): 
-    #TODO get log from database
-    
-    #DUMMY DATA
-    return([
-            "coins",
-            "shield",
-            "sword"
-    ])
+    return show_inventory()
     
 def send_chatlog():
     #TODO get chatlog from database
@@ -356,7 +356,6 @@ def character_creation(data):
 @app.route("/")
 def index():
     """ main page """
-    search_bar()
     return flask.render_template("index.html")
 
 
