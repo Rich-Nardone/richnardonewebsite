@@ -1,6 +1,7 @@
 """
     Container for player stats
 """
+import random
 
 
 class Player:
@@ -34,16 +35,59 @@ class Player:
         self.character_class = "class"
         self.checkpoint = "start"
 
+    def attack(self, type, target):
+        """ Attack the target """
+        if type == "melee":
+            crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
+            crit_mult = 1.00  # The critical damage multiplier
+            if crit_state:
+                crit_mult = 2.00
+            expected_damage = self.str * crit_mult
+            return target.damage(expected_damage, self)
+        if type == "ranged":
+            crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
+            crit_mult = 1.00  # The critical damage multiplier
+            if crit_state:
+                crit_mult = 2.00
+            expected_damage = self.dex * crit_mult
+            return target.damage(expected_damage, self)
+        if type == "magic":
+            crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
+            crit_mult = 1.00  # The critical damage multiplier
+            if crit_state:
+                crit_mult = 2.00
+            expected_damage = self.int * crit_mult
+            return target.damage(expected_damage, self)
+
     def is_dead(self):
         """ Has the player died? """
         return self.health <= 0
 
-    def damage(self, dmg_rcv):
+    def damage(self, dmg_rcv, target_rcv=None):
         """ Player receives damage """
         self.health -= dmg_rcv
-        if self.is_dead():
-            return True  # trigger death stuff
-        return None  # return nothing
+        from_string = ""
+        if target_rcv:
+            from_string = " from " + target_rcv.id
+        if self.is_dead():  # if attack causes death
+            return (
+                self.id + " has " + str(self.health) + " health and has died.",
+                "death",
+            )
+        # otherwise
+        return (
+            self.id
+            + " took "
+            + str(dmg_rcv)
+            + " damage"
+            + from_string
+            + " and is now at "
+            + str(self.health)
+            + "/"
+            + str(self.max_health)
+            + ".",
+            "damage",
+        )
 
     def make_neet(self):
         """ Create 'neet' archetype character. """
