@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 
 # local imports
 import models
+
+
 #tests
 # game logic
 import game.game
@@ -38,6 +40,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 db = flask_sqlalchemy.SQLAlchemy(app)
 db.init_app(app)
 db.app = app
+
 
 # ===================================================================================
 
@@ -255,8 +258,16 @@ def char_create():
 @app.route("/main_chat.html")
 def main():
     """ main chat window """
-    saveProgress()
+    #saveProgress()
     return flask.render_template("main_chat.html")
+    
+
+#=========================================================================================
+@app.route("/options.html")
+def options():
+    """ main chat window """
+    #saveProgress()
+    return flask.render_template("options.html")
 
 
 # =======================================================================================

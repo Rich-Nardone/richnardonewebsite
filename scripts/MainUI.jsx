@@ -6,6 +6,17 @@ import {Socket} from './Socket.jsx';
 import Sound from 'react-sound';
 
 
+const button={
+    fontWeight:'bold',
+    fontStyle:'italic',
+    width:210,
+    border:'3px solid black',
+}   
+
+
+
+
+
 export function MainUI(){
     const [player_info, setPlayerInfo] = useState({user_party: [], user_inventory: [], user_chatlog: []});
     
@@ -16,6 +27,12 @@ export function MainUI(){
                 setPlayerInfo(data);
             });
         }, []);    
+    }
+    
+    function gotoOptions(){
+        
+        console.log("Heading to Options!")
+        return(window.location = "options.html")
     }
     
     
@@ -31,6 +48,7 @@ export function MainUI(){
             <PartyList user_content={player_info.user_party} /> 
             <InventoryList user_content={player_info.user_inventory} />
             <Chatbox user_content={player_info.user_chatlog} /> 
+            <button style={button} onClick={gotoOptions}>Options</button>
         </div>     
     );
 }

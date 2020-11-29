@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const div={
     width:1000,
-    height:406,
+    height:430,
     position: 'fixed',
     left:214.5,
     top:8,
@@ -16,7 +16,7 @@ const div={
 }
 const ul={
     listStyleType:'none',
-    height: 310,
+    height: 315,
     textAlign:'left',
     overflow: 'scroll',
     fontStyle:'italic',
