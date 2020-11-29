@@ -258,7 +258,7 @@ def char_create():
 @app.route("/main_chat.html")
 def main():
     """ main chat window """
-    #saveProgress()
+    saveProgress()
     return flask.render_template("main_chat.html")
     
 

@@ -38,6 +38,19 @@ const Volume_style={
     
 }
 
+const returnBackButton={
+    textAlign:'center',
+    fontWeight:'bold',
+    fontStyle:'italic',
+    background: 'linear-gradient(green,green)',
+    padding: 5,
+    margin: 5,
+    borderRadius:10,
+    fontSize:18,
+    width:1500,
+    
+};
+
 
 
 
@@ -46,7 +59,7 @@ export function Options()
 {
     //States that will be used to modify the font size, border color, and volume
     const [fontSize, setFontSize]=useState(12);
-    const [volume,setVolume]=useState(50);
+    const [vol,setVolume]=useState(50);
     const [borderColor, setBorderColor]=useState("2px solid black")
     //==========================================================================
     //DEFAULT STATES FOR SIZES, VOLUME, AND BORDER COLOR IN CASE OF MODIFICATION
@@ -62,9 +75,22 @@ export function Options()
         
     }
     
+    function defaultBack(){
+        
+        setVolume(vlme);
+        setFontSize(fS);
+        setBorderColor(bC);
+    }
+    
+    function returnToMain(){
+        
+        return(window.location = "main_chat.html")
+    }
+    
     const changeVolume = (event, newValue) => 
     {
         setVolume(newValue);
+        console.log("Volume is now:"+vol);
     }
     
     
@@ -82,7 +108,7 @@ export function Options()
         <Sound
                     url='/static/options_bm.mp3'
                     playStatus={Sound.status.PLAYING}
-                    volume={volume}
+                    volume={vol}
             />
         
         <h1 style={h1}>OPTIONS</h1>
@@ -99,7 +125,7 @@ export function Options()
             </Grid>
             <Grid item xs>
             <Slider 
-                value={volume} 
+                value={vol} 
                 onChange={changeVolume} 
                 aria-labelledby="slider"
                 valueLabelDisplay="on"/>
@@ -109,6 +135,11 @@ export function Options()
             </Grid>
             </Grid>
         </body>
+        
+            <button onClick={defaultBack} style={returnBackButton}> Return to Default Options?</button>
+            <button onClick={returnToMain} style={returnBackButton}>Exit Back to Main?</button>
+            
+        
     
         
       </div>
