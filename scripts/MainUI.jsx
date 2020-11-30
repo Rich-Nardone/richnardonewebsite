@@ -4,7 +4,7 @@ import { InventoryList } from './InventoryList.jsx';
 import { PartyList } from './PartyList.jsx';
 import {Socket} from './Socket.jsx';
 import Sound from 'react-sound';
-import {vol} from './OptionMenu.jsx';
+import {volu} from './OptionMenu.jsx';
 
 
 const button={
@@ -45,7 +45,7 @@ export function MainUI(){
             <Sound
                     url='static/MainChatTheme.mp3'
                     playStatus={Sound.status.PLAYING}
-                    volume={vol}
+                    volume={volu}
             />
             <PartyList user_content={player_info.user_party} /> 
             <InventoryList user_content={player_info.user_inventory} />

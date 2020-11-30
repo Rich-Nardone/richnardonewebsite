@@ -8,6 +8,9 @@ import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 
 
+let volu=localStorage.getItem('volume');
+
+export {volu};
 
 
 const h1={
@@ -59,8 +62,16 @@ export function Options()
 {
     //States that will be used to modify the font size, border color, and volume
     const [fontSize, setFontSize]=useState(12);
-    const [vol,setVolume]=useState(50);
-    const [borderColor, setBorderColor]=useState("2px solid black")
+    if(localStorage.getItem('volume') === null)
+    {
+        const [vol,setVolume]=useState(50);
+        localStorage.setItem('volume',vol)
+    }
+    
+    const [vol,setVolume]=useState(localStorage.getItem('volume'));
+    
+    
+    const [borderColor, setBorderColor]=useState("2px solid black");
     //==========================================================================
     //DEFAULT STATES FOR SIZES, VOLUME, AND BORDER COLOR IN CASE OF MODIFICATION
     const fS=12;
@@ -90,7 +101,8 @@ export function Options()
     const changeVolume = (event, newValue) => 
     {
         setVolume(newValue);
-        console.log("Volume is now:"+vol);
+        localStorage.setItem('volume',newValue);
+        console.log("Volume is now:"+localStorage.getItem('volume'));
     }
     
     
@@ -103,6 +115,7 @@ export function Options()
         setBorderColor(borderColor="2px solid "+color);
         
     }
+    
     return(
       <div>
         <Sound

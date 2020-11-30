@@ -1,7 +1,7 @@
 import React from 'react'; 
 import {GoogleLoginButton} from './GoogleButton.jsx'
 import Sound from 'react-sound';
-import {vol} from './OptionMenu.jsx';
+import {volu} from './OptionMenu.jsx';
 
 
 
@@ -42,7 +42,7 @@ export function App(){
             <Sound
                     url='/static/Index_LoginTheme.mp3'
                     playStatus={Sound.status.PLAYING}
-                    volume={vol}
+                    volume={volu}
             />
             <hr></hr>
         </div>
