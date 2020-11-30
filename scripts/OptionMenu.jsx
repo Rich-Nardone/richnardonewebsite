@@ -89,7 +89,10 @@ export function Options()
     function defaultBack(){
         
         setVolume(vlme);
+        localStorage.setItem('volume',vlme)
+        
         setFontSize(fS);
+        
         setBorderColor(bC);
     }
     

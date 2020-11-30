@@ -27,13 +27,25 @@ const ul={
     textAlign:'left',
     overflow: 'scroll',
     fontStyle:'italic',
+    padding:0,
    
 };
+
+const list_style={
+    borderRadius:5,
+    border:'2px solid black',
+    textAlign:'center',
+    fontWeight:'bold',
+    padding:2,
+    margin:3,
+    
+    
+}
 
 export function PartyList(props){
     console.log(props);
     const display_party = props.user_content.map((members,index)=>
-        <li key={index}> {members} </li>
+        <li style={list_style} key={index}> {members} </li>
     );
     
     return(

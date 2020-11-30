@@ -26,18 +26,30 @@ const ul={
     textAlign:'left',
     overflow: 'scroll',
     fontStyle:'italic',
+    padding:0,
    
 };
 
+const list_style={
+    borderRadius:5,
+    border:'2px solid black',
+    textAlign:'center',
+    fontWeight:'bold',
+    padding:2,
+    margin:3,
+    
+    
+}
+
 export function InventoryList(props){
     const display_inventory = props.user_content.map((items,index)=>
-        <li key={index}> {items} </li>
+        <li style={list_style} key={index}> {items} </li>
     );
     
     return(
         <div style={div}>
             <p style={p}> INVENTORY </p>
-            <ul style={ul}> {display_inventory} </ul>
+            <ul style={ul}> {display_inventory} <br></br></ul>
         </div> 
     );
 }
