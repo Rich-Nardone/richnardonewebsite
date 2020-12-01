@@ -168,6 +168,7 @@ def show_inventory():
         return inventory
 
 def item_sort_asc():
+    inventory = []
     #empties the "sorted" item table
     db.session.query(models.inventory_asc).delete()
     db.session.commit()
@@ -185,7 +186,8 @@ def item_sort_asc():
     personal_items = db.session.query(models.inventory_asc).filter_by(character_id=key)
     #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
     for item in personal_items:
-        print(item.items)
+        inventory.append(item.item)
+    return inventory
 
 def item_sort_dsc():
     #empties the "sorted" item table
@@ -259,6 +261,9 @@ def send_inventory(inventory):
 
 def get_user_inventory(): 
     return show_inventory()
+
+def get_asc_inventory(): 
+    return item_sort_asc()
     
 def send_chatlog():
     #TODO get chatlog from database
