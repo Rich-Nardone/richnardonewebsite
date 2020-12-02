@@ -3,14 +3,9 @@
 """
 import os
 from os.path import join, dirname
-import flask
-import flask_sqlalchemy
-import flask_socketio
-from dotenv import load_dotenv
-
-# local imports
+from settings import db, app, socketio
 import models
-
+import flask
 # tests
 # game logic
 import game.game
@@ -24,22 +19,6 @@ import user_input
 item = 0
 # Used to check if user bought item again.
 times = 1
-
-app = flask.Flask(__name__)
-
-
-socketio = flask_socketio.SocketIO(app)
-socketio.init_app(app, cors_allowed_origins="*")
-
-dotenv_path = join(dirname(__file__), "sql.env")
-load_dotenv(dotenv_path)
-
-database_uri = os.environ["DATABASE_URL"]
-app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
-
-db = flask_sqlalchemy.SQLAlchemy(app)
-db.init_app(app)
-db.app = app
 
 # ===================================================================================
 
@@ -154,9 +133,9 @@ def google_login(data):
     userlist.append(userid.id)
     
     #Used to distinguish users, for database user calls 
-    flask.session['user_id'] = userid
-    flask.session['socket_id'] = flask.request.sid
+    flask.session["user_id"] = em
     
+    #check if user has character
     
 def send_party(): 
     #TODO get party from database 
@@ -170,13 +149,19 @@ def send_inventory(inventory):
 
 def get_user_inventory(): 
     #TODO get log from database
-    
-    #DUMMY DATA
-    return([
-            "coins",
-            "shield",
-            "sword"
-    ])
+    if "user_id" in flask.session:
+        items = []
+        for x, a, i in models.db.session.query(models.username, models.character, models.inventory).\
+        filter(models.username.email == flask.session["user_id"]).\
+        filter(models.character.user_id == models.username.id).\
+        filter(models.inventory.character_id == models.character.id):
+                items.append(i.items)
+        
+        return items
+    else: 
+        return([
+            "error",    #replace this with error
+        ])
     
 def send_chatlog():
     #TODO get chatlog from database
@@ -203,6 +188,7 @@ def get_party():
     
 @socketio.on("get inventory")
 def get_inventory():
+    print(flask.session["user_id"])
     inventory = get_user_inventory()
     send_inventory(inventory)
 
