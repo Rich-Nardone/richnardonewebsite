@@ -1,6 +1,7 @@
 //Displayes inventory list. Inventory list is retrieved from database
 import React from 'react';
 import PropTypes from 'prop-types';
+import {fnt} from './OptionMenu.jsx';
 
 
 
@@ -11,6 +12,7 @@ const div={
     border:'3px solid black',
     
     
+    
 };
 const p={
     padding:'auto',
@@ -19,6 +21,7 @@ const p={
     border:'2px solid black',
     fontWeight:'bold',
     textAlign:'center',
+    fontSize:fnt,
     
 };
 const ul={
@@ -27,6 +30,7 @@ const ul={
     overflow: 'scroll',
     fontStyle:'italic',
     padding:0,
+    fontSize:fnt,
    
 };
 
@@ -37,6 +41,7 @@ const list_style={
     fontWeight:'bold',
     padding:2,
     margin:3,
+    fontSize:fnt,
     
     
 }

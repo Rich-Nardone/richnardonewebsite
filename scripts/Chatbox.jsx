@@ -1,6 +1,7 @@
 import React, {useState} from 'react'; 
 import {Socket} from './Socket.jsx';
 import PropTypes from 'prop-types';
+import {fnt} from './OptionMenu.jsx';
 
 
 const div={
@@ -12,6 +13,7 @@ const div={
     display: 'inline',
     background:'grey',
     border:'3px solid black',
+    fontSize:fnt,
     
 }
 const ul={
@@ -21,6 +23,8 @@ const ul={
     overflow: 'scroll',
     fontStyle:'italic',
     fontWeight: "bold",
+    fontSize:fnt,
+    
    
 };
 
@@ -47,6 +51,7 @@ const secret_p={
     fontWeight:'bold',
     fontStyle:'italic',
     background:'grey',
+    fontSize:fnt,
     
     
     
@@ -57,11 +62,14 @@ const details={
     fontWeight:'bold',
     textAlign:'center',
     fontStyle:'italic',
+    fontSize:fnt,
 }
 
 const body={
     background:'grey',
 }
+
+
 
 
 export function Chatbox(props){
@@ -74,7 +82,7 @@ export function Chatbox(props){
         document.getElementById('user_text_box').value = "";
     }
     const display_log = props.user_content.map((log,index)=>
-        <li key={index}> {log} </li>
+        <li  key={index}> {log} </li>
     );
     
     function submitPayment(){

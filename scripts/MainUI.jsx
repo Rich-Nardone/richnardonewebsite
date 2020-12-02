@@ -5,6 +5,8 @@ import { PartyList } from './PartyList.jsx';
 import {Socket} from './Socket.jsx';
 import Sound from 'react-sound';
 import {volu} from './OptionMenu.jsx';
+import {fnt} from './OptionMenu.jsx';
+
 
 
 const button={
@@ -12,6 +14,7 @@ const button={
     fontStyle:'italic',
     width:210,
     border:'3px solid black',
+    fontSize:fnt,
 }   
 
 

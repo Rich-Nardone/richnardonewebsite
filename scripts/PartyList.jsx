@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {fnt} from './OptionMenu.jsx';
 
 const div={
     width:200,
@@ -16,6 +17,7 @@ const p={
     border:'2px solid black',
     fontWeight:'bold',
     textAlign:'center',
+    fontSize:fnt,
    
     
     
@@ -28,6 +30,7 @@ const ul={
     overflow: 'scroll',
     fontStyle:'italic',
     padding:0,
+    fontSize:fnt,
    
 };
 
@@ -38,6 +41,7 @@ const list_style={
     fontWeight:'bold',
     padding:2,
     margin:3,
+    fontSize:fnt,
     
     
 }
