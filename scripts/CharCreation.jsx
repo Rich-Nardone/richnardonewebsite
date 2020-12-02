@@ -1,7 +1,7 @@
 import React, {useState} from 'react'; 
 import {Socket} from './Socket.jsx';
 import Sound from 'react-sound';
-import {volu} from './OptionMenu.jsx';
+
 
 
 
@@ -65,7 +65,7 @@ function CharSelection(){
              <Sound
                     url='static/CharCreation.mp3'
                     playStatus={Sound.status.PLAYING}
-                    volume={volu}
+                    volume='50'
             />
             <form style={form} onSubmit={handleForm}> 
                 <br></br>
