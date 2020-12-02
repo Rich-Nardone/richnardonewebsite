@@ -2,14 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {fnt} from './OptionMenu.jsx';
+import {brc} from './OptionMenu.jsx';
 
 
 
 const div={
-    width:200,
+    width:205,
     height: 200,
     background:'orange',
-    border:'3px solid black',
+    border:brc,
     
     
     
@@ -18,7 +19,7 @@ const p={
     padding:'auto',
     margin:10,
     position: 'relative',
-    border:'2px solid black',
+    border:brc,
     fontWeight:'bold',
     textAlign:'center',
     fontSize:fnt,
@@ -36,7 +37,7 @@ const ul={
 
 const list_style={
     borderRadius:5,
-    border:'2px solid black',
+    border:brc,
     textAlign:'center',
     fontWeight:'bold',
     padding:2,

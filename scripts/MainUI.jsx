@@ -6,6 +6,7 @@ import {Socket} from './Socket.jsx';
 import Sound from 'react-sound';
 import {volu} from './OptionMenu.jsx';
 import {fnt} from './OptionMenu.jsx';
+import {brc} from './OptionMenu.jsx';
 
 
 
@@ -13,7 +14,7 @@ const button={
     fontWeight:'bold',
     fontStyle:'italic',
     width:210,
-    border:'3px solid black',
+    border:brc,
     fontSize:fnt,
 }   
 

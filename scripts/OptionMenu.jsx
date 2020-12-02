@@ -19,6 +19,8 @@ let fnt=localStorage.getItem('font');
 
 let bt=localStorage.getItem('borderNum')
 
+let brc=localStorage.getItem('borderColor')
+
 
 
 export {fnt};
@@ -103,6 +105,12 @@ export function Options()
         localStorage.setItem('borderNum',borderNum);
     }
     
+    if(localStorage.getItem('borderColor') === null)
+    {
+        const [borderColor,setBorderColor]=useState('2px solid black')
+        localstorage.setItem('borderColor', borderColor)
+    }
+    
     
     
     const [fontSize, setFontSize]=useState(localStorage.getItem('font'));
@@ -113,6 +121,8 @@ export function Options()
     
     
     const [borderNum, setBorderNum]=useState(localStorage.getItem('borderNum'));
+    
+    const [borderColor,setBorderColor]=useState(localStorage.getItem('borderColor'));
     
     //==========================================================================
     //DEFAULT STATES FOR SIZES, VOLUME, AND BORDER COLOR IN CASE OF MODIFICATION
@@ -161,8 +171,64 @@ export function Options()
     {
         
         setBorderNum(newValue);
-        localStorage.setItem('borderNum',newValue)
+        localStorage.setItem('borderNum',newValue);
         
+        
+        if( newValue === 0){
+            
+            setBorderColor('2px solid black');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
+        
+        if( newValue === 1){
+            
+            setBorderColor('2px solid purple')
+            localStorage.setItem('borderColor',borderColor)
+            
+        }
+        
+        if( newValue === 2){
+            
+            setBorderColor('2px solid blue');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
+        
+        if( newValue === 3){
+            
+            setBorderColor('2px solid green');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
+        
+        if( newValue === 4){
+            
+            setBorderColor('2px solid yellow');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
+        
+        if( newValue === 5){
+            
+            setBorderColor('2px solid orange');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
+        
+        if( newValue === 6){
+            
+            setBorderColor('2px solid red');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
+        
+        if( newValue === 7){
+            
+            setBorderColor('2px solid white');
+            localStorage.setItem('borderColor',borderColor);
+            
+        }
         
         console.log("Color is now:"+localStorage.getItem('borderColor'));
     }
