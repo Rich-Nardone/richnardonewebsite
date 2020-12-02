@@ -4,20 +4,28 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import Sound from 'react-sound';
 import Grid from '@material-ui/core/Grid';
+
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import Remove from '@material-ui/icons/Remove';
 import Add from '@material-ui/icons/Add';
+import AcUnit from '@material-ui/icons/AcUnit';
+import Flare from '@material-ui/icons/Flare';
 
 
 let volu=localStorage.getItem('volume');
 
 let fnt=localStorage.getItem('font');
 
+let bt=localStorage.getItem('borderNum')
+
+
+
 export {fnt};
 
 export {volu};
 
+export {brc};
 
 const h1={
     
@@ -60,6 +68,13 @@ const returnBackButton={
     
 };
 
+const button_view={
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+}
 
 
 
@@ -82,29 +97,45 @@ export function Options()
     }
     
     
+    if(localStorage.getItem('borderNum') === null)
+    {
+        const [borderNum,setBorderNum]=useState(0);
+        localStorage.setItem('borderNum',borderNum);
+    }
+    
+    
+    
     const [fontSize, setFontSize]=useState(localStorage.getItem('font'));
     
     const [vol,setVolume]=useState(localStorage.getItem('volume'));
     
+    const [font, setFont]=useState(localStorage.getItem('font_style'));
     
-    const [borderColor, setBorderColor]=useState("2px solid black");
+    
+    const [borderNum, setBorderNum]=useState(localStorage.getItem('borderNum'));
+    
     //==========================================================================
     //DEFAULT STATES FOR SIZES, VOLUME, AND BORDER COLOR IN CASE OF MODIFICATION
     const fS=16;
     const vlme=50;
-    const bC="2px solid black";
+    const bC=0;
     //===========================================================================
     
     
     function defaultBack(){
         
         setVolume(vlme);
-        localStorage.setItem('volume',vlme)
+        localStorage.setItem('volume',vlme);
         
         setFontSize(fS);
+        localStorage.setItem('font',fS);
         
-        setBorderColor(bC);
+        setBorderNum(bC)
+        localStorage.setItem('borderNum',bC)
+        
     }
+    
+    
     
     function returnToMain(){
         
@@ -126,15 +157,58 @@ export function Options()
     }
     
     
+    const changeBorderColor = (event, newValue) => 
+    {
+        
+        setBorderNum(newValue);
+        localStorage.setItem('borderNum',newValue)
+        
+        
+        console.log("Color is now:"+localStorage.getItem('borderColor'));
+    }
+    
+    
+    
     function volume_value(value) {
          return `${value}`;
         }
         
-    function changeBorderColor(color){
-        
-        setBorderColor(borderColor="2px solid "+color);
-        
-    }
+    
+    
+    const marks = [
+    {
+        value: 0,
+        label: 'Black',
+    },
+    {
+        value: 1,
+        label: 'Purple',
+    },
+    {
+        value: 2,
+        label: 'Blue',
+    },
+    {
+        value: 3,
+        label: 'Green',
+    },
+    {
+        value: 4,
+        label: 'Yellow',
+    },
+    {
+        value: 5,
+        label: 'Orange',
+    },
+    {
+        value: 6,
+        label: 'Red',
+    },
+    {
+        value: 7,
+        label: 'White',
+    },
+    ];
     
     return(
       <div>
@@ -186,7 +260,8 @@ export function Options()
                 valueLabelDisplay="on"
                 min={1}
                 max={20}
-                step={1}/>
+                step={1}
+                />
             </Grid>
             <Grid item>
                 <Add />
@@ -195,6 +270,34 @@ export function Options()
             
             
         </body>
+        
+        <body style= {Volume_style}>
+             <Typography style={typography_style} id="borderColor" gutterBottom>
+                Border Color
+            </Typography>
+            <br></br>
+            
+            <Grid container spacing={2}>
+            <Grid item>
+            <AcUnit />
+            </Grid>
+            <Grid item xs>
+            <Slider 
+                value={borderNum} 
+                onChange={changeBorderColor} 
+                aria-labelledby="borderColor"
+                valueLabelDisplay="off"
+                min={0}
+                max={7}
+                step={1}
+                marks={marks}/>
+            </Grid>
+            <Grid item>
+                <Flare />
+            </Grid>
+            </Grid>
+        </body>
+        
             <button onClick={defaultBack} style={returnBackButton}> Return to Default Options?</button>
             <button onClick={returnToMain} style={returnBackButton}>Exit Back to Main?</button>
             

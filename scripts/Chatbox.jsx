@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Socket} from './Socket.jsx';
 import PropTypes from 'prop-types';
 import {fnt} from './OptionMenu.jsx';
+import {brc} from './OptionMenu.jsx';
 
 
 const div={
@@ -12,7 +13,7 @@ const div={
     top:8,
     display: 'inline',
     background:'grey',
-    border:'3px solid black',
+    border:brc,
     fontSize:fnt,
     
 }
@@ -37,7 +38,7 @@ const p={
     padding:0,
     margin:0,
     position: 'relative',
-    border:'2px solid black',
+    border:brc,
     fontWeight:'bold',
     textAlign:'center',
     opacity: 0.5,
