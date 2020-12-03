@@ -37,6 +37,8 @@ class character(db.Model):
     gender = db.Column(db.String(400))
     character_class = db.Column(db.String(400))
     child = db.relationship("inventory", backref="characterid")
+    child = db.relationship("party_list", backref="characterid")
+    child = db.relationship("chat_log", backref="characterid")
 
 class inventory(db.Model):
     """ Stores character inventory """
@@ -61,3 +63,17 @@ class inventory_dsc(db.Model):
     character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
     items = db.Column(db.String(400))
     item_type = db.Column(db.String(400))
+
+class party_list(db.Model):
+    __tablename__= 'party_list'
+    id = db.Column(db.Integer, primary_key=True)
+    character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
+    character_name = db.Column(db.String(400))
+    stat_name = db.Column(db.String(400))
+    stat_value = db.Column(db.Integer)
+
+class chat_log(db.Model):
+    __tablename__ = 'chat_log'
+    id = db.Column(db.Integer, primary_key=True)
+    character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
+    chat = db.Column(db.String(1000))
