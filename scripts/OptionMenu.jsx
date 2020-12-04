@@ -13,13 +13,13 @@ import AcUnit from '@material-ui/icons/AcUnit';
 import Flare from '@material-ui/icons/Flare';
 
 
-let volu=localStorage.getItem('volume');
+let volu=window.localStorage.getItem('volume');
 
-let fnt=localStorage.getItem('font');
+let fnt=window.localStorage.getItem('font');
 
-let bt=localStorage.getItem('borderNum')
+let bt=window.localStorage.getItem('borderNum')
 
-let brc=localStorage.getItem('borderColor')
+let brc=window.localStorage.getItem('borderColor')
 
 
 
@@ -85,44 +85,44 @@ export function Options()
 {
     //States that will be used to modify the font size, border color, and volume
     
-    if(localStorage.getItem('volume') === null)
+    if(window.localStorage.getItem('volume') === null)
     {
         const [vol,setVolume]=useState(50);
-        localStorage.setItem('volume',vol);
+        window.localStorage.setItem('volume',vol);
     }
     
     
-    if(localStorage.getItem('font') === null)
+    if(window.localStorage.getItem('font') === null)
     {
         const [fontSize,setFontSize]=useState(16);
-        localStorage.setItem('font',fontSize);
+        window.localStorage.setItem('font',fontSize);
     }
     
     
-    if(localStorage.getItem('borderNum') === null)
+    if(window.localStorage.getItem('borderNum') === null)
     {
         const [borderNum,setBorderNum]=useState(0);
-        localStorage.setItem('borderNum',borderNum);
+        window.localStorage.setItem('borderNum',borderNum);
     }
     
-    if(localStorage.getItem('borderColor') === null)
+    if(window.localStorage.getItem('borderColor') === null)
     {
         const [borderColor,setBorderColor]=useState('2px solid black')
-        localstorage.setItem('borderColor', borderColor)
+        window.localstorage.setItem('borderColor', borderColor)
     }
     
     
     
-    const [fontSize, setFontSize]=useState(localStorage.getItem('font'));
+    const [fontSize, setFontSize]=useState(window.localStorage.getItem('font'));
     
-    const [vol,setVolume]=useState(localStorage.getItem('volume'));
+    const [vol,setVolume]=useState(window.localStorage.getItem('volume'));
     
-    const [font, setFont]=useState(localStorage.getItem('font_style'));
+    const [font, setFont]=useState(window.localStorage.getItem('font_style'));
     
     
-    const [borderNum, setBorderNum]=useState(localStorage.getItem('borderNum'));
+    const [borderNum, setBorderNum]=useState(window.localStorage.getItem('borderNum'));
     
-    const [borderColor,setBorderColor]=useState(localStorage.getItem('borderColor'));
+    const [borderColor,setBorderColor]=useState(window.localStorage.getItem('borderColor'));
     
     //==========================================================================
     //DEFAULT STATES FOR SIZES, VOLUME, AND BORDER COLOR IN CASE OF MODIFICATION
@@ -135,13 +135,13 @@ export function Options()
     function defaultBack(){
         
         setVolume(vlme);
-        localStorage.setItem('volume',vlme);
+        window.localStorage.setItem('volume',vlme);
         
         setFontSize(fS);
-        localStorage.setItem('font',fS);
+        window.localStorage.setItem('font',fS);
         
         setBorderNum(bC)
-        localStorage.setItem('borderNum',bC)
+        window.localStorage.setItem('borderNum',bC)
         
     }
     
@@ -155,15 +155,15 @@ export function Options()
     const changeVolume = (event, newValue) => 
     {
         setVolume(newValue);
-        localStorage.setItem('volume',newValue);
-        console.log("Volume is now:"+localStorage.getItem('volume'));
+        window.localStorage.setItem('volume',newValue);
+        console.log("Volume is now:"+window.localStorage.getItem('volume'));
     }
     
     const changeFont = (event, newValue) => 
     {
         setFontSize(newValue);
-        localStorage.setItem('font',newValue);
-        console.log("Font is now:"+localStorage.getItem('font'));
+        window.localStorage.setItem('font',newValue);
+        console.log("Font is now:"+window.localStorage.getItem('font'));
     }
     
     
@@ -171,66 +171,66 @@ export function Options()
     {
         
         setBorderNum(newValue);
-        localStorage.setItem('borderNum',newValue);
+        window.localStorage.setItem('borderNum',newValue);
         
         
         if( newValue === 0){
             
             setBorderColor('2px solid black');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
         if( newValue === 1){
             
             setBorderColor('2px solid purple')
-            localStorage.setItem('borderColor',borderColor)
+            window.localStorage.setItem('borderColor',borderColor)
             
         }
         
         if( newValue === 2){
             
             setBorderColor('2px solid blue');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
         if( newValue === 3){
             
             setBorderColor('2px solid green');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
         if( newValue === 4){
             
             setBorderColor('2px solid yellow');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
         if( newValue === 5){
             
             setBorderColor('2px solid orange');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
         if( newValue === 6){
             
             setBorderColor('2px solid red');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
         if( newValue === 7){
             
             setBorderColor('2px solid white');
-            localStorage.setItem('borderColor',borderColor);
+            window.localStorage.setItem('borderColor',borderColor);
             
         }
         
-        console.log("Color is now:"+localStorage.getItem('borderColor'));
+        console.log("Color is now:"+window.localStorage.getItem('borderColor'));
     }
     
     
