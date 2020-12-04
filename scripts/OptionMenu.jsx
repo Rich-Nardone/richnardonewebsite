@@ -105,11 +105,8 @@ export function Options()
         window.localStorage.setItem('borderNum',borderNum);
     }
     
-    if(window.localStorage.getItem('borderColor') === null)
-    {
-        const [borderColor,setBorderColor]=useState('2px solid black')
-        window.localstorage.setItem('borderColor', borderColor)
-    }
+    
+    
     
     
     
