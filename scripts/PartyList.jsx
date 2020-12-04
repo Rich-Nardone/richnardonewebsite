@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react'; 
-import {Socket} from './Socket.jsx';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {fnt} from './OptionMenu.jsx';
+import {brc} from './OptionMenu.jsx';
 
 const div={
-    width:200,
+    width:205,
     height: 200,
     background:'lightblue',
-    border:'3px solid black',
+    border:brc,
     
     
 };
@@ -13,9 +15,10 @@ const p={
     padding:0,
     margin:10,
     position: 'relative',
-    border:'2px solid black',
+    border:brc,
     fontWeight:'bold',
     textAlign:'center',
+    fontSize:fnt,
    
     
     
@@ -27,23 +30,27 @@ const ul={
     textAlign:'left',
     overflow: 'scroll',
     fontStyle:'italic',
+    padding:0,
+    fontSize:fnt,
    
 };
 
-export function PartyList(){
+const list_style={
+    borderRadius:5,
+    border:brc,
+    textAlign:'center',
+    fontWeight:'bold',
+    padding:2,
+    margin:3,
+    fontSize:fnt,
     
-    const[party, setParty] = useState([]);
     
-    function retrieve_player_party(){
-        useEffect(()=>{
-            Socket.emit('get party');
-            Socket.on('user party', (data)=>{
-                setParty(data);
-            });
-        }, []);    
-    }
-    const display_party = party.map((members,index)=>
-        <li key={index}> {members} </li>
+}
+
+export function PartyList(props){
+    console.log(props);
+    const display_party = props.user_content.map((members,index)=>
+        <li style={list_style} key={index}> {members} </li>
     );
     
     retrieve_player_party();

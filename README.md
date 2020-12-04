@@ -36,6 +36,7 @@ If issues arise and one is unable to run the above script, run these commands in
 
     npm install socket.io-client --save  
     npm install --save react-google-button
+    npm install react-sound --save
 
 WARNING: If you receive an error from the command "npm run watch" regarding a missing "babel-loader", run the following:
     npm install --save-dev @babel/core

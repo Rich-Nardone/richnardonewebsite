@@ -28,7 +28,7 @@ function handleLogoutSuccess(){
     console.log('user logged out');
 }
 function handleLogoutFail(){
-    alert('Google logot failed');
+    alert('Google logout failed');
 }
 export function GoogleLoginButton(){
     function handleLoginSuccess(response){

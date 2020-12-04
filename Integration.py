@@ -10,14 +10,13 @@ from dotenv import load_dotenv
 
 # local imports
 import models
-
-# tests
 # game logic
 import game.game
 import game.game_io
 from game.game import game
 from game.game_io import deconstruct_player
 from game.player import Player
+from sqlalchemy import asc, desc
 import user_input
 
 # For shop, checks if item has been purchased.
@@ -40,6 +39,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 db = flask_sqlalchemy.SQLAlchemy(app)
 db.init_app(app)
 db.app = app
+
 
 # ===================================================================================
 
@@ -134,10 +134,100 @@ def saveProgress():
     else:
         print("weird error")
 
+def player_info():
+    """ Send playerinfo to js. Currently sends dummy data. """
+    player_info = {
+        "user_party": ["player1", "player2", "player10"],
+        "user_inventory": ["coins", "sword", "shield"],
+        "user_chatlog": [
+            "welcome to the world",
+            "attack",
+            "user attacks, hitting the blob for 10pts",
+        ],
+    }
+    if item == 1:
+        x = player_info["user_inventory"]
+        global times
+        if times == 0:
+            x.extend(["Health Pack"])
+            times += 1
+        else:
+            x.extend(["Health Pack"] * times)
+            times += 1
+
+        print(x)
+        player_info["user_inventory"] = x
+    socketio.emit("player info", player_info)
+
+def show_inventory():
+        dump = db.session.query(models.inventory).filter_by(character_id="1")
+        inventory = []
+        for item in dump:
+            inventory.append(item.items)
+        return inventory
+
+def item_sort_asc():
+    inventory = []
+    #empties the "sorted" item table
+    db.session.query(models.inventory_asc).delete()
+    db.session.commit()
+    #creates a dump of sorted values from the inventory table
+    unsorted = db.session.query(models.inventory).order_by(models.inventory.items.asc())
+    #loops through the dump and grabs all the items for the current character, adds them to the sorted items table
+    for value in unsorted:
+        sorted_item = models.inventory_asc(items=value.items, character_id= value.character_id)
+        db.session.add(sorted_item)
+        db.session.commit()
+    """
+    this key value is hard coded for now
+    """
+    key = 1
+    personal_items = db.session.query(models.inventory_asc).filter_by(character_id=key)
+    #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
+    for item in personal_items:
+        inventory.append(item.item)
+    return inventory
+
+def item_sort_dsc():
+    #empties the "sorted" item table
+    db.session.query(models.inventory_dsc).delete()
+    db.session.commit()
+    #creates a dump of sorted values from the inventory table
+    unsorted = db.session.query(models.inventory).order_by(models.inventory.items.desc())
+    #loops through the dump and grabs all the items for the current character, adds them to the sorted items table
+    for value in unsorted:
+        sorted_item = models.inventory_dsc(items=value.items, character_id=value.character_id)
+        db.session.add(sorted_item)
+        db.session.commit()
+    """
+    this key value is hard coded for now
+    """
+    key = 1
+    personal_items = db.session.query(models.inventory_dsc).filter_by(character_id=key)
+    #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
+    for item in personal_items:
+        print(item.items)
+
+def filter_by_type():
+    """
+    itemType is hard coded for now, should actually be fetched from front end. key is also hard coded, same as it is for item sort asc/dsc
+    """
+    itemType = "weapon"
+    key = 1
+    filtered_items = db.session.query(models.inventory).filter_by(item_type=itemType, character_id=key)
+    
+    for item in filtered_items:
+        print(item.items)
+
+def search_bar():
+    items = db.session.query(models.inventory)
+    search = "a"
+    #this is a substring search function for the inventory, right now a is hardcoded but what should be done is fetching a search field and inserting it in as a variable
+    for item in items:
+        if search in item.items:
+            print(item.items)
 
 userlist = [1]
-
-
 @socketio.on("google login")
 def google_login(data):
     """ Google Login """
@@ -169,14 +259,10 @@ def send_inventory(inventory):
     socketio.emit('user inventory', inventory)
 
 def get_user_inventory(): 
-    #TODO get log from database
-    
-    #DUMMY DATA
-    return([
-            "coins",
-            "shield",
-            "sword"
-    ])
+    return show_inventory()
+
+def get_asc_inventory(): 
+    return item_sort_asc()
     
 def send_chatlog():
     #TODO get chatlog from database
@@ -290,6 +376,14 @@ def main():
     """ main chat window """
     saveProgress()
     return flask.render_template("main_chat.html")
+    
+
+#=========================================================================================
+@app.route("/options.html")
+def options():
+    """ main chat window """
+    #saveProgress()
+    return flask.render_template("options.html")
 
 
 # =======================================================================================

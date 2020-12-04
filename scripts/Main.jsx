@@ -3,7 +3,8 @@ import * as ReactDOM from 'react-dom';
 
 import {App} from './App.jsx'; 
 import {MainUI} from './MainUI.jsx';
-import {CreationUI} from './CharCreation.jsx'
+import {CreationUI} from './CharCreation.jsx';
+import {Options} from './OptionMenu.jsx';
 
 
 const loginElement = document.getElementById('login');
@@ -21,3 +22,8 @@ if(uiElement){
     ReactDOM.render(<MainUI />, document.getElementById('main_ui'))
 }
 
+
+const optionElement = document.getElementById('options');
+if(optionElement){
+    ReactDOM.render(<Options />, document.getElementById('options'))
+}
