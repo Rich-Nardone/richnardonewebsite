@@ -4,8 +4,6 @@ import Sound from 'react-sound';
 
 
 
-
-
 const h1={
     
     textAlign: 'center',
@@ -24,13 +22,6 @@ const image_style={
     width:1485,
     height:300,
 };
-
-
-
-
- 
-
-
 
 export function App(){
     return(
