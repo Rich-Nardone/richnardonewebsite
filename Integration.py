@@ -242,10 +242,15 @@ def character_creation(data):
 
 # ======================================================================================
 @app.route("/")
+def about():
+    """ main page """
+    return flask.render_template("landing_page.html")
+
+#=======================================================================================
+@app.route("/login.html")
 def index():
     """ main page """
     return flask.render_template("index.html")
-
 
 # ======================================================================================
 @app.route("/character_creation.html")
