@@ -1,26 +1,31 @@
 import React, {useState, useEffect} from 'react'; 
 import {Socket} from './Socket.jsx';
-
+import PropTypes from 'prop-types';
+import {fnt} from './OptionMenu.jsx';
+import {brc} from './OptionMenu.jsx';
 
 
 const div={
     width:1000,
-    height:406,
+    height:430,
     position: 'fixed',
     left:214.5,
     top:8,
     display: 'inline',
     background:'grey',
-    border:'3px solid black',
+    border:brc,
+    fontSize:fnt,
     
 }
 const ul={
     listStyleType:'none',
-    height: 310,
+    height: 315,
     textAlign:'left',
     overflow: 'scroll',
     fontStyle:'italic',
     fontWeight: "bold",
+    fontSize:fnt,
+    
    
 };
 
@@ -33,7 +38,7 @@ const p={
     padding:0,
     margin:0,
     position: 'relative',
-    border:'2px solid black',
+    border:brc,
     fontWeight:'bold',
     textAlign:'center',
     opacity: 0.5,
@@ -47,6 +52,7 @@ const secret_p={
     fontWeight:'bold',
     fontStyle:'italic',
     background:'grey',
+    fontSize:fnt,
     
     
     
@@ -57,11 +63,14 @@ const details={
     fontWeight:'bold',
     textAlign:'center',
     fontStyle:'italic',
+    fontSize:fnt,
 }
 
 const body={
     background:'grey',
 }
+
+
 
 
 export function Chatbox(props){
@@ -83,8 +92,8 @@ export function Chatbox(props){
         Socket.emit('user input', {'input': userInput});
         document.getElementById('user_text_box').value = "";
     }
-    const display_log = chatlog.map((log,index)=>
-        <li key={index}> {log} </li>
+    const display_log = props.user_content.map((log,index)=>
+        <li  key={index}> {log} </li>
     );
     
     function submitPayment(){

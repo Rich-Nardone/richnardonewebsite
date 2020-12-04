@@ -1,5 +1,7 @@
 import React, {useState} from 'react'; 
 import {Socket} from './Socket.jsx';
+import Sound from 'react-sound';
+
 
 
 
@@ -60,6 +62,11 @@ function CharSelection(){
     return(
         <div>
             <h1 style={h1}>Who Are You?</h1>
+             <Sound
+                    url='static/CharCreation.mp3'
+                    playStatus={Sound.status.PLAYING}
+                    volume='50'
+            />
             <form style={form} onSubmit={handleForm}> 
                 <br></br>
                 <label style={label2}> What is your name: </label> 
