@@ -53,7 +53,6 @@ export function PartyList(props){
         <li style={list_style} key={index}> {members} </li>
     );
     
-    retrieve_player_party();
     return(
         <div style={div}>
             <p style={p}> PARTY </p>
@@ -63,3 +62,7 @@ export function PartyList(props){
     );
 }
 
+
+PartyList.propTypes = {
+    user_content: PropTypes.array,
+};
