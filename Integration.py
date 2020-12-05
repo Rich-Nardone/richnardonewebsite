@@ -160,6 +160,8 @@ def google_login(data):
     flask.session["user_id"] = em
     
     #check if user has character
+    #Sending dummy data
+    socketio.emit("has character", False)
     
 def send_party(): 
     #TODO get party from database 
@@ -184,6 +186,9 @@ def get_user_inventory():
         return([
             "error",    #replace this with error
         ])
+
+def send_inventory(inventory):
+    socketio.emit('user inventory', inventory)
     
 def send_chatlog():
     #TODO get chatlog from database
@@ -281,6 +286,14 @@ def about():
     return flask.render_template("landing_page.html")
 
 #=======================================================================================
+
+@app.route("/character_selection.html")
+def char_select():
+    """ main page """
+    return flask.render_template("character_selection.html")
+
+#=======================================================================================
+
 @app.route("/login.html")
 def index():
     """ main page """

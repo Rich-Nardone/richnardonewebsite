@@ -1,8 +1,6 @@
 import React from 'react'; 
 
-
 export function About(){
-    
     function toLogin(event){
        return window.location = "login.html"
     }
