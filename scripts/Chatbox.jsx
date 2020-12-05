@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'; 
 import {Socket} from './Socket.jsx';
-import PropTypes from 'prop-types';
 import {fnt} from './OptionMenu.jsx';
 import {brc} from './OptionMenu.jsx';
 
@@ -71,8 +70,6 @@ const body={
 }
 
 
-
-
 export function Chatbox(props){
     const [userInput, setInput] = useState("");
     const[money,setMoney] = useState(1000);
@@ -92,8 +89,8 @@ export function Chatbox(props){
         Socket.emit('user input', {'input': userInput});
         document.getElementById('user_text_box').value = "";
     }
-    const display_log = props.user_content.map((log,index)=>
-        <li  key={index}> {log} </li>
+    const display_log = chatlog.map((log,index)=>
+        <li key={index}> {log} </li>
     );
     
     function submitPayment(){

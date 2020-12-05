@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {Socket} from './Socket.jsx';
 import PropTypes from 'prop-types';
 import {fnt} from './OptionMenu.jsx';
 import {brc} from './OptionMenu.jsx';
@@ -47,12 +48,23 @@ const list_style={
     
 }
 
-export function PartyList(props){
-    console.log(props);
-    const display_party = props.user_content.map((members,index)=>
-        <li style={list_style} key={index}> {members} </li>
+export function PartyList(){
+    
+    const[party, setParty] = useState([]);
+    
+    function retrieve_player_party(){
+        useEffect(()=>{
+            Socket.emit('get party');
+            Socket.on('user party', (data)=>{
+                setParty(data);
+            });
+        }, []);    
+    }
+    const display_party = party.map((members,index)=>
+        <li key={index}> {members} </li>
     );
     
+    retrieve_player_party();
     return(
         <div style={div}>
             <p style={p}> PARTY </p>
@@ -61,8 +73,3 @@ export function PartyList(props){
         </div> 
     );
 }
-
-
-PartyList.propTypes = {
-    user_content: PropTypes.array,
-};

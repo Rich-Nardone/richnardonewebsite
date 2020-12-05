@@ -1,5 +1,6 @@
 //Displayes inventory list. Inventory list is retrieved from database
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {Socket} from './Socket.jsx';
 import PropTypes from 'prop-types';
 import {fnt} from './OptionMenu.jsx';
 import {brc} from './OptionMenu.jsx';
@@ -48,19 +49,29 @@ const list_style={
     
 }
 
+
 export function InventoryList(props){
-    const display_inventory = props.user_content.map((items,index)=>
-        <li style={list_style} key={index}> {items} </li>
+    const[inventory, setInventory] = useState([]);
+    
+    function retrieve_player_inventory(){
+        useEffect(()=>{
+            Socket.emit('get inventory');
+            Socket.on('user inventory', (data)=>{
+                setInventory(data);
+            });
+        }, []);    
+    }
+    
+    const display_inventory = inventory.map((inventory,index)=>
+        <li key={index}> {inventory} </li>
     );
+    
+    retrieve_player_inventory();
     
     return(
         <div style={div}>
             <p style={p}> INVENTORY </p>
-            <ul style={ul}> {display_inventory} <br></br></ul>
+            <ul style={ul}> {display_inventory} </ul>
         </div> 
     );
 }
-
-InventoryList.propTypes = {
-    user_content: PropTypes.array,
-};

@@ -20,19 +20,7 @@ const button={
 
 
 
-
-
 export function MainUI(){
-    const [player_info, setPlayerInfo] = useState({user_party: [], user_inventory: [], user_chatlog: []});
-    
-    function retrieve_player_info(){
-        useEffect(()=>{
-            Socket.emit('user onchat');
-            Socket.on('player info', (data)=>{
-                setPlayerInfo(data);
-            });
-        }, []);    
-    }
     
     function gotoOptions(){
         
@@ -40,10 +28,6 @@ export function MainUI(){
         return(window.location = "options.html")
     }
     
-    
-    retrieve_player_info()
-    
-    console.log(player_info);
     return(
         <div>
             <Sound
@@ -51,9 +35,9 @@ export function MainUI(){
                     playStatus={Sound.status.PLAYING}
                     volume={volu}
             />
-            <PartyList user_content={player_info.user_party} /> 
-            <InventoryList user_content={player_info.user_inventory} />
-            <Chatbox user_content={player_info.user_chatlog} /> 
+            <PartyList /> 
+            <InventoryList />
+            <Chatbox /> 
             <button style={button} onClick={gotoOptions}>Options</button>
         </div>     
     );
