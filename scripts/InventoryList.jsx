@@ -61,7 +61,6 @@ export function InventoryList(props){
             });
         }, []);    
     }
-    console.log("TESTTT")
     const display_inventory = inventory.map((inventory,index)=>
         <li key={index}> {inventory} </li>
     );

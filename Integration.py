@@ -4,6 +4,7 @@
 import os
 from os.path import join, dirname
 from settings import db, app, socketio
+from inventory import get_user_inventory, get_asc_inventory, get_dsc_inventory, search_bar, filter_by_type
 import models
 import flask
 # tests
@@ -126,76 +127,6 @@ def player_info():
         player_info["user_inventory"] = x
     socketio.emit("player info", player_info)
 
-def show_inventory():
-        #need to get character id from character selection page for load game 
-        dump = db.session.query(models.inventory).filter_by(character_id="1")
-        inventory = []
-        for item in dump:
-            inventory.append(item.items)
-        return inventory
-
-def item_sort_asc():
-    inventory = []
-    #empties the "sorted" item table
-    db.session.query(models.inventory_asc).delete()
-    db.session.commit()
-    #creates a dump of sorted values from the inventory table
-    unsorted = db.session.query(models.inventory).order_by(models.inventory.items.asc())
-    #loops through the dump and grabs all the items for the current character, adds them to the sorted items table
-    for value in unsorted:
-        sorted_item = models.inventory_asc(items=value.items, character_id= value.character_id)
-        db.session.add(sorted_item)
-        db.session.commit()
-    """
-    this key value is hard coded for now
-    """
-    key = 1
-    personal_items = db.session.query(models.inventory_asc).filter_by(character_id=key)
-    #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
-    for item in personal_items:
-        inventory.append(item.item)
-    return inventory
-
-def item_sort_dsc():
-    #empties the "sorted" item table
-    db.session.query(models.inventory_dsc).delete()
-    db.session.commit()
-    #creates a dump of sorted values from the inventory table
-    unsorted = db.session.query(models.inventory).order_by(models.inventory.items.desc())
-    #loops through the dump and grabs all the items for the current character, adds them to the sorted items table
-    for value in unsorted:
-        sorted_item = models.inventory_dsc(items=value.items, character_id=value.character_id)
-        db.session.add(sorted_item)
-        db.session.commit()
-    """
-    this key value is hard coded for now
-    """
-    key = 1
-    personal_items = db.session.query(models.inventory_dsc).filter_by(character_id=key)
-    #currently this is just to print the sorted table as a test to make sure it works, in the future it should connect with front end to visually display the items sorted, probably best to send a list?
-    for item in personal_items:
-        print(item.items)
-
-def filter_by_type():
-    """
-    itemType is hard coded for now, should actually be fetched from front end. key is also hard coded, same as it is for item sort asc/dsc
-    """
-    itemType = "weapon"
-    key = 1
-    filtered_items = db.session.query(models.inventory).filter_by(item_type=itemType, character_id=key)
-    
-    for item in filtered_items:
-        print(item.items)
-
-def search_bar():
-    items = db.session.query(models.inventory)
-    search = "a"
-    #this is a substring search function for the inventory, right now a is hardcoded but what should be done is fetching a search field and inserting it in as a variable
-    for item in items:
-        if search in item.items:
-            print(item.items)
-
-
 userlist = [1]
 
 idlist = [""]
@@ -224,11 +155,6 @@ def send_party():
     #DUMMY DATA
     user_party=["player1", "player2", "player10"]
     socketio.emit('user party', user_party)
-
-
-def get_user_inventory():
-    return show_inventory()
-    
     
 def send_chatlog():
     #TODO get chatlog from database
@@ -241,8 +167,6 @@ def send_chatlog():
     ]
     socketio.emit('user chatlog', user_chatlog)
 
-def get_asc_inventory(): 
-    return item_sort_asc()
 
 @socketio.on("user input")
 def parse_user_input(data):
