@@ -20,17 +20,6 @@ item = 0
 # Used to check if user bought item again.
 times = 1
 
-
-# ===================================================================================
-
-# For shop, checks if item has been purchased.
-item = 0
-# Used to check if user bought item again.
-times = 1
-#plesae
-
-# function that marks and saves progress,
-#  either inserting a new character into database or updating an existing one.
 def saveProgress():
     """ Saves the user's progress to the database """
     FLAG = "INSERT"
@@ -138,6 +127,7 @@ def player_info():
     socketio.emit("player info", player_info)
 
 def show_inventory():
+        #need to get character id from character selection page for load game 
         dump = db.session.query(models.inventory).filter_by(character_id="1")
         inventory = []
         for item in dump:
@@ -208,7 +198,7 @@ def search_bar():
 
 userlist = [1]
 
-
+idlist = [""]
 @socketio.on("google login")
 def google_login(data):
     """ Google Login """
@@ -226,9 +216,8 @@ def google_login(data):
 
     #Used to distinguish users, for database user calls 
     flask.session["user_id"] = em
-    
+    idlist.append(em)
     #check if user has character
-    
 def send_party(): 
     #TODO get party from database 
     
@@ -269,7 +258,6 @@ def get_party():
     
 @socketio.on("get inventory")
 def get_inventory():
-    print(flask.session["user_id"])
     inventory = get_user_inventory()
     send_inventory(inventory)
 
@@ -367,6 +355,7 @@ def main():
 def options():
     """ main chat window """
     #saveProgress()
+    print(idlist[-1] + " YOOOOO")
     return flask.render_template("options.html")
 
 
