@@ -7,21 +7,21 @@ import random
 class Player:
     """ Class for player stats and data """
 
-    def __init__(self):
+    def __init__(self, id="", strength=0, dex=0, con=0, intel=0, cha=0, luk=0):
         self.id = "name"
         # stats
         # Strength: Used for slapping and stronging things
-        self.strength = 0
+        self.strength = strength
         # Dexterity: Used for going fast and being fast
-        self.dex = 0
+        self.dex = dex
         # Constitution: Healthiness and not-die ability
-        self.con = 0
+        self.con = con
         # Intelligence: The BIG BRAIN
-        self.intel = 0
+        self.intel = intel
         # Charisma: How likeable or punchable you are
-        self.cha = 0
+        self.cha = cha
         # Luck: Lucky you, huh?
-        self.luk = 0
+        self.luk = luk
         # totals
         # Health: Your life.
         self.max_health = 100 + self.con * 10
@@ -44,7 +44,7 @@ class Player:
                 crit_mult = 2.00
             expected_damage = self.strength * crit_mult
             return target.damage(expected_damage, self)
-        if type == "ranged":
+        if type == "range":
             crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
             crit_mult = 1.00  # The critical damage multiplier
             if crit_state:
