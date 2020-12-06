@@ -7,7 +7,7 @@ from .game_io import prompt_in, send_out
 from .player import Player
 
 # START
-def start_scenario(user):
+def start_scenario(user=None):
     """ Tries to find a player for the user, otherwise creates new """
     start_text = "You are in a white, bare room with nothing but a mirror with a few words on it."
     start_text = (

@@ -11,10 +11,12 @@ sys.path.insert(0, parentdir)
 
 # stuff required for testing
 import random
-from game import game, player, scenario
+from game import game, player, scenario, game_io
 
 test_unset_player = player.Player()
 test_strong_player = player.Player("stronk", 20, 20, 20, 20, 20, 0)
+SCENARIO_NAME = "beginning"
+SEQ_INPUT = []
 
 
 class GameTestCase(unittest.TestCase):
@@ -84,13 +86,23 @@ class PlayerTestCase(unittest.TestCase):
 
 
 class ScenarioTestCase(unittest.TestCase):
+    def setUp(self):
+        self.success_test_params = [
+            {SCENARIO_NAME: "intro", SEQ_INPUT: ["loot", "loot", "look", "leave"]},
+            {SCENARIO_NAME: "intro_hall", SEQ_INPUT: ["classroom", "entrance"]},
+            {SCENARIO_NAME: "classroom", SEQ_INPUT: ["fight", "leave"]},
+        ]
+
     def test_start(self):
-        # TODO
-        self.assertTrue(True)
+        # Test start_scenario
+        test_unset_player = scenario.start_scenario()
 
     def test_scenario(self):
-        # TODO
-        self.assertTrue(False)
+        for test in self.success_test_params:
+            # Load scenario with different inputs
+            game_io.prompt_in = MagicMock(side_effect=test[SEQ_INPUT])
+            game_io.send_out = MagicMock()
+            (player, scen_id) = scenario.scenario(test_unset_player,test[SCENARIO_NAME])
 
 
 if __name__ == "__main__":
