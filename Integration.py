@@ -48,7 +48,6 @@ def player_info():
     socketio.emit("player info", player_info)
 
 userlist = [1]
-
 idlist = [""]
 @socketio.on("google login")
 def google_login(data):
