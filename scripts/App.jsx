@@ -1,6 +1,7 @@
 import React from 'react'; 
 import {GoogleLoginButton} from './GoogleButton.jsx'
 import Sound from 'react-sound';
+import {EmailLogin} from './EmailLogin.jsx';
 
 const h1={
     textAlign: 'center',
@@ -21,6 +22,8 @@ const image_style={
     height:300,
 };
 
+
+
 export function App(){
     return(
         <div>
@@ -28,6 +31,7 @@ export function App(){
             <img  style={image_style} src='/static/Fog.gif' alt="image"/>
             <hr></hr>
             <GoogleLoginButton /> 
+            <EmailLogin />
             <Sound
                     url='/static/Index_LoginTheme.mp3'
                     playStatus={Sound.status.PLAYING}
