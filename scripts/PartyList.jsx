@@ -8,9 +8,7 @@ const div={
     width:205,
     height: 200,
     background:'lightblue',
-    border:brc,
-    
-    
+    border:brc
 };
 const p={
     padding:0,
@@ -19,12 +17,7 @@ const p={
     border:brc,
     fontWeight:'bold',
     textAlign:'center',
-    fontSize:fnt,
-   
-    
-    
-    
-    
+    fontSize:fnt
 };
 const ul={
     height: 123,
@@ -32,8 +25,7 @@ const ul={
     overflow: 'scroll',
     fontStyle:'italic',
     padding:0,
-    fontSize:fnt,
-   
+    fontSize:fnt
 };
 
 const list_style={
@@ -43,13 +35,10 @@ const list_style={
     fontWeight:'bold',
     padding:2,
     margin:3,
-    fontSize:fnt,
-    
-    
-}
+    fontSize:fnt
+};
 
 export function PartyList(){
-    
     const[party, setParty] = useState([]);
     
     function retrieve_player_party(){

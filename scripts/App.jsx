@@ -2,10 +2,7 @@ import React from 'react';
 import {GoogleLoginButton} from './GoogleButton.jsx'
 import Sound from 'react-sound';
 
-
-
 const h1={
-    
     textAlign: 'center',
     padding: 50,
     margin: 50,
@@ -13,8 +10,9 @@ const h1={
     fontStyle: 'italic',
     borderWidth: 5,
     background: 'linear-gradient(darkviolet,darkblue)',
-    borderRadius:10,
+    borderRadius:10
 };
+
 const image_style={
     float:'center',
     padding:5,

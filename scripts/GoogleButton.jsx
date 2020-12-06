@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { Socket } from './Socket';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
@@ -18,9 +18,6 @@ const log_style={
     
 };
 
-
-
-
 function handleLoginFail(){
     alert('Google Login in Error');
 }
@@ -31,12 +28,25 @@ function handleLogoutFail(){
     alert('Google logout failed');
 }
 export function GoogleLoginButton(){
+    
     function handleLoginSuccess(response){
-        console.log("Successful Login")
-        let userData=response
+        let userData=response;
         Socket.emit('google login', {'UserInfo':userData});
-        return(window.location = "character_creation.html")
     }
+    
+    function userHasChar(){
+        useEffect(()=>{
+            Socket.on('has character', (hasCharacter)=>{
+                if(hasCharacter)
+                    return window.location = "character_selection.html";
+                else
+                    return window.location = "character_creation.html";
+            })
+        });
+    }
+    
+    userHasChar();
+    
     return(
         <GoogleLogin 
             clientId={ClientID}
