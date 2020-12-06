@@ -2,40 +2,35 @@ import React, {useState} from 'react';
 import {Socket} from './Socket.jsx';
 import Sound from 'react-sound';
 
-
-
-
-
 const h1={
-    
     textAlign: 'center',
     padding: 50,
     margin: 50,
     fontWeight: 'bold',
     fontStyle: 'italic',
     borderWidth: 5,
-    background: 'linear-gradient(darkviolet,darkblue)',
-    borderRadius:10,
-};
+    background: 'white',
+    borderRadius:10
+}
 
 const label1={
-    
     fontWeight: 'bold',
     fontStyle: 'italic',
-    textAlign:'center',
-    
+    textAlign:'center'
 }
+
 const label2={
     fontWeight:'bold',
     fontStyle:'italic',
     textAlign:'center',
     fontSize:'25'
 }
+
 const form={
-    background:'linear-gradient(purple,darkviolet)',
+    background:'white',
     border:'3px solid black',
     textAlign:'center',
-    borderRadius:10,
+    borderRadius:10
 }
 
 
