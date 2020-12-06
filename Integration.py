@@ -68,7 +68,15 @@ def google_login(data):
     flask.session["user_id"] = em
     idlist.append(em)
     #check if user has character
-    socketio.emit("has character", False)
+    socketio.emit("has character", True)
+    
+@socketio.on("email login")
+def email_login(data):
+    print(data)
+    
+    #for email login, we need to check if user email exists in username table. If true, check for characters.
+    #example data ->  {'has_account': True, 'has_character:' True}
+    socketio.emit("email exists", True)
 
 def send_party(): 
     #TODO get party from database 
