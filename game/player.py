@@ -42,7 +42,7 @@ class Player:
             crit_mult = 1.00  # The critical damage multiplier
             if crit_state:
                 crit_mult = 2.00
-            expected_damage = self.str * crit_mult
+            expected_damage = self.strength * crit_mult
             return target.damage(expected_damage, self)
         if type == "ranged":
             crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
@@ -56,7 +56,7 @@ class Player:
             crit_mult = 1.00  # The critical damage multiplier
             if crit_state:
                 crit_mult = 2.00
-            expected_damage = self.int * crit_mult
+            expected_damage = self.intel * crit_mult
             return target.damage(expected_damage, self)
 
     def is_dead(self):
