@@ -4,6 +4,8 @@
 import os
 from os.path import join, dirname
 from settings import db, app, socketio
+from inventory import get_user_inventory, get_asc_inventory, get_dsc_inventory, search_bar, filter_by_type
+from progress import saveProgress, loadProgress
 import models
 import flask
 # tests
@@ -19,98 +21,6 @@ from game.player import Player
 item = 0
 # Used to check if user bought item again.
 times = 1
-
-
-# ===================================================================================
-
-# For shop, checks if item has been purchased.
-item = 0
-# Used to check if user bought item again.
-times = 1
-#plesae
-
-# function that marks and saves progress,
-#  either inserting a new character into database or updating an existing one.
-def saveProgress():
-    """ Saves the user's progress to the database """
-    FLAG = "INSERT"
-    USER = userlist[-1]
-    all_character = [
-        character.character_name
-        for character in db.session.query(models.character).all()
-    ]
-    all_userid = [
-        user_id.user_id for user_id in db.session.query(models.character).all()
-    ]
-    dict = {}
-    for i in range(len(all_character)):
-        dict[all_userid[i]] = all_character[i]
-
-    USER = userlist[-1]
-    email = db.session.query(models.username).filter_by(id=USER).first()
-    key = email.id
-    characterList = db.session.query(models.character).filter_by(user_id=key)
-
-    player = Player()
-    # needs to pick character by user choice
-    for char in characterList:
-        if char.character_name == "popo":
-            player = char
-
-    statslist = deconstruct_player(player)
-
-    for x, y in dict.items():
-        if USER == x and statslist[0] == y:
-            FLAG = "UPDATE"
-            break
-        else:
-            FLAG = "INSERT"
-
-    if FLAG == "INSERT":
-        chara = models.character(
-            user_id=USER,
-            character_name=statslist[0],
-            strength=statslist[1],
-            dex=statslist[2],
-            con=statslist[3],
-            intel=statslist[4],
-            cha=statslist[5],
-            luck=statslist[6],
-            max_health=statslist[7],
-            health=statslist[8],
-            max_mana=statslist[9],
-            mana=statslist[10],
-            money=statslist[11],
-            checkpoint=statslist[12],
-            gender=statslist[13],
-            character_class=statslist[14],
-        )
-        db.session.add(chara)
-        db.session.commit()
-    elif FLAG == "UPDATE":
-        chara = (
-            db.session.query(models.character)
-            .filter_by(user_id=USER, character_name=statslist[0])
-            .first()
-        )
-        chara.strength = statslist[1]
-        chara.dex = statslist[2]
-        chara.con = statslist[3]
-        chara.intel = statslist[4]
-        chara.cha = statslist[5]
-        chara.luck = statslist[6]
-        chara.max_health = statslist[7]
-        chara.health = statslist[8]
-        chara.max_mana = statslist[9]
-        chara.mana = statslist[10]
-        chara.money = statslist[11]
-        chara.checkpoint = statslist[12]
-        chara.gender = statslist[13]
-        chara.character_class = statslist[14]
-        db.session.commit()
-    else:
-        print("weird error")
-
 
 def player_info():
     """ Send playerinfo to js. Currently sends dummy data. """
@@ -137,10 +47,8 @@ def player_info():
         player_info["user_inventory"] = x
     socketio.emit("player info", player_info)
 
-
 userlist = [1]
-
-
+idlist = [""]
 @socketio.on("google login")
 def google_login(data):
     """ Google Login """
@@ -158,37 +66,16 @@ def google_login(data):
 
     #Used to distinguish users, for database user calls 
     flask.session["user_id"] = em
-    
+    idlist.append(em)
     #check if user has character
-    #Sending dummy data
     socketio.emit("has character", False)
-    
+
 def send_party(): 
     #TODO get party from database 
     
     #DUMMY DATA
     user_party=["player1", "player2", "player10"]
     socketio.emit('user party', user_party)
-
-
-def get_user_inventory(): 
-    #TODO get log from database
-    if "user_id" in flask.session:
-        items = []
-        for x, a, i in models.db.session.query(models.username, models.character, models.inventory).\
-        filter(models.username.email == flask.session["user_id"]).\
-        filter(models.character.user_id == models.username.id).\
-        filter(models.inventory.character_id == models.character.id):
-                items.append(i.items)
-        
-        return items
-    else: 
-        return([
-            "error",    #replace this with error
-        ])
-
-def send_inventory(inventory):
-    socketio.emit('user inventory', inventory)
     
 def send_chatlog():
     #TODO get chatlog from database
@@ -200,6 +87,7 @@ def send_chatlog():
             "user attacks, hitting the blob for 10pts"
     ]
     socketio.emit('user chatlog', user_chatlog)
+
 
 @socketio.on("user input")
 def parse_user_input(data):
@@ -215,9 +103,11 @@ def get_party():
     
 @socketio.on("get inventory")
 def get_inventory():
-    print(flask.session["user_id"])
     inventory = get_user_inventory()
     send_inventory(inventory)
+
+def send_inventory(inventory):
+    socketio.emit('user inventory', inventory)
 
 @socketio.on("get chatlog")
 def get_chatlog():
@@ -230,7 +120,6 @@ def get_chatlog():
             "user attacks, hitting the blob for 10pts"
     ]
     send_chatlog()
-
 
 # Test atm for the shop
 @socketio.on("item purchased")
@@ -310,7 +199,6 @@ def char_create():
 @app.route("/main_chat.html")
 def main():
     """ main chat window """
-    saveProgress()
     return flask.render_template("main_chat.html")
     
 
@@ -319,6 +207,7 @@ def main():
 def options():
     """ main chat window """
     #saveProgress()
+    print(idlist[-1] + " YOOOOO")
     return flask.render_template("options.html")
 
 
