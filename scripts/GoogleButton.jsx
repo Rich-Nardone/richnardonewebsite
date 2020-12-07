@@ -36,8 +36,9 @@ export function GoogleLoginButton(){
     
     function userHasChar(){
         useEffect(()=>{
-            Socket.on('has character', (hasCharacter)=>{
-                if(hasCharacter)
+            Socket.on('google login response', (data)=>{
+                console.log(data)
+                if(data.has_character)
                     return window.location = "character_selection.html";
                 else
                     return window.location = "character_creation.html";
