@@ -5,11 +5,15 @@
 """
 from .player import Player
 import os, sys, inspect
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
+from Integration import save_progress
+from settings import socketio
+import user_input
 
-from ..integration import save_progress
+user_in = user_input.UserInput()
 
 def g_save_progress(user, player):
     """ calls save_progress from integration """
