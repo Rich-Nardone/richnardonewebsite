@@ -4,7 +4,7 @@
 import os
 from os.path import join, dirname
 from settings import db, app, socketio
-from inventory import get_user_inventory, get_asc_inventory, get_dsc_inventory, search_bar, filter_by_type
+from inventory import get_user_inventory, get_asc_inventory, get_dsc_inventory, search_bar, filter_by_type, User
 from progress import saveProgress, loadProgress
 import models
 import flask
@@ -49,6 +49,11 @@ def player_info():
 
 userlist = [1]
 idlist = [""]
+
+def create_user_controller(email): 
+    userObj = User(email)
+    flask.session["userObj"] = userObj
+
 @socketio.on("google login")
 def google_login(data):
     """ Google Login """
@@ -65,18 +70,33 @@ def google_login(data):
     userlist.append(userid.id)
 
     #Used to distinguish users, for database user calls 
+    create_user_controller(em)
     flask.session["user_id"] = em
     idlist.append(em)
+    
+    flask.session["userObj"] = User(em)
     #check if user has character
     socketio.emit("has character", True)
     
 @socketio.on("email login")
 def email_login(data):
     print(data)
+    create_user_controller(data)
     
-    #for email login, we need to check if user email exists in username table. If true, check for characters.
-    #example data ->  {'has_account': True, 'has_character:' True}
-    socketio.emit("email exists", True)
+    userObj = flask.session["userObj"]
+    response = {}
+    
+    if userObj.user_exists(): 
+        response["user_exists"] = True
+        if userObj.character_counter > 0: 
+            response["has_character"] = True
+        else: 
+            response["has_character"] = False
+    else: 
+        response["user_exists"] = False
+        response["has_character"] = False
+        
+    socketio.emit("email exists", response)
 
 def send_party(): 
     #TODO get party from database 
