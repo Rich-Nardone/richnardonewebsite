@@ -9,8 +9,6 @@ from progress import saveProgress, loadProgress
 from user_controller import User
 import models
 import flask
-# tests
-
 # game logic
 import game.game
 import game.game_io
