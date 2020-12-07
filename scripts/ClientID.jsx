@@ -1,5 +1,5 @@
 
-let ClientID = "517598503885-sqqh5dnpi8hc9dtndgl6uitqvdar1h80.apps.googleusercontent.com"
+let ClientID = "656111270790-6jsfgnirr63rvkth2ro0u35l4alkugrg.apps.googleusercontent.com"
 
 
 export {ClientID};
