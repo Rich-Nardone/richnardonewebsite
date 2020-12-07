@@ -34,4 +34,7 @@ class User():
         self.selected_character_id = char_id
     
     def get_inventory(self):
-        pass
+        inventory_list = []
+        for x in models.db.session.query(models.inventory).filter(models.inventory.character_id == self.selected_character_id):
+            inventory_list.append(x.items)
+        return inventory_list
