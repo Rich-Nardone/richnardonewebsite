@@ -11,13 +11,17 @@ export function EmailLogin(){
         Socket.emit('email login', email);
         Socket.on('email exists', (data)=>{
             console.log(data)
-            if (data)
-                return window.location = "main_chat.html"; //subject to change
+            if (data.user_exists && data.has_character)
+                return window.location = "character_selection.html"; //subject to change
+            else if(data.user_exists && !data.has_character){
+                return window.location = "character_creation.html"
+            }
             else{
                 alert("Email not found please try again");
                 Socket.off('email exists');
             }
         });
+        
     }
     
     
