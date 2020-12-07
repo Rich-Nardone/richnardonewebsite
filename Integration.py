@@ -73,7 +73,6 @@ def google_login(data):
     create_user_controller(em)
     flask.session["user_id"] = em
     idlist.append(em)
-    
     flask.session["userObj"] = User(em)
     #check if user has character
     socketio.emit("has character", True)
@@ -157,7 +156,15 @@ def item_purchased():
     item = 1
     player_info()
 
-
+@socketio.on("get user characters")
+def user_chars():
+    print("landed")
+    characters={}
+    userObj = flask.session["userObj"]
+    characters["char_instance"] = userObj.get_characters()
+    print(characters)
+    socketio.emit("recieve user characters", characters)
+    
 @socketio.on("user new character")
 def character_creation(data):
     """ Create character """
