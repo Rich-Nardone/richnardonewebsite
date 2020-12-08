@@ -19,20 +19,6 @@ from .player import Player
 user_in = user_input.UserInput()
 
 
-def g_save_progress(user, player):
-    """ calls save_progress from integration """
-    # iunno if its feasible to move the function from integration to game_io
-    save_progress(player)
-
-
-def load_progress(user):
-    """ Method for saving progress """
-    # TODO Implement with PSQL
-    player = Player()
-    checkpoint = ""
-    return (user, player, checkpoint)  # DEBUG
-
-
 def prompt_in():
     """ Method for receiving input """
     text = user_in.read_input()

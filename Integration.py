@@ -16,10 +16,7 @@ from user_controller import User
 import models
 
 # game logic
-import game.game
-import game.game_io
 from game.game import game
-from game.game_io import deconstruct_player
 from game.player import Player
 
 # For shop, checks if item has been purchased.
