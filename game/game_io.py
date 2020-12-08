@@ -10,7 +10,6 @@ import sys
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from progress import save_progress
 from settings import socketio
 import user_input
 
@@ -30,26 +29,3 @@ def prompt_in():
 def send_out(msg):
     """ Method for sending reply """
     socketio.emit("text", {"text": msg})
-
-
-def deconstruct_player(player):
-    """ Deconstructing player object for PSQL """
-    # Simon wants to move this to the player.py file and player class
-    statslist = [
-        player.id,
-        player.strength,
-        player.dex,
-        player.con,
-        player.intel,
-        player.cha,
-        player.luk,
-        player.max_health,
-        player.health,
-        player.max_mana,
-        player.mana,
-        player.money,
-        player.checkpoint,
-        player.gen,
-        player.character_class,
-    ]
-    return statslist

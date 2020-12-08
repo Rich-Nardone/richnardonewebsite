@@ -89,6 +89,29 @@ class Player:
             "damage",
         )
 
+
+    def deconstruct_player(self):
+        """ Deconstructing player object for PSQL """
+        # Simon wants to move this to the player.py file and player class
+        statslist = [
+            self.id,
+            self.strength,
+            self.dex,
+            self.con,
+            self.intel,
+            self.cha,
+            self.luk,
+            self.max_health,
+            self.health,
+            self.max_mana,
+            self.mana,
+            self.money,
+            self.checkpoint,
+            self.gen,
+            self.character_class,
+        ]
+        return statslist
+
     def make_neet(self):
         """ Create 'neet' archetype character. """
         # Strength: Used for slapping and stronging things
@@ -157,3 +180,25 @@ class Player:
         self.max_mana = self.intel * 5
         # money
         self.money = self.luk * 5
+
+
+def deconstruct_player(player):
+    """ Deconstructing player object for PSQL """
+    statslist = [
+        player.id,
+        player.strength,
+        player.dex,
+        player.con,
+        player.intel,
+        player.cha,
+        player.luk,
+        player.max_health,
+        player.health,
+        player.max_mana,
+        player.mana,
+        player.money,
+        player.checkpoint,
+        player.gen,
+        player.character_class,
+    ]
+    return statslist
