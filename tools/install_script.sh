@@ -36,6 +36,7 @@ echo "Updating npm and dependencies..."
 npm i -${MODE}
 npm i -g webpack -${MODE}
 npm i --save-dev webpack -${MODE}
+npm i -S webpack-cli -${MODE}
 npm i -S socket.io-client -${MODE}
 # react
 npm i -S react -${MODE}
