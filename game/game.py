@@ -56,15 +56,20 @@ def combat(player, enemy):
     send_out("Combat has ended! " + winner + " has won!")
 
 
-def game(user):
+def game(userlist, char_name):
     """ Runs the game, given a user """
-    # player character
-    player = start_scenario(user)
-    save_progress(user, player, "start")  # move to within the game
-    # this tuple is shaped: "Player, String" where string is the area
-    state_tuple = scenario(player, "intro")
+    # try to load progress, otherwise start scenario
+    player = load_progress(userlist, char_name) #unsure if im calling this right
+    if(player != None):
+        state_tuple = (player, player.checkpoint)
+    else:
+        # player character
+        player = start_scenario(userlist[-1])
+        save_progress([player])  # move to within the game
+        # this tuple is shaped: "Player, String" where string is the area
+        state_tuple = scenario(player, "intro")
     while state_tuple[1] != "end":
-        save_progress(user, state_tuple[0], state_tuple[1])
+        save_progress([state_tuple[0]])
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
-    return user
+    return

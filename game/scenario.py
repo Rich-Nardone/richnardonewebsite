@@ -17,7 +17,6 @@ def start_scenario(user=None):
     send_out(start_text)
     # character creation
     player = Player()
-    # TODO fetch player info for user 'user' from the database need player name, gender and class
     return player
 
 
