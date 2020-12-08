@@ -42,7 +42,7 @@ const listStyle = {
 
 };
 
-export default function InventoryList() {
+export function InventoryList() {
   const [inventory, setInventory] = useState([]);
 
   function retrievePlayerInventory() {
@@ -75,3 +75,5 @@ export default function InventoryList() {
     </div>
   );
 }
+
+export default InventoryList;

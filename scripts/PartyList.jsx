@@ -36,7 +36,7 @@ const listStyle = {
   fontSize: fnt,
 };
 
-export default function PartyList() {
+export function PartyList() {
   const [party, setParty] = useState([]);
 
   function retrievePlayerParty() {
@@ -69,3 +69,5 @@ export default function PartyList() {
     </div>
   );
 }
+
+export default PartyList;
