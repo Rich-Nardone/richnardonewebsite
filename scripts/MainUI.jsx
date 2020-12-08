@@ -1,44 +1,38 @@
-import React, {useState, useEffect} from 'react'; 
-import { Chatbox } from './Chatbox.jsx';
-import { InventoryList } from './InventoryList.jsx'; 
-import { PartyList } from './PartyList.jsx';
-import {Socket} from './Socket.jsx';
+import React from 'react';
 import Sound from 'react-sound';
-import {volu} from './OptionMenu.jsx';
-import {fnt} from './OptionMenu.jsx';
-import {brc} from './OptionMenu.jsx';
+import { Chatbox } from './Chatbox';
+import { InventoryList } from './InventoryList';
+import { PartyList } from './PartyList';
+import { Socket } from './Socket';
+import { volu, fnt, brc } from './OptionMenu';
 
+const button = {
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  width: 210,
+  border: brc,
+  fontSize: fnt,
+};
 
+export default function MainUI() {
+  function gotoOptions() {
+    // eslint-disable-next-line no-console
+    console.log('Heading to Options!');
+    window.location = 'options.html';
+    return window.location;
+  }
 
-const button={
-    fontWeight:'bold',
-    fontStyle:'italic',
-    width:210,
-    border:brc,
-    fontSize:fnt,
-}   
-
-
-
-export function MainUI(){
-    
-    function gotoOptions(){
-        
-        console.log("Heading to Options!")
-        return(window.location = "options.html")
-    }
-    
-    return(
-        <div>
-            <Sound
-                    url='static/MainChatTheme.mp3'
-                    playStatus={Sound.status.PLAYING}
-                    volume={volu}
-            />
-            <PartyList /> 
-            <InventoryList />
-            <Chatbox /> 
-            <button style={button} onClick={gotoOptions}>Options</button>
-        </div>     
-    );
+  return (
+    <div>
+      <Sound
+        url="static/MainChatTheme.mp3"
+        playStatus={Sound.status.PLAYING}
+        volume={volu}
+      />
+      <PartyList />
+      <InventoryList />
+      <Chatbox />
+      <button type="submit" style={button} onClick={gotoOptions}>Options</button>
+    </div>
+  );
 }

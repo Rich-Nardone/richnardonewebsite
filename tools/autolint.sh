@@ -3,13 +3,13 @@
 # Run from parent directory with 'sh tools/autolint.sh'
 
 # ESLINT
-#for s in scripts/*.jsx;
-#do
-#    echo "Linting $s"
-#    npx eslint $s --fix
-#    echo "press any button to continue"
-#    read -n 1 -s
-#done
+for s in "scripts/*.jsx";
+do
+    echo "Linting $s"
+    npx eslint $s --fix
+done
+echo "press any button to continue"
+read -n 1 -s
 
 # PYLINT
 # Precede all lints with a reformat
@@ -17,8 +17,8 @@
 for p in game/*.py;
 do
     echo "Linting {$p}"
-    black $p
-    pylint $p
+    python -m black $p
+    python -m pylint $p
     echo "press any button to continue"
     read -n 1 -s
 done
@@ -26,8 +26,8 @@ done
 for p in *.py;
 do
     echo "Linting {$p}"
-    black $p
-    pylint $p
+    python -m black $p
+    python -m pylint $p
     echo "press any button to continue"
     read -n 1 -s
 done

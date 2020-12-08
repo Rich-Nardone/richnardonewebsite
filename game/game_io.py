@@ -3,22 +3,27 @@
     - include PSQL additions, likely in another method
         called report_progress
 """
-from .player import Player
-import os, sys, inspect
+import inspect
+import os
+import sys
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from Integration import save_progress
+from progress import save_progress
 from settings import socketio
 import user_input
 
+from .player import Player
+
 user_in = user_input.UserInput()
+
 
 def g_save_progress(user, player):
     """ calls save_progress from integration """
     # iunno if its feasible to move the function from integration to game_io
     save_progress(player)
+
 
 def load_progress(user):
     """ Method for saving progress """

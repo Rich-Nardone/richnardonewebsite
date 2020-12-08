@@ -26,22 +26,29 @@ sudo ${PIP} install Flask-SQLAlchemy==2.1 -q
 echo "...for coverage"
 sudo ${PIP} install coverage -q
 echo "...for pylint"
-sudo ${PIP} install pylint
+sudo ${PIP} install pylint -q
 echo "...for black"
-sudo ${PIP} install git+git://github.com/psf/black
+sudo ${PIP} install git+git://github.com/psf/black -q
 
 echo "Updating npm and dependencies..."
-npm install -${MODE}
-npm install -g webpack -${MODE}
-npm install --save-dev webpack -${MODE}
-npm install socket.io-client --save -${MODE}
+npm i -${MODE}
+npm i -g webpack -${MODE}
+npm i --save-dev webpack -${MODE}
+npm i -S socket.io-client -${MODE}
+# react
+npm i -S react -${MODE}
+npm i -S react-dom -${MODE}
+npm i -S react-sound -${MODE}
 # google auth
-npm install --save react-google-button -${MODE}
+npm i -S react-google-button -${MODE}
+npm i -S react-google-login -${MODE}
 # for linting
-npm install eslint --save-dev -${MODE}
-npm install eslint-plugin-react@latest --save-dev -${MODE}
+npm i eslint --save-dev -${MODE}
+npm i eslint-plugin-react@latest --save-dev -${MODE}
 npm i eslint-config-airbnb -${MODE}
-npm install eslint-plugin-jsx-a11y@latest --save-dev -${MODE}
-npm install eslint-plugin-import@latest --save-dev -${MODE}
+npm i eslint-plugin-jsx-a11y@latest --save-dev -${MODE}
+npm i eslint-plugin-import@latest --save-dev -${MODE}
+# other
+npm i -S prop-types -${MODE}
 
 echo "All dependencies installed!"

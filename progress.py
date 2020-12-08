@@ -1,15 +1,16 @@
+"""
+    Helpful file to streamline saving and loading players' progress from the database
+"""
+
 import os
 import models
 from settings import db
 
-import game.game
-import game.game_io
-from game.game import game
 from game.game_io import deconstruct_player
 from game.player import Player
 
-#for this funciton work a list of users with most recent ones at the end must be sent
-def saveProgress(userlist):
+# for this funciton work a list of users with most recent ones at the end must be sent
+def save_progress(userlist):
     """ Saves the user's progress to the database """
     FLAG = "INSERT"
     USER = userlist[-1]
@@ -88,15 +89,18 @@ def saveProgress(userlist):
         db.session.commit()
     else:
         print("weird error")
-#need to send list of users to use function, also this is currnetly incomplete
-def loadProgress(userlist):
-    USER=userlist[-1]
+
+
+# need to send list of users to use function, also this is currnetly incomplete
+def load_progress(userlist):
+    """ Tries to load progress from DB """
+    USER = userlist[-1]
     email = db.session.query(models.username).filter_by(id=USER).first()
     key = email.id
     characterList = db.session.query(models.character).filter_by(user_id=key)
-    #gets all the character names tied to userID. Need to display all names and allowed use to select or create new
+    # gets all the character names tied to userID. Need to display all names and allowed use to select or create new
     player = Player()
     for char in characterList:
         if char.characterName == "popo":
             player = char
-    #game(player)
+    # game(player)
