@@ -26,7 +26,7 @@ export function App() {
   return (
     <div>
       <h1 style={h1}>Welcome to Text RPG</h1>
-      <img style={image_style} src="/static/Fog.gif" alt="fog" />
+      <img style={imageStyle} src="/static/Fog.gif" alt="fog" />
       <hr />
       <GoogleLoginButton />
       <EmailLogin />
