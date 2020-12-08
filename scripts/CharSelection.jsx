@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {Socket} from './Socket.jsx'; 
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { Socket } from './Socket';
 
-export function CharSelection(){
+export default function CharSelection(){
     const [character, updateCharacter] = useState([]);
     const [selection, updateSelection] = useState(null);
     
@@ -20,7 +22,7 @@ export function CharSelection(){
         return window.location="character_creation.html";
     }
     
-    const display_character = character.map((chars,index)=>
+    const displayCharacter = character.map((chars,index)=>
         <div>
         <input type ="radio" value={chars.id} name="char" onChange={e=>updateSelection(e.target.value)}/>
         <label> Character Name: {chars.character_name} , Class: {chars.class}</label>
@@ -39,7 +41,7 @@ export function CharSelection(){
         <div>
             <h1> Continue with Charcter </h1> 
             <form onSubmit={toMain}> 
-                {display_character}
+                {displayCharacter}
                 <br />
                 <input type="submit" /> 
             </form>
