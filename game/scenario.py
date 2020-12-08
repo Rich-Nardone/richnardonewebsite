@@ -20,6 +20,7 @@ def start_scenario(user=None):
     # TODO fetch player info for user 'user' from the database need player name, gender and class
     return player
 
+
 def scenario(player, scenario_id):
     """ Loads into the scenario """
     if scenario_id == "intro":

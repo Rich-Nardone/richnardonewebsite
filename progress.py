@@ -1,15 +1,16 @@
+"""
+    Helpful file to streamline saving and loading players' progress from the database
+"""
+
 import os
 import models
 from settings import db
 
-import game.game
-import game.game_io
-from game.game import game
 from game.game_io import deconstruct_player
 from game.player import Player
 
 # for this funciton work a list of users with most recent ones at the end must be sent
-def saveProgress(userlist):
+def save_progress(userlist):
     """ Saves the user's progress to the database """
     FLAG = "INSERT"
     USER = userlist[-1]
@@ -91,7 +92,8 @@ def saveProgress(userlist):
 
 
 # need to send list of users to use function, also this is currnetly incomplete
-def loadProgress(userlist):
+def load_progress(userlist):
+    """ Tries to load progress from DB """
     USER = userlist[-1]
     email = db.session.query(models.username).filter_by(id=USER).first()
     key = email.id

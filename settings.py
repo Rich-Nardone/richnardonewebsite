@@ -1,3 +1,7 @@
+"""
+    Display settings, stored in PSQL
+"""
+
 import os
 from os.path import join, dirname
 import flask

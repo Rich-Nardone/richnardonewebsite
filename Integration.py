@@ -2,7 +2,7 @@
     Launches the Flask app
 """
 import os
-from os.path import join, dirname
+import flask
 from settings import db, app, socketio
 from inventory import (
     get_user_inventory,
@@ -11,10 +11,10 @@ from inventory import (
     search_bar,
     filter_by_type,
 )
-from progress import saveProgress, loadProgress
+from progress import save_progress, loadProgress
 from user_controller import User
 import models
-import flask
+
 # game logic
 import game.game
 import game.game_io
@@ -23,14 +23,14 @@ from game.game_io import deconstruct_player
 from game.player import Player
 
 # For shop, checks if item has been purchased.
-item = 0
+ITEM = 0
 # Used to check if user bought item again.
-times = 1
+TIMES = 1
 
 
 def player_info():
     """ Send playerinfo to js. Currently sends dummy data. """
-    player_info = {
+    player_data = {
         "user_party": ["player1", "player2", "player10"],
         "user_inventory": ["coins", "sword", "shield"],
         "user_chatlog": [
@@ -39,27 +39,30 @@ def player_info():
             "user attacks, hitting the blob for 10pts",
         ],
     }
-    if item == 1:
-        x = player_info["user_inventory"]
-        global times
-        if times == 0:
-            x.extend(["Health Pack"])
-            times += 1
+    if ITEM == 1:
+        inv = player_data["user_inventory"]
+        global TIMES
+        if TIMES == 0:
+            inv.extend(["Health Pack"])
+            TIMES += 1
         else:
-            x.extend(["Health Pack"] * times)
-            times += 1
+            inv.extend(["Health Pack"] * TIMES)
+            TIMES += 1
 
-        print(x)
-        player_info["user_inventory"] = x
-    socketio.emit("player info", player_info)
+        print(inv)
+        player_data["user_inventory"] = inv
+    socketio.emit("player info", player_data)
 
 
 userlist = [1]
 idlist = [""]
 
-def create_user_controller(email): 
+
+def create_user_controller(email):
+    """ Creates a session for a user given an email """
     userObj = User(email)
     flask.session["userObj"] = userObj
+
 
 @socketio.on("google login")
 def google_login(data):
@@ -76,43 +79,44 @@ def google_login(data):
     userid = db.session.query(models.username).filter_by(email=em).first()
     userlist.append(userid.id)
 
-    #Used to distinguish users, for database user calls 
+    # Used to distinguish users, for database user calls
     create_user_controller(em)
     flask.session["user_id"] = em
     idlist.append(em)
-    
-    #check if user has character
+
+    # check if user has character
     userObj = flask.session["userObj"]
     response = {}
-    
-    if userObj.user_exists(): 
-        if userObj.character_counter > 0: 
+
+    if userObj.user_exists():
+        if userObj.character_counter > 0:
             response["has_character"] = True
-        else: 
+        else:
             response["has_character"] = False
-    else: 
+    else:
         response["has_character"] = False
-        
+
     socketio.emit("google login response", response)
-    
+
+
 @socketio.on("email login")
 def email_login(data):
     print(data)
     create_user_controller(data)
-    
+
     userObj = flask.session["userObj"]
     response = {}
-    
-    if userObj.user_exists(): 
+
+    if userObj.user_exists():
         response["user_exists"] = True
-        if userObj.character_counter > 0: 
+        if userObj.character_counter > 0:
             response["has_character"] = True
-        else: 
+        else:
             response["has_character"] = False
-    else: 
+    else:
         response["user_exists"] = False
         response["has_character"] = False
-        
+
     socketio.emit("email exists", response)
 
 
@@ -135,13 +139,15 @@ def send_chatlog():
     ]
     socketio.emit("user chatlog", user_chatlog)
 
+
 @socketio.on("choosen character")
 def character_selected(data):
     print("id selection" + str(data))
-    if "userObj" in flask.session: 
-        userObj=flask.session["userObj"]
+    if "userObj" in flask.session:
+        userObj = flask.session["userObj"]
         userObj.char_select(data)
         print(userObj.selected_character_id)
+
 
 @socketio.on("user input")
 def parse_user_input(data):
@@ -181,19 +187,21 @@ def get_chatlog():
 @socketio.on("item purchased")
 def item_purchased():
     """ Purchase item """
-    global item
-    item = 1
+    global ITEM
+    ITEM = 1
     player_info()
+
 
 @socketio.on("get user characters")
 def user_chars():
     print("landed")
-    characters={}
+    characters = {}
     userObj = flask.session["userObj"]
     characters["char_instance"] = userObj.get_characters()
     print(characters)
     socketio.emit("recieve user characters", characters)
-    
+
+
 @socketio.on("user new character")
 def character_creation(data):
     """ Create character """
@@ -275,7 +283,7 @@ def main():
 @app.route("/options.html")
 def options():
     """ main chat window """
-    # saveProgress()
+    # save_progress()
     print(idlist[-1] + " YOOOOO")
     return flask.render_template("options.html")
 

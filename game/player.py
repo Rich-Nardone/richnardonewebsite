@@ -35,23 +35,23 @@ class Player:
         self.gen = "gender"
         self.character_class = "class"
 
-    def attack(self, type, target):
+    def attack(self, atk_type, target):
         """ Attack the target """
-        if type == "melee":
+        if atk_type == "melee":
             crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
             crit_mult = 1.00  # The critical damage multiplier
             if crit_state:
                 crit_mult = 2.00
             expected_damage = self.strength * crit_mult
             return target.damage(expected_damage, self)
-        if type == "range":
+        if atk_type == "range":
             crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
             crit_mult = 1.00  # The critical damage multiplier
             if crit_state:
                 crit_mult = 2.00
             expected_damage = self.dex * crit_mult
             return target.damage(expected_damage, self)
-        if type == "magic":
+        if atk_type == "magic":
             crit_state = self.luk < random.randrange(1, 100)  # Is this hit a crit?
             crit_mult = 1.00  # The critical damage multiplier
             if crit_state:
