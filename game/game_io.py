@@ -5,20 +5,20 @@
 """
 from .player import Player
 import os, sys, inspect
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
+from Integration import save_progress
+from settings import socketio
+import user_input
 
+user_in = user_input.UserInput()
 
-
-
-def progress(user, player, checkpoint):
-    """ Method for saving progress """
-    # TODO Implement with PSQL
-    print(
-        "DEBUG: Username " + user + " with", player.id, "at " + player.checkpoint
-    )  # DEBUG
-
+def g_save_progress(user, player):
+    """ calls save_progress from integration """
+    # iunno if its feasible to move the function from integration to game_io
+    save_progress(player)
 
 def load_progress(user):
     """ Method for saving progress """
