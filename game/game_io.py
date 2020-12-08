@@ -15,10 +15,12 @@ import user_input
 
 user_in = user_input.UserInput()
 
+
 def g_save_progress(user, player):
     """ calls save_progress from integration """
     # iunno if its feasible to move the function from integration to game_io
     save_progress(player)
+
 
 def load_progress(user):
     """ Method for saving progress """

@@ -22,24 +22,21 @@ const imageStyle = {
   height: 300,
 };
 
-
-
 export function App() {
   return (
     <div>
       <h1 style={h1}>Welcome to Text RPG</h1>
-      <img style={image_style} src='/static/Fog.gif' alt="fog" />
-      <hr></hr>
+      <img style={image_style} src="/static/Fog.gif" alt="fog" />
+      <hr />
       <GoogleLoginButton />
       <EmailLogin />
       <Sound
-        url='/static/Index_LoginTheme.mp3'
+        url="/static/Index_LoginTheme.mp3"
         playStatus={Sound.status.PLAYING}
-        volume='50'
+        volume="50"
       />
-      <hr></hr>
+      <hr />
     </div>
-
 
   );
 }

@@ -29,21 +29,18 @@ function handleLogoutFail() {
   alert('Google logout failed');
 }
 export function GoogleLoginButton() {
-
   function handleLoginSuccess(response) {
-    let userData = response;
-    Socket.emit('google login', { 'UserInfo': userData });
+    const userData = response;
+    Socket.emit('google login', { UserInfo: userData });
   }
 
   function userHasChar() {
     useEffect(() => {
       Socket.on('google login response', (data) => {
-        console.log(data)
-        if (data.has_character)
-          return window.location = "character_selection.html";
-        else
-          return window.location = "character_creation.html";
-      })
+        console.log(data);
+        if (data.has_character) { return window.location = 'character_selection.html'; }
+        return window.location = 'character_creation.html';
+      });
     });
   }
 
@@ -52,17 +49,15 @@ export function GoogleLoginButton() {
   return (
     <GoogleLogin
       clientId={ClientID}
-      render={renderProps => (
+      render={(renderProps) => (
         <button onClick={renderProps.onClick} style={logStyle}>Newcomer? Enter if you dare...</button>
       )}
       buttonText="REGISTER"
       onSuccess={handleLoginSuccess}
       onFailure={handleLoginFail}
-      cookiePolicy={'single_host_origin'}
-      theme='dark'
+      cookiePolicy="single_host_origin"
+      theme="dark"
       style={logStyle}
-
-
 
     />
   );

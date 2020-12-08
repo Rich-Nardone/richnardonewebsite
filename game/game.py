@@ -8,6 +8,7 @@ from .scenario import scenario, start_scenario
 
 # COMBAT COMBAT COMBAT
 def combat(player, enemy):
+    """ Simulates combat between the player and the enemy """
     send_out("Player " + player.id + " begins combat with " + enemy.id)
     send_out(
         "Player "
@@ -53,7 +54,7 @@ def game(user):
     """ Runs the game, given a user """
     # player character
     player = start_scenario(user)
-    g_save_progress(user, player, "start") #move to within the game
+    g_save_progress(user, player, "start")  # move to within the game
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
     while state_tuple[1] != "end":
