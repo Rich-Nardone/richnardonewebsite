@@ -91,8 +91,10 @@ function CharSelection() {
     </div>
   );
 }
-export default function CreationUI() {
+export function CreationUI() {
   return (
     <CharSelection />
   );
 }
+
+export default CreationUI;

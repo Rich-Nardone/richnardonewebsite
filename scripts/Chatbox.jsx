@@ -62,7 +62,7 @@ const body = {
   background: 'grey',
 };
 
-export default function Chatbox() {
+export function Chatbox() {
   const [userInput, setInput] = useState('');
   const [money, setMoney] = useState(1000);
   const [chatlog, setChatlog] = useState([]);
@@ -136,3 +136,5 @@ export default function Chatbox() {
     </div>
   );
 }
+
+export default Chatbox;

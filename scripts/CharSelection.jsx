@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { Socket } from './Socket';
 
-export default function CharSelection() {
+export function CharSelection() {
   const [character, updateCharacter] = useState([]);
   const [selection, updateSelection] = useState(null);
 
@@ -54,3 +54,5 @@ export default function CharSelection() {
     </div>
   );
 }
+
+export default CharSelection;

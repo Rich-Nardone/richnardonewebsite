@@ -14,7 +14,7 @@ const button = {
   fontSize: fnt,
 };
 
-export default function MainUI() {
+export function MainUI() {
   function gotoOptions() {
     // eslint-disable-next-line no-console
     console.log('Heading to Options!');
@@ -36,3 +36,5 @@ export default function MainUI() {
     </div>
   );
 }
+
+export default MainUI;
