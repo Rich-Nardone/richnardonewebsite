@@ -26,9 +26,9 @@ sudo ${PIP} install Flask-SQLAlchemy==2.1 -q
 echo "...for coverage"
 sudo ${PIP} install coverage -q
 echo "...for pylint"
-sudo ${PIP} install pylint
+sudo ${PIP} install pylint -q
 echo "...for black"
-sudo ${PIP} install git+git://github.com/psf/black
+sudo ${PIP} install git+git://github.com/psf/black -q
 
 echo "Updating npm and dependencies..."
 npm install -${MODE}

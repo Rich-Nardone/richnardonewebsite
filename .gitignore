@@ -11,6 +11,6 @@ node_modules/
 package-lock.json
 static/script.js
 lib/
-.eslintrc.js
+.eslintrc.*
 # vscode
 .vscode/
