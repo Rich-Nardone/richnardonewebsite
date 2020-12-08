@@ -6,8 +6,7 @@ import os
 import models
 from settings import db
 
-from game.game_io import deconstruct_player
-from game.player import Player
+from game.player import Player, deconstruct_player
 
 # for this funciton work a list of users with most recent ones at the end must be sent
 def save_progress(userlist):

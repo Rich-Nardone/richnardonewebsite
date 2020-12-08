@@ -1,9 +1,15 @@
 """
     Handles the game logic
 """
-
+import inspect
+import os
+import sys
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+from progress import save_progress, load_progress
 # local imports
-from .game_io import g_save_progress, prompt_in, send_out
+from .game_io import prompt_in, send_out
 from .scenario import scenario, start_scenario
 
 # COMBAT COMBAT COMBAT
@@ -54,11 +60,11 @@ def game(user):
     """ Runs the game, given a user """
     # player character
     player = start_scenario(user)
-    g_save_progress(user, player, "start")  # move to within the game
+    save_progress(user, player, "start")  # move to within the game
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
     while state_tuple[1] != "end":
-        g_save_progress(user, state_tuple[0], state_tuple[1])
+        save_progress(user, state_tuple[0], state_tuple[1])
         state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
     return user
