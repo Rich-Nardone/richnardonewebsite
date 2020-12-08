@@ -4,7 +4,13 @@
 import os
 from os.path import join, dirname
 from settings import db, app, socketio
-from inventory import get_user_inventory, get_asc_inventory, get_dsc_inventory, search_bar, filter_by_type
+from inventory import (
+    get_user_inventory,
+    get_asc_inventory,
+    get_dsc_inventory,
+    search_bar,
+    filter_by_type,
+)
 from progress import saveProgress, loadProgress
 from user_controller import User
 import models
@@ -20,6 +26,7 @@ from game.player import Player
 item = 0
 # Used to check if user bought item again.
 times = 1
+
 
 def player_info():
     """ Send playerinfo to js. Currently sends dummy data. """
@@ -45,6 +52,7 @@ def player_info():
         print(x)
         player_info["user_inventory"] = x
     socketio.emit("player info", player_info)
+
 
 userlist = [1]
 idlist = [""]
@@ -107,23 +115,25 @@ def email_login(data):
         
     socketio.emit("email exists", response)
 
-def send_party(): 
-    #TODO get party from database 
-    
-    #DUMMY DATA
-    user_party=["player1", "player2", "player10"]
-    socketio.emit('user party', user_party)
-    
+
+def send_party():
+    # TODO get party from database
+
+    # DUMMY DATA
+    user_party = ["player1", "player2", "player10"]
+    socketio.emit("user party", user_party)
+
+
 def send_chatlog():
-    #TODO get chatlog from database
-    
-    #DUMMY DATA
-    user_chatlog=[
-            "welcome to the world",
-            "attack",
-            "user attacks, hitting the blob for 10pts"
+    # TODO get chatlog from database
+
+    # DUMMY DATA
+    user_chatlog = [
+        "welcome to the world",
+        "attack",
+        "user attacks, hitting the blob for 10pts",
     ]
-    socketio.emit('user chatlog', user_chatlog)
+    socketio.emit("user chatlog", user_chatlog)
 
 @socketio.on("choosen character")
 def character_selected(data):
@@ -136,34 +146,36 @@ def character_selected(data):
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
-    print(
-        data["input"]
-    )
+    print(data["input"])
 
 
 @socketio.on("get party")
 def get_party():
     send_party()
-    
+
+
 @socketio.on("get inventory")
 def get_inventory():
     inventory = get_user_inventory()
     send_inventory(inventory)
 
+
 def send_inventory(inventory):
-    socketio.emit('user inventory', inventory)
+    socketio.emit("user inventory", inventory)
+
 
 @socketio.on("get chatlog")
 def get_chatlog():
-    #TODO get chatlog from database
-    
-    #DUMMY DATA
-    user_chatlog=[
-            "welcome to the world",
-            "attack",
-            "user attacks, hitting the blob for 10pts"
+    # TODO get chatlog from database
+
+    # DUMMY DATA
+    user_chatlog = [
+        "welcome to the world",
+        "attack",
+        "user attacks, hitting the blob for 10pts",
     ]
     send_chatlog()
+
 
 # Test atm for the shop
 @socketio.on("item purchased")
@@ -226,19 +238,24 @@ def about():
     """ main page """
     return flask.render_template("landing_page.html")
 
-#=======================================================================================
+
+# =======================================================================================
+
 
 @app.route("/character_selection.html")
 def char_select():
     """ main page """
     return flask.render_template("character_selection.html")
 
-#=======================================================================================
+
+# =======================================================================================
+
 
 @app.route("/login.html")
 def index():
     """ main page """
     return flask.render_template("index.html")
+
 
 # ======================================================================================
 @app.route("/character_creation.html")
@@ -252,13 +269,13 @@ def char_create():
 def main():
     """ main chat window """
     return flask.render_template("main_chat.html")
-    
 
-#=========================================================================================
+
+# =========================================================================================
 @app.route("/options.html")
 def options():
     """ main chat window """
-    #saveProgress()
+    # saveProgress()
     print(idlist[-1] + " YOOOOO")
     return flask.render_template("options.html")
 
@@ -271,5 +288,5 @@ if __name__ == "__main__":
         app,
         host=os.getenv("IP", "0.0.0.0"),
         port=int(os.getenv("PORT", 8080)),
-        debug=True
+        debug=True,
     )

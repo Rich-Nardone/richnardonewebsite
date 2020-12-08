@@ -7,9 +7,9 @@ for s in "scripts/*.jsx";
 do
     echo "Linting $s"
     npx eslint $s --fix
-    echo "press any button to continue"
-    read -n 1 -s
 done
+echo "press any button to continue"
+read -n 1 -s
 
 # PYLINT
 # Precede all lints with a reformat

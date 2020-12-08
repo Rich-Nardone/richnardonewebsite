@@ -2,6 +2,7 @@
     Container for User Input
 """
 
+
 class UserInput:
     """ Class to handle user input """
 
@@ -14,7 +15,7 @@ class UserInput:
         self.recent = text
         if not self.updated:
             self.updated = True
-    
+
     def read_input(self):
         """ Tries to read input if there has been any new input """
         if self.updated:
