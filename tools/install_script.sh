@@ -13,6 +13,8 @@ sudo ${PIP} install requests -q
 # flask serving
 echo "...for Flask"
 sudo ${PIP} install flask -q
+echo "...for flask-session"
+sudo ${PIP} install Flask-Sessions -q
 echo "...for flask-socketio"
 sudo ${PIP} install flask-socketio -q
 echo "...for eventlet"
