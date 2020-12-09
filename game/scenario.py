@@ -73,7 +73,7 @@ def scenario(player, scenario_id):
             if parse(action)["fight"] and slime_alive:
                 send_out("You begin combat with the gray slime!", player.id)
                 slime_npc = Player("", 10, 10, 10, 0, 0, 0)
-                combat(player, slime_npc, player.id)
+                combat(player, slime_npc)
                 slime_alive = False
             if parse(action)["leave"]:
                 return (player, "entrance", player.id)
@@ -90,11 +90,11 @@ def scenario(player, scenario_id):
             if parse(action)["fight"]:
                 send_out("You begin combat with the gray slimes!", player.id)
                 slime_npc1 = Player("", 10, 10, 10, 0, 0, 0)
-                combat(player, slime_npc1, player.id)
+                combat(player, slime_npc1)
                 slime_npc2 = Player("", 10, 10, 10, 0, 0, 0)
-                combat(player, slime_npc2, player.id)
+                combat(player, slime_npc2)
                 slime_npc3 = Player("", 10, 10, 10, 0, 0, 0)
-                combat(player, slime_npc3, player.id)
+                combat(player, slime_npc3)
                 slime_alive = False
             if parse(action)["talk"]:
                 send_out(
