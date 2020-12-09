@@ -176,9 +176,9 @@ def get_chatlog():
 def game_start():
     player = Player()
     # try to grab player object from db if possible
-    dat = db.session.query(models.chat_log).filter_by(character_id="1")
+    dat = db.session.query(models.username).filter_by(character_id="1")
     print(dat)
-    game(player, True, {})
+    game(player)
 
 
 def get_user_log():
