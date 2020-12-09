@@ -79,8 +79,6 @@ def google_login(data):
 
     # Used to distinguish users, for database user calls
     create_user_controller(em)
-
-    flask.session["user_id"] = em
     idlist.append(em)
 
     # check if user has character
@@ -130,11 +128,6 @@ def send_chatlog(user_chatlog):
 charlist = [1]
 @socketio.on("choosen character")
 def character_selected(data):
-    charlist.append(data)
-    db.session.query(models.charlist).delete()
-    char = models.charlist(char=data)
-    db.session.add(char)
-    db.session.commit()
     if "userObj" in flask.session:
         userObj = flask.session["userObj"]
         userObj.char_select(data)
@@ -193,6 +186,7 @@ def send_log(log):
 
 def show_log():
     userObj = flask.session["userObj"]
+    print("char select" + str(userObj.selected_character_id))
     log = userObj.retrive_chatlog()
     print(log)
     return log
@@ -258,6 +252,8 @@ def character_creation(data):
         userObj.char_select(x.id)
         
     flask.session["userObj"] = userObj
+    
+    print("char selected: " + str(userObj.selected_character_id))
         
         
 
@@ -273,7 +269,7 @@ def about():
 
 
 @app.route("/character_selection.html")
-def char_select():
+def choose_char():
     """ main page """
     return flask.render_template("character_selection.html")
 

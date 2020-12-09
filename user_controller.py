@@ -5,7 +5,6 @@ import models
 
 class User:
     """ A class which links a user to their email (hidden from all users) """
-
     def __init__(self, email):
         self.email = email
         self.user_id = None
