@@ -91,15 +91,20 @@ def save_progress(userlist):
 
 
 # need to send list of users to use function, also this is currnetly incomplete
-def load_progress(userlist):
-    """ Tries to load progress from DB """
+def load_progress(userlist, char_name):
+    """
+        Loads all characters from DB
+        -> userlist is the list of most recent users
+        -> Tries to match char_name with user from DB
+        <- Returns a Player obj if found, otherwise returns None
+    """
     USER = userlist[-1]
     email = db.session.query(models.username).filter_by(id=USER).first()
     key = email.id
     characterList = db.session.query(models.character).filter_by(user_id=key)
     # gets all the character names tied to userID. Need to display all names and allowed use to select or create new
-    player = Player()
+    player = None
     for char in characterList:
-        if char.characterName == "popo":
+        if char.characterName == char_name:
             player = char
-    # game(player)
+    return player
