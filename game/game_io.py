@@ -11,10 +11,9 @@ import time
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from settings import socketio
+from settings import db, socketio
+import models
 import user_input
-
-from .player import Player
 
 user_in = user_input.UserInput()
 
@@ -30,4 +29,11 @@ def prompt_in():
 
 def send_out(msg):
     """ Method for sending reply """
+    dbmsg = models.chat_log(
+        user_id = 000,
+        character_id = 000,
+        chat = msg
+    )
+    db.session.add(dbmsg)
+    db.session.commit()
     socketio.emit("chatlog updated", {"text": msg})
