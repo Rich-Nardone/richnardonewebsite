@@ -9,6 +9,7 @@ from .player import Player
 
 def scenario(player, scenario_id):
     """ Loads into the scenario """
+    print("From scenario " + str(player.id))
     if scenario_id == "start":
         send_out(
             "You are in a white, bare room with nothing but a mirror with a few words on it."
