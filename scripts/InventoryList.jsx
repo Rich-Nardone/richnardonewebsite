@@ -1,14 +1,17 @@
 // Displayes inventory list. Inventory list is retrieved from database
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Socket } from './Socket';
 import { fnt, brc } from './OptionMenu';
 
 const div = {
+  position: 'relative',
   width: 205,
   height: 200,
   background: 'orange',
   border: brc,
+  boxShadow: '2px 5px black',
+  borderRadius: 10,
+  top: 100,
 
 };
 const p = {
@@ -27,17 +30,6 @@ const ul = {
   overflow: 'scroll',
   fontStyle: 'italic',
   padding: 0,
-  fontSize: fnt,
-
-};
-
-const listStyle = {
-  borderRadius: 5,
-  border: brc,
-  textAlign: 'center',
-  fontWeight: 'bold',
-  padding: 2,
-  margin: 3,
   fontSize: fnt,
 
 };

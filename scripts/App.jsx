@@ -10,28 +10,22 @@ const h1 = {
   fontWeight: 'bold',
   fontStyle: 'italic',
   borderWidth: 5,
-  background: 'linear-gradient(darkviolet,darkblue)',
+  background: 'grey',
   borderRadius: 10,
-};
-
-const imageStyle = {
-  float: 'center',
-  padding: 5,
-  margin: 5,
-  width: 1485,
-  height: 300,
+  boxShadow: '2px 5px black',
 };
 
 export function App() {
   return (
     <div>
       <h1 style={h1}>Welcome to Text RPG</h1>
-      <img style={imageStyle} src="/static/Fog.gif" alt="fog" />
+
       <hr />
       <GoogleLoginButton />
+      <br />
       <EmailLogin />
       <Sound
-        url="/static/Index_LoginTheme.mp3"
+        url="/static/Login.mp3"
         playStatus={Sound.status.PLAYING}
         volume="50"
       />
@@ -40,3 +34,5 @@ export function App() {
 
   );
 }
+
+export default App;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import Slider from '@material-ui/core/Slider';
@@ -71,7 +72,6 @@ const buttonView = {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-
 };
 
 export function Options() {

@@ -5,14 +5,18 @@ import Sound from 'react-sound';
 import { Socket } from './Socket';
 
 const h1 = {
+  position: 'relative',
   textAlign: 'center',
   padding: 50,
-  margin: 50,
+  margin: 25,
   fontWeight: 'bold',
   fontStyle: 'italic',
   borderWidth: 5,
-  background: 'white',
+  background: 'grey',
   borderRadius: 10,
+  boxShadow: '2px 5px black',
+  width: 250,
+  left: 500,
 };
 
 const label1 = {
@@ -29,10 +33,14 @@ const label2 = {
 };
 
 const form = {
-  background: 'white',
+  position: 'relative',
+  background: 'grey',
   border: '3px solid black',
   textAlign: 'center',
   borderRadius: 10,
+  left: 500,
+  width: 400,
+  boxShadow: '2px 5px black',
 };
 
 function CharSelection() {
@@ -58,9 +66,9 @@ function CharSelection() {
     <div>
       <h1 style={h1}>Who Are You?</h1>
       <Sound
-        url="static/CharCreation.mp3"
+        url="static/CharCreationMusic.mp3"
         playStatus={Sound.status.PLAYING}
-        volume="50"
+        volume="40"
       />
       <form style={form} onSubmit={handleForm}>
         <br />
