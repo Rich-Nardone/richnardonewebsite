@@ -12,18 +12,17 @@ const h1 = {
   borderWidth: 5,
   background: 'grey',
   borderRadius: 10,
-  boxShadow:'2px 5px black',
+  boxShadow: '2px 5px black',
 };
-
 
 export function App() {
   return (
     <div>
       <h1 style={h1}>Welcome to Text RPG</h1>
-      
+
       <hr />
       <GoogleLoginButton />
-      <br></br>
+      <br />
       <EmailLogin />
       <Sound
         url="/static/Login.mp3"
@@ -35,3 +34,5 @@ export function App() {
 
   );
 }
+
+export default App;

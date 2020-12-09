@@ -93,10 +93,10 @@ def save_progress(userlist):
 # need to send list of users to use function, also this is currnetly incomplete
 def load_progress(userlist, char_name):
     """
-        Loads all characters from DB
-        -> userlist is the list of most recent users
-        -> Tries to match char_name with user from DB
-        <- Returns a Player obj if found, otherwise returns None
+    Loads all characters from DB
+    -> userlist is the list of most recent users
+    -> Tries to match char_name with user from DB
+    <- Returns a Player obj if found, otherwise returns None
     """
     USER = userlist[-1]
     email = db.session.query(models.username).filter_by(id=USER).first()
