@@ -5,10 +5,15 @@ import { Socket } from './Socket';
 import { fnt, brc } from './OptionMenu';
 
 const div = {
+  position: 'relative',
   width: 205,
   height: 200,
   background: 'orange',
   border: brc,
+  boxShadow:'2px 5px black',
+  borderRadius: 10,
+  top: 100,
+  
 
 };
 const p = {
@@ -28,6 +33,7 @@ const ul = {
   fontStyle: 'italic',
   padding: 0,
   fontSize: fnt,
+  
 
 };
 

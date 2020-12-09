@@ -7,11 +7,15 @@ import { Socket } from './Socket';
 import { volu, fnt, brc } from './OptionMenu';
 
 const button = {
+  position: 'relative',
   fontWeight: 'bold',
   fontStyle: 'italic',
   width: 210,
   border: brc,
   fontSize: fnt,
+  top: 300,
+  borderRadius: 10,
+  top: 300,
 };
 
 export function MainUI() {
@@ -25,7 +29,7 @@ export function MainUI() {
   return (
     <div>
       <Sound
-        url="static/MainChatTheme.mp3"
+        url="static/MainUIMusic.mp3"
         playStatus={Sound.status.PLAYING}
         volume={volu}
       />

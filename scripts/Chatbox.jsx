@@ -6,13 +6,14 @@ const div = {
   width: 1000,
   height: 430,
   position: 'fixed',
-  left: 214.5,
-  top: 8,
+  left: 300,
+  top: 50,
   display: 'inline',
   background: 'grey',
   border: brc,
   fontSize: fnt,
-
+  boxShadow:'2px 5px black',
+  borderRadius: 10,
 };
 const ul = {
   listStyleType: 'none',

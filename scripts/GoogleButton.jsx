@@ -10,12 +10,13 @@ const logStyle = {
   textAlign: 'center',
   fontWeight: 'bold',
   fontStyle: 'italic',
-  background: 'linear-gradient(darkviolet,darkblue)',
+  background: 'grey',
   padding: 5,
   margin: 5,
   borderRadius: 10,
   fontSize: 18,
   width: 1500,
+  boxShadow:'2px 5px black',
 
 };
 
