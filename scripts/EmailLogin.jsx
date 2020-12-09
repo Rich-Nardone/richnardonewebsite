@@ -1,8 +1,9 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Socket } from './Socket.jsx';
+import { Socket } from './Socket';
 
-
-const div_style= {
+const divStyle = {
   textAlign: 'center',
   fontWeight: 'bold',
   fontStyle: 'italic',
@@ -12,33 +13,36 @@ const div_style= {
   borderRadius: 10,
   fontSize: 18,
   width: 1500,
-  boxShadow:'5px 10px black',
+  boxShadow: '5px 10px black',
 };
-
-
-
 
 export function EmailLogin() {
   const [email, setEmail] = useState(null);
 
   function checkEmail(event) {
     event.preventDefault();
+    // eslint-disable-next-line no-param-reassign
     event.target.value = '';
     Socket.emit('email login', email);
     Socket.on('email exists', (data) => {
       console.log(data);
-      if (data.user_exists && data.has_character) { return window.location = 'character_selection.html'; } // subject to change
+      if (data.user_exists && data.has_character) {
+        window.location = 'character_selection.html';
+        return window.location;
+      } // subject to change
       if (data.user_exists && !data.has_character) {
-        return window.location = 'character_creation.html';
+        window.location = 'character_creation.html';
+        return window.location;
       }
 
       alert('Email not found please try again');
       Socket.off('email exists');
+      return window.location;
     });
   }
 
   return (
-    <div style={div_style}>
+    <div style={divStyle}>
       <h3> Email Login </h3>
       <form onSubmit={checkEmail}>
         <p> Enter your email </p>
@@ -50,3 +54,5 @@ export function EmailLogin() {
     </div>
   );
 }
+
+export default EmailLogin;

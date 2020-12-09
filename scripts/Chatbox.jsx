@@ -12,7 +12,7 @@ const div = {
   background: 'grey',
   border: brc,
   fontSize: fnt,
-  boxShadow:'2px 5px black',
+  boxShadow: '2px 5px black',
   borderRadius: 10,
 };
 const ul = {

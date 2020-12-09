@@ -3,7 +3,6 @@ import Sound from 'react-sound';
 import { Chatbox } from './Chatbox';
 import { InventoryList } from './InventoryList';
 import { PartyList } from './PartyList';
-import { Socket } from './Socket';
 import { volu, fnt, brc } from './OptionMenu';
 
 const button = {
@@ -15,7 +14,6 @@ const button = {
   fontSize: fnt,
   top: 300,
   borderRadius: 10,
-  top: 300,
 };
 
 export function MainUI() {

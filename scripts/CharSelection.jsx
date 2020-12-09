@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
-// eslint-disable-next-line no-unused-vars
-import { Socket } from './Socket';
 import Sound from 'react-sound';
+import { Socket } from './Socket';
 
 const h1 = {
   textAlign: 'left',
@@ -13,26 +12,23 @@ const h1 = {
   borderWidth: 5,
   background: 'grey',
   borderRadius: 10,
-  boxShadow:'2px 5px black',
+  boxShadow: '2px 5px black',
   backgroundPosition: 'center',
-  width:500,
+  width: 500,
 };
 
-const character_style ={
-  
+const characterStyle = {
+
   textAlign: 'left',
-  fontWeight:'bold',
+  fontWeight: 'bold',
   background: 'grey',
   borderRadius: 5,
   padding: 5,
   margin: 5,
-  width:300,
-  boxShadow:'2px 5px black',
-  
-  
-  
-}
+  width: 300,
+  boxShadow: '2px 5px black',
 
+};
 
 export function CharSelection() {
   const [character, updateCharacter] = useState([]);
@@ -48,14 +44,15 @@ export function CharSelection() {
     }, []);
   }
 
-  function newChar(event) {
-    return window.location = 'character_creation.html';
+  function newChar() {
+    window.location = 'character_creation.html';
+    return window.location;
   }
 
-  const displayCharacter = character.map((chars, index) => (
+  const displayCharacter = character.map((chars) => (
     <div>
       <input type="radio" value={chars.id} name="char" onChange={(e) => updateSelection(e.target.value)} />
-      <label style={character_style} >
+      <label style={characterStyle}>
         {' '}
         Character Name:
         {chars.character_name}
@@ -63,16 +60,19 @@ export function CharSelection() {
         , Class:
         {chars.class}
       </label>
-      <br></br>
-      <br></br>
+      <br />
+      <br />
     </div>
-    
+
   ));
 
   function toMain(event) {
     event.preventDefault();
     Socket.emit('choosen character', selection);
-    if (selection != null) { return window.location = 'main_chat.html'; }
+    if (selection != null) {
+      window.location = 'main_chat.html';
+    }
+    return window.location;
   }
 
   getCharacters();
@@ -84,13 +84,13 @@ export function CharSelection() {
         volume="50"
       />
       <h1 style={h1}> Continue with Character? </h1>
-      <br></br>
+      <br />
       <form onSubmit={toMain}>
         {displayCharacter}
         <br />
         <input type="submit" />
       </form>
-      <button onClick={newChar}> Create new Character </button>
+      <button type="submit" onClick={newChar}> Create new Character </button>
     </div>
   );
 }
