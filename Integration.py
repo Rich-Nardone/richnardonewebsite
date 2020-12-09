@@ -79,7 +79,7 @@ def google_login(data):
 
     # Used to distinguish users, for database user calls
     create_user_controller(em)
-    
+
     flask.session["user_id"] = em
     idlist.append(em)
 
@@ -164,10 +164,28 @@ def send_inventory(inventory):
 @socketio.on("get chatlog")
 def get_chatlog():
     # this function is only called once so we're abusing that to start the game
-    player = db.session.query(models.character).filter_by(id=userlist[-1]).first()
+    player = Player()
+    stats = db.session.query(models.character).filter_by(user_id=userlist[-1]).first()
+    [
+        player.id,
+        player.strength,
+        player.dex,
+        player.con,
+        player.intel,
+        player.cha,
+        player.luk,
+        player.max_health,
+        player.health,
+        player.max_mana,
+        player.mana,
+        player.money,
+        player.checkpoint,
+        player.gen,
+        player.character_class,
+    ] = stats
     game(player, False)
     # get chatlog from db
-    chatlog = db.session.query(models.chat_log).filter_by(id=userlist[-1]).first()
+    chatlog = db.session.query(models.chat_log).filter_by(character_id=player.id).first()
     send_chatlog(chatlog)
 
 
