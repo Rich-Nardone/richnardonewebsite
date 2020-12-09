@@ -16,6 +16,7 @@ from user_controller import User
 import models
 
 # game logic
+from game.game import game
 from game.game_io import user_in
 from game.player import Player
 
@@ -78,6 +79,7 @@ def google_login(data):
 
     # Used to distinguish users, for database user calls
     create_user_controller(em)
+
     flask.session["user_id"] = em
     idlist.append(em)
 
@@ -125,24 +127,16 @@ def send_party():
     socketio.emit("user party", user_party)
 
 
-def send_chatlog():
-    # TODO get chatlog from database
-
-    # DUMMY DATA
-    user_chatlog = [
-        "welcome to the world",
-        "attack",
-        "user attacks, hitting the blob for 10pts",
-    ]
+def send_chatlog(user_chatlog):
     socketio.emit("user chatlog", user_chatlog)
 
 
 @socketio.on("choosen character")
 def character_selected(data):
-    print("id selection" + str(data))
     if "userObj" in flask.session:
         userObj = flask.session["userObj"]
         userObj.char_select(data)
+        flask.session["userObj"] = userObj
         print(userObj.selected_character_id)
 
 
@@ -169,15 +163,33 @@ def send_inventory(inventory):
 
 @socketio.on("get chatlog")
 def get_chatlog():
-    # TODO get chatlog from database
-
-    # DUMMY DATA
-    user_chatlog = [
-        "welcome to the world",
-        "attack",
-        "user attacks, hitting the blob for 10pts",
-    ]
-    send_chatlog()
+    # this function is only called once so we're abusing that to start the game
+    player = Player()
+    char_id = 0
+    if "userObj" in flask.session:
+        char_id = flask.session["userObj"].selected_character_id
+    stats = db.session.query(models.character).filter_by(user_id=userlist[-1], character_id=char_id).first()
+    [
+        player.id,
+        player.strength,
+        player.dex,
+        player.con,
+        player.intel,
+        player.cha,
+        player.luk,
+        player.max_health,
+        player.health,
+        player.max_mana,
+        player.mana,
+        player.money,
+        player.checkpoint,
+        player.gen,
+        player.character_class,
+    ] = stats
+    game(player, False)
+    # get chatlog from db
+    chatlog = db.session.query(models.chat_log).filter_by(character_id=player.id).first()
+    send_chatlog(chatlog)
 
 
 # Test atm for the shop

@@ -11,7 +11,8 @@ import time
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from settings import socketio
+from settings import db, socketio
+import models
 import user_input
 
 user_in = user_input.UserInput()
@@ -26,6 +27,14 @@ def prompt_in():
     return text
 
 
-def send_out(msg):
+def send_out(msg, flask_dict):
     """ Method for sending reply """
+    print(msg)
+    dbmsg = models.chat_log(
+        user_id=flask_dict["user_id"], # email
+        character_id=flask_dict["user_id"], # char
+        chat=msg
+    )
+    db.session.add(dbmsg)
+    db.session.commit()
     socketio.emit("chatlog updated", {"text": msg})
