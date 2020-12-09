@@ -11,6 +11,7 @@ from inventory import (
     search_bar,
     filter_by_type,
 )
+
 from user_controller import User
 import models
 
