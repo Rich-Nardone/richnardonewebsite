@@ -84,11 +84,9 @@ export function Chatbox() {
   }
   
   function listenChatChange(){
-    useEffect(() => {
-      Socket.on('text', (data)=>{
-        console.log(data);
-      });
-    }, []);
+    Socket.on('chatlog updated', (data)=>{
+      console.log(data);
+    });
   }
   
   const displayLog = chatlog.map((log, index) => (
