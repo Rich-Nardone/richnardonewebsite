@@ -131,7 +131,7 @@ def parse(command):
 
 
 # COMBAT COMBAT COMBAT
-def combat(player, enemy, player.id):
+def combat(player, enemy):
     """ Simulates combat between the player and the enemy """
     send_out("Player " + player.id + " begins combat with " + enemy.id, player.id)
     send_out(

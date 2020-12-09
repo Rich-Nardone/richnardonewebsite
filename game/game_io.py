@@ -32,7 +32,6 @@ def send_out(msg, char_id):
     print(msg)
     socketio.emit("chatlog updated", {"text": msg})
     dbmsg = models.chat_log(
-        id=1, # message id
         character_id=char_id, # char
         chat=msg
     )

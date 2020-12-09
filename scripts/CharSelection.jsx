@@ -69,6 +69,7 @@ export function CharSelection() {
   function toMain(event) {
     event.preventDefault();
     Socket.emit('choosen character', selection);
+    console.log(selection)
     if (selection != null) {
       window.location = 'main_chat.html';
     }

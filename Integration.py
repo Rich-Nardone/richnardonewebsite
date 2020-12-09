@@ -130,9 +130,10 @@ def send_party():
 def send_chatlog(user_chatlog):
     socketio.emit("user chatlog", user_chatlog)
 
-
+charlist = [1]
 @socketio.on("choosen character")
 def character_selected(data):
+    charlist.append(data)
     if "userObj" in flask.session:
         userObj = flask.session["userObj"]
         userObj.char_select(data)
@@ -176,7 +177,7 @@ def get_chatlog():
 def game_start():
     player = Player()
     # try to grab player object from db if possible
-    dat = db.session.query(models.username).filter_by(character_id="1")
+    dat = db.session.query(models.username).filter_by(id="1")
     print(dat)
     game(player)
 
@@ -192,7 +193,7 @@ def show_log():
     log = []
     for item in dump:
         log.append(item.chat)
-    print(log)
+    print(charlist[-1])
     return log
 
 # Test atm for the shop
