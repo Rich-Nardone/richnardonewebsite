@@ -17,7 +17,6 @@ def start_scenario(user=None):
     send_out(start_text)
     # character creation
     player = Player()
-    # TODO fetch player info for user 'user' from the database need player name, gender and class
     return player
 
 
@@ -74,7 +73,52 @@ def scenario(player, scenario_id):
         while action:
             if "fight" in action:
                 send_out("You begin combat with the gray slime!")
-                # Changes in combat-and-death branch
+                slime_npc = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc)
             if "leave" in action:
                 return (player, "entrance")
     return (player, scenario_id)
+
+
+# COMBAT COMBAT COMBAT
+def combat(player, enemy):
+    """ Simulates combat between the player and the enemy """
+    send_out("Player " + player.id + " begins combat with " + enemy.id)
+    send_out(
+        "Player "
+        + player.id
+        + " starts at "
+        + str(player.health)
+        + "/"
+        + str(player.max_health)
+    )
+    send_out(
+        "Player "
+        + enemy.id
+        + " starts at "
+        + str(enemy.health)
+        + "/"
+        + str(enemy.max_health)
+    )
+    while not player.is_dead() and not enemy.is_dead():
+        # Prompt player aciton
+        action = prompt_in()
+        # Determine faster speed, Pokemon style
+        if enemy.speed > player.speed:
+            # Enemies go first
+            send_out(enemy.attack("melee", player))
+            if "attack" in action:
+                send_out(player.attack("melee", enemy))
+            else:
+                continue  # we don't handle other actions right now
+        else:
+            # players go first
+            if "attack" in action:
+                send_out(player.attack("melee", enemy))
+                send_out(enemy.attack("melee", player))
+            else:
+                continue  # we don't handle other actions right now
+    winner = player.id
+    if player.is_dead():
+        winner = enemy.id
+    send_out("Combat has ended! " + winner + " has won!")

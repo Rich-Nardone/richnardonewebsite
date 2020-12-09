@@ -11,12 +11,12 @@ from inventory import (
     search_bar,
     filter_by_type,
 )
-#from progress import save_progress, loadProgress
+
 from user_controller import User
 import models
 
 # game logic
-from game.game import game
+from game.game_io import user_in
 from game.player import Player
 
 # For shop, checks if item has been purchased.
@@ -149,7 +149,7 @@ def character_selected(data):
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
-    print(data["input"])
+    user_in.update(data["input"])
 
 
 @socketio.on("get party")
