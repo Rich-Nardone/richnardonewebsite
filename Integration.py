@@ -139,10 +139,14 @@ def character_selected(data):
         flask.session["userObj"] = userObj
         print(userObj.selected_character_id)
 
-
+#character id is hard coded
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
+    message = data["input"]
+    chat = models.chat_log(chat=message,character_id="1")
+    db.session.add(chat)
+    db.session.commit()
     user_in.update(data["input"])
 
 
@@ -163,34 +167,22 @@ def send_inventory(inventory):
 
 @socketio.on("get chatlog")
 def get_chatlog():
-    # this function is only called once so we're abusing that to start the game
-    player = Player()
-    char_id = 0
-    if "userObj" in flask.session:
-        char_id = flask.session["userObj"].selected_character_id
-    stats = db.session.query(models.character).filter_by(user_id=userlist[-1], character_id=char_id).first()
-    [
-        player.id,
-        player.strength,
-        player.dex,
-        player.con,
-        player.intel,
-        player.cha,
-        player.luk,
-        player.max_health,
-        player.health,
-        player.max_mana,
-        player.mana,
-        player.money,
-        player.checkpoint,
-        player.gen,
-        player.character_class,
-    ] = stats
-    game(player, False)
-    # get chatlog from db
-    chatlog = db.session.query(models.chat_log).filter_by(character_id=player.id).first()
-    send_chatlog(chatlog)
+    log = get_user_log()
+    send_log(log)
+    
+def get_user_log():
+    return show_log()
 
+def send_log(log):
+    socketio.emit("user chatlog", log)
+
+def show_log():
+    dump = db.session.query(models.chat_log).filter_by(character_id="1")
+    log = []
+    for item in dump:
+        log.append(item.chat)
+    print(log)
+    return log
 
 # Test atm for the shop
 @socketio.on("item purchased")
@@ -285,6 +277,7 @@ def char_create():
 @app.route("/main_chat.html")
 def main():
     """ main chat window """
+    show_log()
     return flask.render_template("main_chat.html")
 
 
