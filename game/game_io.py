@@ -22,7 +22,7 @@ def prompt_in():
     """ Method for receiving input """
     text = user_in.read_input()
     while not text:
-        time.sleep(0.05)  # wait for 50 milliseconds
+        time.sleep(1)  # wait x seconds for user input
         text = user_in.read_input()
     return text
 

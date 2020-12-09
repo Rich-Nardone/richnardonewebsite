@@ -120,9 +120,6 @@ def email_login(data):
 
 
 def send_party():
-    # TODO get party from database
-
-    # DUMMY DATA
     user_party = ["player1", "player2", "player10"]
     socketio.emit("user party", user_party)
 
@@ -162,7 +159,8 @@ def get_party():
 
 @socketio.on("get inventory")
 def get_inventory():
-    inventory = get_user_inventory()
+    userObj = flask.session["userObj"]
+    inventory = userObj.get_inventory()
     send_inventory(inventory)
 
 
@@ -181,9 +179,10 @@ def get_chatlog():
 def game_start():
     player = Player()
     # try to grab player object from db if possible
-    dat = db.session.query(models.username).filter_by(id="1")
-    print(dat)
-    game(player)
+    userObj = flask.session["userObj"]
+    for x in db.session.query(models.character).filter(models.character.id==userObj.selected_character_id):
+        dat = x
+        game(dat)
 
 
 def get_user_log():
@@ -193,10 +192,9 @@ def send_log(log):
     socketio.emit("user chatlog", log)
 
 def show_log():
-    dump = db.session.query(models.chat_log).filter_by(character_id=charlist[-1])
-    log = []
-    for item in dump:
-        log.append(item.chat)
+    userObj = flask.session["userObj"]
+    log = userObj.retrive_chatlog()
+    print(log)
     return log
 
 # Test atm for the shop
@@ -214,7 +212,6 @@ def user_chars():
     characters = {}
     userObj = flask.session["userObj"]
     characters["char_instance"] = userObj.get_characters()
-    print(characters)
     socketio.emit("recieve user characters", characters)
 
 
@@ -254,6 +251,15 @@ def character_creation(data):
     )
     db.session.add(dbplayer)
     db.session.commit()
+    userObj = flask.session["userObj"]
+    for x in models.db.session.query(models.character).filter(models.character.user_id == dbplayer.user_id, models.character.character_name == data["name"]):
+        print(x.character_name)
+        print(x.id)
+        userObj.char_select(x.id)
+        
+    flask.session["userObj"] = userObj
+        
+        
 
 
 # ======================================================================================

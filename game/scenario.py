@@ -9,13 +9,14 @@ from .player import Player
 
 def scenario(player, scenario_id):
     """ Loads into the scenario """
+    print("From scenario " + str(player.id))
     if scenario_id == "start":
         send_out(
             "You are in a white, bare room with nothing but a mirror with a few words on it."
             + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”",
             player.id,
         )
-        return (player, "intro", player.id)
+        return (player, "intro")
     if scenario_id == "intro":
         send_out(
             "You wake up at your desk in class, with no one in sight. Strangely enough, "
@@ -36,7 +37,7 @@ def scenario(player, scenario_id):
                 send_out("It seems dark outside...", player.id)
             if parse(action)["leave"]:
                 send_out("You leave the room.", player.id)
-                return (player, "intro_hall", player.id)
+                return (player, "intro_hall")
             action = prompt_in()
     if scenario_id == "intro_hall":
         send_out(
@@ -60,7 +61,7 @@ def scenario(player, scenario_id):
             + "like the noises of an oversaturated bath towel.",
             player.id,
         )
-        return (player, next_area, player.id)
+        return (player, next_area)
     if scenario_id == "classroom":
         send_out(
             "Peeking in, you find a strange gray mass that rests on top of the trail. The stra"
@@ -76,7 +77,7 @@ def scenario(player, scenario_id):
                 combat(player, slime_npc)
                 slime_alive = False
             if parse(action)["leave"]:
-                return (player, "entrance", player.id)
+                return (player, "entrance")
     if scenario_id == "entrance":
         send_out(
             "Outside of the schoool, you find a few of your classmates and your professor, trying "
@@ -104,6 +105,8 @@ def scenario(player, scenario_id):
                 )
             if parse(action)["loot"] and not looted:
                 send_out("You find a broom!", player.id)
+            if parse(action)["quit"]:
+                return (player, "end")
 
     return (player, scenario_id, player.id)
 
@@ -126,6 +129,8 @@ def parse(command):
     d["melee"] = "melee" in command
     d["range"] = "range" in command
     d["magic"] = "magic" in command
+    # exit game
+    d["quit"] = "quit" in command
 
     return d
 
