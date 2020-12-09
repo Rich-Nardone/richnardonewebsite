@@ -5,8 +5,12 @@ import { fnt, brc } from './OptionMenu';
 const div = {
   width: 205,
   height: 200,
+  left: 50,
   background: 'lightblue',
   border: brc,
+  boxShadow: '2px 5px black',
+  borderRadius: 10,
+  top: '50%',
 };
 const p = {
   padding: 0,
@@ -23,16 +27,6 @@ const ul = {
   overflow: 'scroll',
   fontStyle: 'italic',
   padding: 0,
-  fontSize: fnt,
-};
-
-const listStyle = {
-  borderRadius: 5,
-  border: brc,
-  textAlign: 'center',
-  fontWeight: 'bold',
-  padding: 2,
-  margin: 3,
   fontSize: fnt,
 };
 

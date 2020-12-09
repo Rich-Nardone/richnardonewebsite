@@ -1,15 +1,17 @@
 """
     Handles the game logic
 """
+
 import inspect
 import os
 import sys
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 from progress import save_progress, load_progress
+
 # local imports
-from .game_io import prompt_in, send_out
 from .scenario import scenario, start_scenario
 
 
@@ -27,4 +29,3 @@ def game(player, is_new, flask_dict):
         save_progress([state_tuple[0]])
         state_tuple = scenario(state_tuple[0], state_tuple[1], flask_dict)
     print("game has reached endstate")
-    return
