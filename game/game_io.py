@@ -29,10 +29,12 @@ def prompt_in():
 
 def send_out(msg, flask_dict):
     """ Method for sending reply """
-    dbmsg = models.chat_log(
-        user_id=flask_dict["user_id"], character_id=flask_dict["user_id"], chat=msg
-    )
     print(msg)
+    dbmsg = models.chat_log(
+        user_id=flask_dict["user_id"], # email
+        character_id=flask_dict["user_id"], # char
+        chat=msg
+    )
     db.session.add(dbmsg)
     db.session.commit()
     socketio.emit("chatlog updated", {"text": msg})

@@ -165,7 +165,10 @@ def send_inventory(inventory):
 def get_chatlog():
     # this function is only called once so we're abusing that to start the game
     player = Player()
-    stats = db.session.query(models.character).filter_by(user_id=userlist[-1]).first()
+    char_id = 0
+    if "userObj" in flask.session:
+        char_id = flask.session["userObj"].selected_character_id
+    stats = db.session.query(models.character).filter_by(user_id=userlist[-1], character_id=char_id).first()
     [
         player.id,
         player.strength,
