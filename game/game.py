@@ -12,17 +12,15 @@ sys.path.insert(0, parentdir)
 from progress import save_progress, load_progress
 
 # local imports
-from .scenario import scenario, start_scenario
+from .scenario import scenario
 
 
-def game(player, is_new, flask_dict):
+def game(player):
     """ Runs the game, given a user """
-    # this tuple is shaped: "Player, String" where string is the area
-    state_tuple = scenario(player, "intro")
     # try to load progress, otherwise start scenario
-    state_tuple = (player, player.checkpoint, flask_dict)
+    state_tuple = (player, player.checkpoint)
     # running game
     while state_tuple[1] != "end":
-        save_progress([state_tuple[0]])
-        state_tuple = scenario(state_tuple[0], state_tuple[1], flask_dict)
+        # save_progress([state_tuple[0]])
+        state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")

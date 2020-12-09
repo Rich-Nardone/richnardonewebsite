@@ -7,8 +7,8 @@ import random
 class Player:
     """ Class for player stats and data """
 
-    def __init__(self, id="", strength=0, dex=0, con=0, intel=0, cha=0, luk=0):
-        self.id = "name"
+    def __init__(self, id=0, strength=0, dex=0, con=0, intel=0, cha=0, luk=0):
+        self.id = 0
         # stats
         # Strength: Used for slapping and stronging things
         self.strength = strength
