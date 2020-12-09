@@ -16,7 +16,7 @@ const logStyle = {
   borderRadius: 10,
   fontSize: 18,
   width: 1500,
-  boxShadow:'2px 5px black',
+  boxShadow: '2px 5px black',
 
 };
 
@@ -39,8 +39,12 @@ export function GoogleLoginButton() {
     useEffect(() => {
       Socket.on('google login response', (data) => {
         console.log(data);
-        if (data.has_character) { return window.location = 'character_selection.html'; }
-        return window.location = 'character_creation.html';
+        if (data.has_character) {
+          window.location = 'character_selection.html';
+          return window.location;
+        }
+        window.location = 'character_creation.html';
+        return window.location;
       });
     });
   }
@@ -51,7 +55,7 @@ export function GoogleLoginButton() {
     <GoogleLogin
       clientId={ClientID}
       render={(renderProps) => (
-        <button onClick={renderProps.onClick} style={logStyle}>Newcomer? Enter if you dare...</button>
+        <button type="submit" onClick={renderProps.onClick} style={logStyle}>Newcomer? Enter if you dare...</button>
       )}
       buttonText="REGISTER"
       onSuccess={handleLoginSuccess}

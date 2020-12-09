@@ -14,9 +14,9 @@ const h1 = {
   borderWidth: 5,
   background: 'grey',
   borderRadius: 10,
-  boxShadow:'2px 5px black',
-  width:250,
-  left:500,
+  boxShadow: '2px 5px black',
+  width: 250,
+  left: 500,
 };
 
 const label1 = {
@@ -30,7 +30,6 @@ const label2 = {
   fontStyle: 'italic',
   textAlign: 'center',
   fontSize: '25',
-  textAlign:'center'
 };
 
 const form = {
@@ -39,9 +38,9 @@ const form = {
   border: '3px solid black',
   textAlign: 'center',
   borderRadius: 10,
-  left:500,
-  width:400,
-  boxShadow:'2px 5px black',
+  left: 500,
+  width: 400,
+  boxShadow: '2px 5px black',
 };
 
 function CharSelection() {
