@@ -7,16 +7,13 @@ from .game_io import prompt_in, send_out
 from .player import Player
 
 # START
-def start_scenario(user=None):
-    """ Tries to find a player for the user, otherwise creates new """
-    start_text = "You are in a white, bare room with nothing but a mirror with a few words on it."
+def start_scenario(player):
+    """ Text intro"""
     start_text = (
-        start_text
+        "You are in a white, bare room with nothing but a mirror with a few words on it."
         + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”"
     )
     send_out(start_text)
-    # character creation
-    player = Player()
     return player
 
 
@@ -30,16 +27,16 @@ def scenario(player, scenario_id):
         action = prompt_in()
         looted = False
         while action:
-            if "loot" in action or "steal" in action:
+            if parse(action)["loot"]:
                 if not looted:
                     send_out("You find $20 in people's bags.")
                     player.money += 20
                     looted = True
                 else:
                     send_out("You've already looted everything!")
-            if "look" in action:
+            if parse(action)["look"]:
                 send_out("It seems dark outside...")
-            if "leave" in action:
+            if parse(action)["leave"]:
                 send_out("You leave the room.")
                 return (player, "intro_hall")
             action = prompt_in()
@@ -70,15 +67,66 @@ def scenario(player, scenario_id):
             + "nger thing is that the room itself seems to lack color wherever this mass goes."
         )
         action = prompt_in()
+        slime_alive = True
         while action:
-            if "fight" in action:
+            if parse(action)["fight"] and slime_alive:
                 send_out("You begin combat with the gray slime!")
                 slime_npc = Player("", 10, 10, 10, 0, 0, 0)
                 combat(player, slime_npc)
-            if "leave" in action:
+                slime_alive = False
+            if parse(action)["leave"]:
                 return (player, "entrance")
+    if scenario_id == "entrance":
+        send_out(
+            "Outside of the schoool, you find a few of your classmates and your professor, trying "
+            + "to fend off some colorless slimes with brooms."
+        )
+        action = prompt_in()
+        slime_alive = True
+        looted = False
+        while action:
+            if parse(action)["fight"]:
+                send_out("You begin combat with the gray slimes!")
+                slime_npc1 = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc1)
+                slime_npc2 = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc2)
+                slime_npc3 = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc3)
+                slime_alive = False
+            if parse(action)["talk"]:
+                send_out(
+                    "You walk over and see your classmates wearily pushing the slimes away."
+                    + " \"Oh, you're alive!\", goes your professor. \"Come lend us a hand!\""
+                )
+            if parse(action)["loot"] and not looted:
+                send_out(
+                    "You find a broom!"
+                )
+
+
     return (player, scenario_id)
 
+
+def parse(command):
+    """
+        function that parses a string and returns a map of strings->booleans based on command
+        - command is a string
+    """
+    d = {}
+
+    # exploration
+    d["fight"] = "fight" in command
+    d["leave"] = "leave" in command
+    d["look"] = "look" in command
+    d["loot"] = "loot" in command or "steal" in command
+    d["talk"] = "talk" in command
+    # fighting
+    d["melee"] = "melee" in command
+    d["range"] = "range" in command
+    d["magic"] = "magic" in command
+
+    return d
 
 # COMBAT COMBAT COMBAT
 def combat(player, enemy):

@@ -13,18 +13,16 @@ from .game_io import prompt_in, send_out
 from .scenario import scenario, start_scenario
 
 
-def game(userlist, char_name):
+def game(player, is_new):
     """ Runs the game, given a user """
+    # this tuple is shaped: "Player, String" where string is the area
+    state_tuple = scenario(player, "intro")
     # try to load progress, otherwise start scenario
-    player = load_progress(userlist, char_name) #unsure if im calling this right
-    if(player != None):
-        state_tuple = (player, player.checkpoint)
+    if is_new:
+        start_scenario(player)
     else:
-        # player character
-        player = start_scenario(userlist[-1])
-        save_progress([player])  # move to within the game
-        # this tuple is shaped: "Player, String" where string is the area
-        state_tuple = scenario(player, "intro")
+        state_tuple = (player, player.checkpoint)
+    # running game
     while state_tuple[1] != "end":
         save_progress([state_tuple[0]])
         state_tuple = scenario(state_tuple[0], state_tuple[1])

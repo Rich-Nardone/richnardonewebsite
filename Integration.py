@@ -15,6 +15,7 @@ from user_controller import User
 import models
 
 # game logic
+from game.game import game
 from game.game_io import user_in
 from game.player import Player
 
@@ -124,15 +125,7 @@ def send_party():
     socketio.emit("user party", user_party)
 
 
-def send_chatlog():
-    # TODO get chatlog from database
-
-    # DUMMY DATA
-    user_chatlog = [
-        "welcome to the world",
-        "attack",
-        "user attacks, hitting the blob for 10pts",
-    ]
+def send_chatlog(user_chatlog):
     socketio.emit("user chatlog", user_chatlog)
 
 
@@ -168,15 +161,12 @@ def send_inventory(inventory):
 
 @socketio.on("get chatlog")
 def get_chatlog():
-    # TODO get chatlog from database
-
-    # DUMMY DATA
-    user_chatlog = [
-        "welcome to the world",
-        "attack",
-        "user attacks, hitting the blob for 10pts",
-    ]
-    send_chatlog()
+    # this function is only called once so we're abusing that to start the game
+    player = db.session.query(models.character).filter_by(id=userlist[-1]).first()
+    game(player, False)
+    # get chatlog from db
+    chatlog = db.session.query(models.chat_log).filter_by(id=userlist[-1]).first()
+    send_chatlog(chatlog)
 
 
 # Test atm for the shop
