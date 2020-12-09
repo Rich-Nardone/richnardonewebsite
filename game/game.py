@@ -20,10 +20,7 @@ def game(player, is_new, flask_dict):
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
     # try to load progress, otherwise start scenario
-    if is_new:
-        start_scenario(player)
-    else:
-        state_tuple = (player, player.checkpoint, flask_dict)
+    state_tuple = (player, player.checkpoint, flask_dict)
     # running game
     while state_tuple[1] != "end":
         save_progress([state_tuple[0]])

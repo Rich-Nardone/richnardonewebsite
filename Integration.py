@@ -169,7 +169,18 @@ def send_inventory(inventory):
 def get_chatlog():
     log = get_user_log()
     send_log(log)
-    
+
+
+# Start game
+@socketio.on("game start")
+def game_start():
+    player = Player()
+    # try to grab player object from db if possible
+    dat = db.session.query(models.chat_log).filter_by(character_id="1")
+    print(dat)
+    game(player, True, {})
+
+
 def get_user_log():
     return show_log()
 

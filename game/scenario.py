@@ -6,19 +6,15 @@
 from .game_io import prompt_in, send_out
 from .player import Player
 
-# START
-def start_scenario(player):
-    """ Text intro"""
-    start_text = (
-        "You are in a white, bare room with nothing but a mirror with a few words on it."
-        + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”"
-    )
-    send_out(start_text)
-    return player
-
 
 def scenario(player, scenario_id, flask_dict):
     """ Loads into the scenario """
+    if scenario_id == "start":
+        send_out(
+            "You are in a white, bare room with nothing but a mirror with a few words on it."
+            + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”"
+        )
+        return(player, "intro")
     if scenario_id == "intro":
         send_out(
             "You wake up at your desk in class, with no one in sight. Strangely enough, "
@@ -118,12 +114,13 @@ def parse(command):
     d = {}
 
     # exploration
-    d["fight"] = "fight" in command
+    d["fight"] = "fight" in command or "attack" in command
     d["leave"] = "leave" in command
     d["look"] = "look" in command
     d["loot"] = "loot" in command or "steal" in command
     d["talk"] = "talk" in command
     # fighting
+    d["attack"] = "attack" in command
     d["melee"] = "melee" in command
     d["range"] = "range" in command
     d["magic"] = "magic" in command
@@ -160,13 +157,13 @@ def combat(player, enemy, flask_dict):
         if enemy.speed > player.speed:
             # Enemies go first
             send_out(enemy.attack("melee", player), flask_dict)
-            if "attack" in action:
+            if parse(action)["attack"]:
                 send_out(player.attack("melee", enemy), flask_dict)
             else:
                 continue  # we don't handle other actions right now
         else:
             # players go first
-            if "attack" in action:
+            if parse(action)["attack"]:
                 send_out(player.attack("melee", enemy), flask_dict)
                 send_out(enemy.attack("melee", player), flask_dict)
             else:

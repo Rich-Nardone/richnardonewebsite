@@ -108,8 +108,13 @@ export function Chatbox() {
     }
   }
 
+  function startGame() {
+    Socket.emit('game start');
+  }
+
   retrievePlayerChatlog();
   listenChatChange();
+  startGame();
   return (
     <div style={div}>
       <div id="chatbox">
