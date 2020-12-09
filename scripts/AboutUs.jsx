@@ -1,4 +1,18 @@
 import React from 'react';
+import Sound from 'react-sound';
+
+const h1 = {
+  textAlign: 'center',
+  padding: 50,
+  margin: 50,
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  borderWidth: 5,
+  borderRadius: 10,
+};
+
+
+
 
 export function About() {
   function toLogin(event) {
@@ -8,7 +22,12 @@ export function About() {
 
   return (
     <div>
-      <h1> Welcome to Text RPG </h1>
+      <Sound
+        url="static/flute.mp3"
+        playStatus={Sound.status.PLAYING}
+        volume="50"
+      />
+      <h1 style={h1}> Welcome to Text RPG </h1>
       <p> About Us </p>
       <ul>
         <li>Who we are</li>

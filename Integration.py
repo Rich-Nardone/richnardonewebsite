@@ -11,7 +11,7 @@ from inventory import (
     search_bar,
     filter_by_type,
 )
-from progress import save_progress, loadProgress
+#from progress import save_progress, loadProgress
 from user_controller import User
 import models
 

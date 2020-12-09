@@ -1,6 +1,23 @@
 import React, { useState } from 'react';
 import { Socket } from './Socket.jsx';
 
+
+const div_style= {
+  textAlign: 'center',
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  background: 'grey',
+  padding: 5,
+  margin: 5,
+  borderRadius: 10,
+  fontSize: 18,
+  width: 1500,
+  boxShadow:'5px 10px black',
+};
+
+
+
+
 export function EmailLogin() {
   const [email, setEmail] = useState(null);
 
@@ -21,7 +38,7 @@ export function EmailLogin() {
   }
 
   return (
-    <div>
+    <div style={div_style}>
       <h3> Email Login </h3>
       <form onSubmit={checkEmail}>
         <p> Enter your email </p>
