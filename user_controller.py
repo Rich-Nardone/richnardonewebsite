@@ -3,7 +3,6 @@
 """
 import models
 
-
 class User:
     """ A class which links a user to their email (hidden from all users) """
 
