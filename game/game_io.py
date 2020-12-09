@@ -34,6 +34,7 @@ def send_out(msg):
         character_id = 000,
         chat = msg
     )
+    print(msg)
     db.session.add(dbmsg)
     db.session.commit()
     socketio.emit("chatlog updated", {"text": msg})
