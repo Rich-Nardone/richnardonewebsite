@@ -91,7 +91,6 @@ class Player:
 
     def deconstruct_player(self):
         """ Deconstructing player object for PSQL """
-        # Simon wants to move this to the player.py file and player class
         statslist = [
             self.id,
             self.strength,

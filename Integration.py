@@ -16,7 +16,7 @@ from user_controller import User
 import models
 
 # game logic
-from game.game import game
+from game.game_io import user_in
 from game.player import Player
 
 # For shop, checks if item has been purchased.
@@ -144,6 +144,8 @@ def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
     #might have to add this to database?
     print(data["input"])
+    user_in.update(data["input"])
+
 
 
 @socketio.on("get party")

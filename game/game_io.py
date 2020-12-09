@@ -6,6 +6,7 @@
 import inspect
 import os
 import sys
+import time
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -22,10 +23,11 @@ def prompt_in():
     """ Method for receiving input """
     text = user_in.read_input()
     while not text:
+        time.sleep(.05) # wait for 50 milliseconds
         text = user_in.read_input()
     return text
 
 
 def send_out(msg):
     """ Method for sending reply """
-    socketio.emit("text", {"text": msg})
+    socketio.emit("chatlog updated", {"text": msg})
