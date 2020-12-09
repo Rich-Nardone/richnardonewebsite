@@ -88,3 +88,8 @@ class chat_log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
     chat = db.Column(db.String(1000))
+
+class charlist(db.Model):
+    __tablename__ = "charlist"
+    id = db.Column(db.Integer, primary_key=True)
+    char = db.Column(db.Integer)

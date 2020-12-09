@@ -20,7 +20,7 @@ def game(player):
     # try to load progress, otherwise start scenario
     state_tuple = (player, player.checkpoint)
     # running game
-    while state_tuple[1] != "end":
+    #while state_tuple[1] != "end":
         # save_progress([state_tuple[0]])
-        state_tuple = scenario(state_tuple[0], state_tuple[1])
+    #    state_tuple = scenario(state_tuple[0], state_tuple[1])
     print("game has reached endstate")
