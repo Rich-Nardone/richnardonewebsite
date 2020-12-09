@@ -13,7 +13,7 @@ from .game_io import prompt_in, send_out
 from .scenario import scenario, start_scenario
 
 
-def game(player, is_new):
+def game(player, is_new, flask_dict):
     """ Runs the game, given a user """
     # this tuple is shaped: "Player, String" where string is the area
     state_tuple = scenario(player, "intro")
@@ -21,10 +21,10 @@ def game(player, is_new):
     if is_new:
         start_scenario(player)
     else:
-        state_tuple = (player, player.checkpoint)
+        state_tuple = (player, player.checkpoint, flask_dict)
     # running game
     while state_tuple[1] != "end":
         save_progress([state_tuple[0]])
-        state_tuple = scenario(state_tuple[0], state_tuple[1])
+        state_tuple = scenario(state_tuple[0], state_tuple[1], flask_dict)
     print("game has reached endstate")
     return

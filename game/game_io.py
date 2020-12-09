@@ -22,17 +22,15 @@ def prompt_in():
     """ Method for receiving input """
     text = user_in.read_input()
     while not text:
-        time.sleep(.05) # wait for 50 milliseconds
+        time.sleep(0.05)  # wait for 50 milliseconds
         text = user_in.read_input()
     return text
 
 
-def send_out(msg):
+def send_out(msg, flask_dict):
     """ Method for sending reply """
     dbmsg = models.chat_log(
-        user_id = 000,
-        character_id = 000,
-        chat = msg
+        user_id=flask_dict["user_id"], character_id=flask_dict["user_id"], chat=msg
     )
     print(msg)
     db.session.add(dbmsg)
