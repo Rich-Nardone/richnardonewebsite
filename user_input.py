@@ -19,5 +19,6 @@ class UserInput:
     def read_input(self):
         """ Tries to read input if there has been any new input """
         if self.updated:
+            self.updated = False
             return self.recent
         return None

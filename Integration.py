@@ -17,6 +17,7 @@ import models
 
 # game logic
 from game.game import game
+from game.game_io import user_in
 from game.player import Player
 
 # For shop, checks if item has been purchased.
@@ -142,8 +143,7 @@ def character_selected(data):
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
-    #might have to add this to database?
-    print(data["input"])
+    user_in.update(data["input"])
 
 
 @socketio.on("get party")
@@ -163,13 +163,11 @@ def send_inventory(inventory):
 
 @socketio.on("get chatlog")
 def get_chatlog():
-    # TODO get chatlog from database
-    userObj = flask.session["userObj"]
-    print(userObj.selected_character_id)
-    chatlog = []
-    
-    chatlog.append(userObj.retrive_chatlog())
-    
+    # this function is only called once so we're abusing that to start the game
+    player = db.session.query(models.character).filter_by(id=userlist[-1]).first()
+    game(player, False)
+    # get chatlog from db
+    chatlog = db.session.query(models.chat_log).filter_by(id=userlist[-1]).first()
     send_chatlog(chatlog)
 
 
