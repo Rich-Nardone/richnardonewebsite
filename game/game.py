@@ -12,49 +12,6 @@ from progress import save_progress, load_progress
 from .game_io import prompt_in, send_out
 from .scenario import scenario, start_scenario
 
-# COMBAT COMBAT COMBAT
-def combat(player, enemy):
-    """ Simulates combat between the player and the enemy """
-    send_out("Player " + player.id + " begins combat with " + enemy.id)
-    send_out(
-        "Player "
-        + player.id
-        + " starts at "
-        + str(player.health)
-        + "/"
-        + str(player.max_health)
-    )
-    send_out(
-        "Player "
-        + enemy.id
-        + " starts at "
-        + str(enemy.health)
-        + "/"
-        + str(enemy.max_health)
-    )
-    while not player.is_dead() and not enemy.is_dead():
-        # Prompt player aciton
-        action = prompt_in()
-        # Determine faster speed, Pokemon style
-        if enemy.speed > player.speed:
-            # Enemies go first
-            send_out(enemy.attack("melee", player))
-            if "attack" in action:
-                send_out(player.attack("melee", enemy))
-            else:
-                continue  # we don't handle other actions right now
-        else:
-            # players go first
-            if "attack" in action:
-                send_out(player.attack("melee", enemy))
-                send_out(enemy.attack("melee", player))
-            else:
-                continue  # we don't handle other actions right now
-    winner = player.id
-    if player.is_dead():
-        winner = enemy.id
-    send_out("Combat has ended! " + winner + " has won!")
-
 
 def game(userlist, char_name):
     """ Runs the game, given a user """
