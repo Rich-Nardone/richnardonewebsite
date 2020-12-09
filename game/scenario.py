@@ -6,41 +6,35 @@
 from .game_io import prompt_in, send_out
 from .player import Player
 
-# START
-def start_scenario(user=None):
-    """ Tries to find a player for the user, otherwise creates new """
-    start_text = "You are in a white, bare room with nothing but a mirror with a few words on it."
-    start_text = (
-        start_text
-        + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”"
-    )
-    send_out(start_text)
-    # character creation
-    player = Player()
-    return player
 
-
-def scenario(player, scenario_id):
+def scenario(player, scenario_id, flask_dict):
     """ Loads into the scenario """
+    if scenario_id == "start":
+        send_out(
+            "You are in a white, bare room with nothing but a mirror with a few words on it."
+            + "Upon further inspection the mirror seems to be asking you a question, “Who are you?”"
+        )
+        return(player, "intro")
     if scenario_id == "intro":
         send_out(
             "You wake up at your desk in class, with no one in sight. Strangely enough, "
-            + "it looks like everyone has left only recently and forgotten their things."
+            + "it looks like everyone has left only recently and forgotten their things.",
+            flask_dict,
         )
         action = prompt_in()
         looted = False
         while action:
-            if "loot" in action or "steal" in action:
+            if parse(action)["loot"]:
                 if not looted:
-                    send_out("You find $20 in people's bags.")
+                    send_out("You find $20 in people's bags.", flask_dict)
                     player.money += 20
                     looted = True
                 else:
-                    send_out("You've already looted everything!")
-            if "look" in action:
-                send_out("It seems dark outside...")
-            if "leave" in action:
-                send_out("You leave the room.")
+                    send_out("You've already looted everything!", flask_dict)
+            if parse(action)["look"]:
+                send_out("It seems dark outside...", flask_dict)
+            if parse(action)["leave"]:
+                send_out("You leave the room.", flask_dict)
                 return (player, "intro_hall")
             action = prompt_in()
     if scenario_id == "intro_hall":
@@ -48,7 +42,7 @@ def scenario(player, scenario_id):
             "As you leave the room, you notice that the hallway is empty as well,"
             + "with some strange gray trails all heading either towards or from the main entrance."
         )
-        send_out("Where do you go?")
+        send_out("Where do you go?", flask_dict)
         action = prompt_in()
         next_area = None
         while not next_area:
@@ -61,36 +55,91 @@ def scenario(player, scenario_id):
             action = prompt_in()
         send_out(
             "As you approach, there is a slow and constant squishing sound,"
-            + "like the noises of an oversaturated bath towel."
+            + "like the noises of an oversaturated bath towel.",
+            flask_dict,
         )
         return (player, next_area)
     if scenario_id == "classroom":
         send_out(
             "Peeking in, you find a strange gray mass that rests on top of the trail. The stra"
-            + "nger thing is that the room itself seems to lack color wherever this mass goes."
+            + "nger thing is that the room itself seems to lack color wherever this mass goes.",
+            flask_dict,
         )
         action = prompt_in()
+        slime_alive = True
         while action:
-            if "fight" in action:
-                send_out("You begin combat with the gray slime!")
+            if parse(action)["fight"] and slime_alive:
+                send_out("You begin combat with the gray slime!", flask_dict)
                 slime_npc = Player("", 10, 10, 10, 0, 0, 0)
-                combat(player, slime_npc)
-            if "leave" in action:
+                combat(player, slime_npc, flask_dict)
+                slime_alive = False
+            if parse(action)["leave"]:
                 return (player, "entrance")
+    if scenario_id == "entrance":
+        send_out(
+            "Outside of the schoool, you find a few of your classmates and your professor, trying "
+            + "to fend off some colorless slimes with brooms.",
+            flask_dict,
+        )
+        action = prompt_in()
+        slime_alive = True
+        looted = False
+        while action:
+            if parse(action)["fight"]:
+                send_out("You begin combat with the gray slimes!", flask_dict)
+                slime_npc1 = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc1, flask_dict)
+                slime_npc2 = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc2, flask_dict)
+                slime_npc3 = Player("", 10, 10, 10, 0, 0, 0)
+                combat(player, slime_npc3, flask_dict)
+                slime_alive = False
+            if parse(action)["talk"]:
+                send_out(
+                    "You walk over and see your classmates wearily pushing the slimes away."
+                    + ' "Oh, you\'re alive!", goes your professor. "Come lend us a hand!"',
+                    flask_dict,
+                )
+            if parse(action)["loot"] and not looted:
+                send_out("You find a broom!", flask_dict)
+
     return (player, scenario_id)
 
 
+def parse(command):
+    """
+    function that parses a string and returns a map of strings->booleans based on command
+    - command is a string
+    """
+    d = {}
+
+    # exploration
+    d["fight"] = "fight" in command or "attack" in command
+    d["leave"] = "leave" in command
+    d["look"] = "look" in command
+    d["loot"] = "loot" in command or "steal" in command
+    d["talk"] = "talk" in command
+    # fighting
+    d["attack"] = "attack" in command
+    d["melee"] = "melee" in command
+    d["range"] = "range" in command
+    d["magic"] = "magic" in command
+
+    return d
+
+
 # COMBAT COMBAT COMBAT
-def combat(player, enemy):
+def combat(player, enemy, flask_dict):
     """ Simulates combat between the player and the enemy """
-    send_out("Player " + player.id + " begins combat with " + enemy.id)
+    send_out("Player " + player.id + " begins combat with " + enemy.id, flask_dict)
     send_out(
         "Player "
         + player.id
         + " starts at "
         + str(player.health)
         + "/"
-        + str(player.max_health)
+        + str(player.max_health),
+        flask_dict,
     )
     send_out(
         "Player "
@@ -98,7 +147,8 @@ def combat(player, enemy):
         + " starts at "
         + str(enemy.health)
         + "/"
-        + str(enemy.max_health)
+        + str(enemy.max_health),
+        flask_dict,
     )
     while not player.is_dead() and not enemy.is_dead():
         # Prompt player aciton
@@ -106,19 +156,19 @@ def combat(player, enemy):
         # Determine faster speed, Pokemon style
         if enemy.speed > player.speed:
             # Enemies go first
-            send_out(enemy.attack("melee", player))
-            if "attack" in action:
-                send_out(player.attack("melee", enemy))
+            send_out(enemy.attack("melee", player), flask_dict)
+            if parse(action)["attack"]:
+                send_out(player.attack("melee", enemy), flask_dict)
             else:
                 continue  # we don't handle other actions right now
         else:
             # players go first
-            if "attack" in action:
-                send_out(player.attack("melee", enemy))
-                send_out(enemy.attack("melee", player))
+            if parse(action)["attack"]:
+                send_out(player.attack("melee", enemy), flask_dict)
+                send_out(enemy.attack("melee", player), flask_dict)
             else:
                 continue  # we don't handle other actions right now
     winner = player.id
     if player.is_dead():
         winner = enemy.id
-    send_out("Combat has ended! " + winner + " has won!")
+    send_out("Combat has ended! " + winner + " has won!", flask_dict)

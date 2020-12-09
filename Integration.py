@@ -16,6 +16,7 @@ from user_controller import User
 import models
 
 # game logic
+from game.game import game
 from game.game_io import user_in
 from game.player import Player
 
@@ -78,7 +79,7 @@ def google_login(data):
 
     # Used to distinguish users, for database user calls
     create_user_controller(em)
-    
+
     flask.session["user_id"] = em
     idlist.append(em)
 
@@ -138,14 +139,15 @@ def character_selected(data):
         flask.session["userObj"] = userObj
         print(userObj.selected_character_id)
 
-
+#character id is hard coded
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
-    #might have to add this to database?
-    print(data["input"])
+    message = data["input"]
+    chat = models.chat_log(chat=message,character_id="1")
+    db.session.add(chat)
+    db.session.commit()
     user_in.update(data["input"])
-
 
 
 @socketio.on("get party")
@@ -165,15 +167,33 @@ def send_inventory(inventory):
 
 @socketio.on("get chatlog")
 def get_chatlog():
-    # TODO get chatlog from database
-    userObj = flask.session["userObj"]
-    print(userObj.selected_character_id)
-    chatlog = []
-    
-    chatlog.append(userObj.retrive_chatlog())
-    
-    send_chatlog(chatlog)
+    log = get_user_log()
+    send_log(log)
 
+
+# Start game
+@socketio.on("game start")
+def game_start():
+    player = Player()
+    # try to grab player object from db if possible
+    dat = db.session.query(models.chat_log).filter_by(character_id="1")
+    print(dat)
+    game(player, True, {})
+
+
+def get_user_log():
+    return show_log()
+
+def send_log(log):
+    socketio.emit("user chatlog", log)
+
+def show_log():
+    dump = db.session.query(models.chat_log).filter_by(character_id="1")
+    log = []
+    for item in dump:
+        log.append(item.chat)
+    print(log)
+    return log
 
 # Test atm for the shop
 @socketio.on("item purchased")
@@ -268,6 +288,7 @@ def char_create():
 @app.route("/main_chat.html")
 def main():
     """ main chat window """
+    show_log()
     return flask.render_template("main_chat.html")
 
 

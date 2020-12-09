@@ -85,11 +85,9 @@ export function Chatbox() {
   }
   
   function listenChatChange(){
-    useEffect(() => {
-      Socket.on('text', (data)=>{
-        console.log(data);
-      });
-    }, []);
+    Socket.on('chatlog updated', (data)=>{
+      console.log(data);
+    });
   }
   
   const displayLog = chatlog.map((log, index) => (
@@ -110,8 +108,13 @@ export function Chatbox() {
     }
   }
 
+  function startGame() {
+    Socket.emit('game start');
+  }
+
   retrievePlayerChatlog();
   listenChatChange();
+  startGame();
   return (
     <div style={div}>
       <div id="chatbox">
