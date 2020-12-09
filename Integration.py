@@ -11,7 +11,7 @@ from inventory import (
     search_bar,
     filter_by_type,
 )
-from progress import save_progress, loadProgress
+
 from user_controller import User
 import models
 
@@ -78,6 +78,7 @@ def google_login(data):
 
     # Used to distinguish users, for database user calls
     create_user_controller(em)
+    
     flask.session["user_id"] = em
     idlist.append(em)
 
@@ -125,30 +126,23 @@ def send_party():
     socketio.emit("user party", user_party)
 
 
-def send_chatlog():
-    # TODO get chatlog from database
-
-    # DUMMY DATA
-    user_chatlog = [
-        "welcome to the world",
-        "attack",
-        "user attacks, hitting the blob for 10pts",
-    ]
+def send_chatlog(user_chatlog):
     socketio.emit("user chatlog", user_chatlog)
 
 
 @socketio.on("choosen character")
 def character_selected(data):
-    print("id selection" + str(data))
     if "userObj" in flask.session:
         userObj = flask.session["userObj"]
         userObj.char_select(data)
+        flask.session["userObj"] = userObj
         print(userObj.selected_character_id)
 
 
 @socketio.on("user input")
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
+    #might have to add this to database?
     print(data["input"])
 
 
@@ -170,14 +164,13 @@ def send_inventory(inventory):
 @socketio.on("get chatlog")
 def get_chatlog():
     # TODO get chatlog from database
-
-    # DUMMY DATA
-    user_chatlog = [
-        "welcome to the world",
-        "attack",
-        "user attacks, hitting the blob for 10pts",
-    ]
-    send_chatlog()
+    userObj = flask.session["userObj"]
+    print(userObj.selected_character_id)
+    chatlog = []
+    
+    chatlog.append(userObj.retrive_chatlog())
+    
+    send_chatlog(chatlog)
 
 
 # Test atm for the shop

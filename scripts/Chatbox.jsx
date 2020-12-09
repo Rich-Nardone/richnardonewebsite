@@ -79,8 +79,18 @@ export function Chatbox() {
   function submitInput(event) {
     event.preventDefault();
     Socket.emit('user input', { input: userInput });
+    setChatlog(chatlog =>[...chatlog, userInput])
     document.getElementById('user_text_box').value = '';
   }
+  
+  function listenChatChange(){
+    useEffect(() => {
+      Socket.on('text', (data)=>{
+        console.log(data);
+      });
+    }, []);
+  }
+  
   const displayLog = chatlog.map((log, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <li key={index}>
@@ -100,6 +110,7 @@ export function Chatbox() {
   }
 
   retrievePlayerChatlog();
+  listenChatChange();
   return (
     <div style={div}>
       <div id="chatbox">
