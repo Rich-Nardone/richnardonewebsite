@@ -1,5 +1,22 @@
 body{
-    background-image: url(https://media.giphy.com/media/remMvcYDTQNKE/giphy.gif);
-    background-repeat: no-repeat;
+    background-image: url('/static/sea-edge.png'),url('/static/sea-edge2.png');
+    background-repeat: no-repeat, repeat;
     background-size: cover;
+}
+
+button{
+    text-align: center;
+    font-style: italic;
+    font-size: 16;
+    background: grey;
+    border-radius: 10;
+    width: 300;
+    box-shadow: 2px 5px black;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover{
+    background:white;
 }

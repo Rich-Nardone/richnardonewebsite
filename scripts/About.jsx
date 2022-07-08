@@ -1,6 +1,5 @@
 import React from 'react';
 import Sound from 'react-sound';
-
 const h1 = {
   textAlign: 'center',
   marginTop:200,
@@ -9,7 +8,7 @@ const h1 = {
   fontStyle: 'italic',
   borderWidth: 5,
   borderRadius: 10,
-  background: 'orange',
+  background: 'grey',
   boxShadow: '2px 5px black',
 
 };
@@ -27,18 +26,19 @@ const div1 = {
 
 const p = {
   textAlign: 'center',
-  fontWeight: 'bold',
   fontStyle: 'italic',
   fontSize: 16,
-  background: 'orange',
+  background: 'grey',
   borderRadius: 10,
-  borderWidth: 5,
   width: 300,
   boxShadow: '2px 5px black',
   display: 'block',
   marginLeft: 'auto',
   marginRight: 'auto',
 };
+
+
+
 
 export function About() {
   function toEnter() {
@@ -49,16 +49,13 @@ export function About() {
   return (
     <div style={div1}>
       <h1 style={h1}> Richard Nardone Portfolio Website </h1>
-
       <br />
-
       <p style={p}>
         Built Using Python, Flask, React, PSQL, HTML
       </p>
       <br />
       <br />
-
-      <button style= {p} type="submit" onClick={toEnter}> Enter Website </button>
+      <button type="submit" onClick={toEnter}> Enter Website </button>
     </div>
   );
 }
