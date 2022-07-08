@@ -71,7 +71,7 @@ PyMeta3==0.5.1
 pyOpenSSL==19.1.0
 PySocks==1.7.1
 python-dateutil==2.8.1
-python-dotenv==0.14.0
+python-dotenv==0.20.0
 python-engineio==3.13.2
 python-socketio==4.6.0
 pytz==2020.1
