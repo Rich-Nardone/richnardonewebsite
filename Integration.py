@@ -33,7 +33,7 @@ def options():
 if __name__ == "__main__":
     socketio.run(
         app,
-        host=os.getenv("IP", "192.168.86.38"),
+        host=os.getenv("IP", "100.1.244.74"),
         port=int(os.getenv("PORT", 8080)),
         debug=True,
     )
