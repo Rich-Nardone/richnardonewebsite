@@ -4,6 +4,9 @@
 import os
 import flask
 from settings import app, socketio
+import collections
+from collections import abc
+collections.MutableMapping = abc.MutableMapping
 
 # ======================================================================================
 @app.route("/")

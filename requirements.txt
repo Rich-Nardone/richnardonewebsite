@@ -1,7 +1,6 @@
 antiorm==1.2.1
 appdirs==1.4.4
 astroid==2.4.2
-awscli==1.18.127
 backcall==0.2.0
 beautifulsoup4==4.9.3
 black==20.8b1
