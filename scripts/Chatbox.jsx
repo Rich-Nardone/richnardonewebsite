@@ -64,62 +64,11 @@ const body = {
 };
 
 export function Chatbox() {
-  const [userInput, setInput] = useState('');
-  const [money, setMoney] = useState(1000);
-  const [chatlog, setChatlog] = useState([]);
 
-  function retrievePlayerChatlog() {
-    useEffect(() => {
-      Socket.emit('get chatlog');
-      Socket.on('user chatlog', (data) => {
-        setChatlog(data);
-      });
-    }, []);
-  }
-
-  function submitInput(event) {
-    event.preventDefault();
-    Socket.emit('user input', { input: userInput });
-    setChatlog(chatlog =>[...chatlog, userInput])
-    document.getElementById('user_text_box').value = '';
-  }
-  
-  function listenChatChange(){
-    Socket.on('chatlog updated', (data)=>{
-      console.log(data);
-    });
-  }
-  
-  const displayLog = chatlog.map((log, index) => (
-    // eslint-disable-next-line react/no-array-index-key
-    <li key={index}>
-      {' '}
-      {log}
-      {' '}
-    </li>
-  ));
-
-  function submitPayment() {
-    if (money === 0) {
-      setMoney(0);
-    } else {
-      setMoney(money - 500);
-      Socket.emit('item purchased');
-    }
-  }
-
-  function startGame() {
-    Socket.emit('game start');
-  }
-
-  retrievePlayerChatlog();
-  listenChatChange();
-  startGame();
   return (
     <div style={div}>
       <div id="chatbox">
         <ul style={ul}>
-          {displayLog}
         </ul>
       </div>
       <p style={p}>Possible Actions: &quot;Say&quot;, &quot;Do&quot;, &quot;Attack&quot;</p>
@@ -132,21 +81,16 @@ export function Chatbox() {
           </p>
           <p style={secretP}>
             Current Money:
-            {money}
             {' '}
             Bucks
           </p>
           <br />
-          <button type="submit" id="Health" onClick={submitPayment}>Health Pack: 500 Bucks</button>
         </body>
 
       </details>
       <br />
       <div id="user_buttons">
-        <form onSubmit={submitInput}>
-          <input style={input} id="user_text_box" type="text" placeholder="What is your command?" onChange={(e) => setInput(e.target.value)} />
-          <input type="submit" />
-        </form>
+       
       </div>
     </div>
   );

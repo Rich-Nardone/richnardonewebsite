@@ -1,7 +1,6 @@
 import React from 'react';
 import Sound from 'react-sound';
 import { Chatbox } from './Chatbox';
-import { InventoryList } from './InventoryList';
 import { PartyList } from './PartyList';
 import { volu, fnt, brc } from './OptionMenu';
 
@@ -32,7 +31,6 @@ export function MainUI() {
         volume={volu}
       />
       <PartyList />
-      <InventoryList />
       <Chatbox />
       <button type="submit" style={button} onClick={gotoOptions}>Options</button>
     </div>

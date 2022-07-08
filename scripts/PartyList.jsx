@@ -32,15 +32,6 @@ const ul = {
 
 export function PartyList() {
   const [party, setParty] = useState([]);
-
-  function retrievePlayerParty() {
-    useEffect(() => {
-      Socket.emit('get party');
-      Socket.on('user party', (data) => {
-        setParty(data);
-      });
-    }, []);
-  }
   const displayParty = party.map((members, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <li key={index}>
@@ -49,8 +40,6 @@ export function PartyList() {
       {' '}
     </li>
   ));
-
-  retrievePlayerParty();
   return (
     <div style={div}>
       <p style={p}> PARTY </p>
