@@ -3,22 +3,8 @@
 """
 import os
 import flask
-from settings import db, app, socketio
-from inventory import (
-    get_user_inventory,
-    get_asc_inventory,
-    get_dsc_inventory,
-    search_bar,
-    filter_by_type,
-)
+from settings import app, socketio
 
-from user_controller import User
-import models
-
-# game logic
-from game.game import game
-from game.game_io import user_in
-from game.player import Player
 
 # For shop, checks if item has been purchased.
 ITEM = 0
@@ -56,10 +42,6 @@ userlist = [1]
 idlist = [""]
 
 
-def create_user_controller(email):
-    """ Creates a session for a user given an email """
-    userObj = User(email)
-    flask.session["userObj"] = userObj
 
 
 @socketio.on("google login")
@@ -69,17 +51,7 @@ def google_login(data):
     userdat = data["UserInfo"]
     profiledat = userdat["profileObj"]
     em = profiledat["email"]
-    all_email = [username.email for username in db.session.query(models.username).all()]
-    if em not in all_email:
-        user = models.username(email=em)
-        db.session.add(user)
-        db.session.commit()
-    userid = db.session.query(models.username).filter_by(email=em).first()
-    userlist.append(userid.id)
 
-    # Used to distinguish users, for database user calls
-    create_user_controller(em)
-    idlist.append(em)
 
     # check if user has character
     userObj = flask.session["userObj"]
@@ -99,7 +71,6 @@ def google_login(data):
 @socketio.on("email login")
 def email_login(data):
     print(data)
-    create_user_controller(data)
 
     userObj = flask.session["userObj"]
     response = {}
@@ -139,10 +110,7 @@ def character_selected(data):
 def parse_user_input(data):
     """ Parse user inputs in order to interact with game logic """
     message = data["input"]
-    chat = models.chat_log(chat=message,character_id=charlist[-1])
-    db.session.add(chat)
-    db.session.commit()
-    user_in.update(data["input"])
+
 
 
 @socketio.on("get party")
@@ -160,26 +128,6 @@ def get_inventory():
 def send_inventory(inventory):
     socketio.emit("user inventory", inventory)
 
-
-@socketio.on("get chatlog")
-def get_chatlog():
-    log = get_user_log()
-    send_log(log)
-
-
-# Start game
-@socketio.on("game start")
-def game_start():
-    player = Player()
-    # try to grab player object from db if possible
-    userObj = flask.session["userObj"]
-    for x in db.session.query(models.character).filter(models.character.id==userObj.selected_character_id):
-        dat = x
-        game(dat)
-
-
-def get_user_log():
-    return show_log()
 
 def send_log(log):
     socketio.emit("user chatlog", log)
@@ -208,52 +156,6 @@ def user_chars():
     characters["char_instance"] = userObj.get_characters()
     socketio.emit("recieve user characters", characters)
 
-
-@socketio.on("user new character")
-def character_creation(data):
-    """ Create character """
-    player = Player()
-    player.id = data["name"]
-    player.gen = data["gen"]
-    player.character_class = data["classType"]
-    # data includes character attributes: name, gender and character class
-    if data["classType"] == "Jock":
-        player.make_jock()
-    elif data["classType"] == "Bookworm":
-        player.make_bookworm()
-    elif data["classType"] == "NEET":
-        player.make_neet()
-    USER = userlist[-1]
-    email = db.session.query(models.username).filter_by(id=USER).first()
-    userid = email.id
-    dbplayer = models.character(
-        user_id=userid,
-        character_class=data["classType"],
-        character_name=data["name"],
-        gender=data["gen"],
-        strength=player.strength,
-        dex=player.dex,
-        con=player.con,
-        intel=player.intel,
-        cha=player.cha,
-        luck=player.luk,
-        max_health=player.max_health,
-        health=player.health,
-        max_mana=player.max_mana,
-        mana=player.mana,
-        money=player.money,
-    )
-    db.session.add(dbplayer)
-    db.session.commit()
-    userObj = flask.session["userObj"]
-    for x in models.db.session.query(models.character).filter(models.character.user_id == dbplayer.user_id, models.character.character_name == data["name"]):
-        print(x.character_name)
-        print(x.id)
-        userObj.char_select(x.id)
-        
-    flask.session["userObj"] = userObj
-    
-    print("char selected: " + str(userObj.selected_character_id))
         
         
 
