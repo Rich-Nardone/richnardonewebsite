@@ -26,7 +26,7 @@ If issues arise and one is unable to run the above script, run these commands in
     
     pip install flask-socketio
 
-    pip install evenlet
+    pip install eventlet
 
     pip install requests
     

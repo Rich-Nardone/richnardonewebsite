@@ -33,7 +33,7 @@ echo "...for black"
 sudo ${PIP} install git+git://github.com/psf/black -q
 
 echo "Updating npm and dependencies..."
-npm i -${MODE}
+npm i -s
 npm i -g webpack -${MODE}
 npm i --save-dev webpack -${MODE}
 npm i -S webpack-cli -${MODE}
