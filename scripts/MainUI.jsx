@@ -1,5 +1,5 @@
 import React from 'react';
-import Sound from 'react-sound';
+import { NavBar } from './NavBar';
 import { Chatbox } from './Chatbox';
 import { PartyList } from './PartyList';
 import { volu, fnt, brc } from './OptionMenu';
@@ -25,14 +25,8 @@ export function MainUI() {
 
   return (
     <div>
-      <Sound
-        url="static/MainUIMusic.mp3"
-        playStatus={Sound.status.PLAYING}
-        volume={volu}
-      />
-      <PartyList />
+      <NavBar />
       <Chatbox />
-      <button type="submit" style={button} onClick={gotoOptions}>Options</button>
     </div>
   );
 }

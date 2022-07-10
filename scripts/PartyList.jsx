@@ -33,9 +33,8 @@ const ul = {
 export function PartyList() {
   const [party, setParty] = useState([]);
   const displayParty = party.map((members, index) => (
-    // eslint-disable-next-line react/no-array-index-key
+
     <li key={index}>
-      {' '}
       {members}
       {' '}
     </li>

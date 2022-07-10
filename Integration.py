@@ -13,7 +13,21 @@ collections.MutableMapping = abc.MutableMapping
 def about():
     """ main page """
     return flask.render_template("landing_page.html")
-
+# =======================================================================================
+@app.route("/resume.html")
+def resume():
+    """ main chat window """
+    return flask.render_template("resume.html")
+# =======================================================================================
+@app.route("/projects.html")
+def projects():
+    """ main chat window """
+    return flask.render_template("projects.html")
+# =======================================================================================
+@app.route("/contact.html")
+def contact():
+    """ main chat window """
+    return flask.render_template("contact.html")
 
 # =======================================================================================
 @app.route("/main_chat.html")
@@ -36,7 +50,7 @@ def options():
 if __name__ == "__main__":
     socketio.run(
         app,
-        host=os.getenv("IP", "0.0.0.0"),
+        host=os.getenv("IP", "192.168.86.38"),
         port=int(os.getenv("PORT", 8080)),
         debug=True,
     )
