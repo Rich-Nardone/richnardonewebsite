@@ -36,14 +36,6 @@ def main():
     return flask.render_template("main_chat.html")
 
 
-# =========================================================================================
-@app.route("/options.html")
-def options():
-    """ main chat window """
-    # save_progress()
-    return flask.render_template("options.html")
-
-
 # =======================================================================================
 
 # RUNS ON THIS HOST AND PORT

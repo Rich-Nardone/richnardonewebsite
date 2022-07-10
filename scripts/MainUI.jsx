@@ -16,12 +16,6 @@ const button = {
 };
 
 export function MainUI() {
-  function gotoOptions() {
-    // eslint-disable-next-line no-console
-    console.log('Heading to Options!');
-    window.location = 'options.html';
-    return window.location;
-  }
 
   return (
     <div>

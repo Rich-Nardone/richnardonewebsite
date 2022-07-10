@@ -1,0 +1,26 @@
+body{
+    background-image: url('/static/sea-edge.png'),url('/static/sea-edge2.png');
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+li {
+    float: left;
+}
+  
+button {
+    font-size: 20px;
+    display: block;
+    padding: 8px;
+    background-color: #dddddd;
+  }
+
+button:hover{
+    font-size: 21px;
+    background-color:grey;
+  }
