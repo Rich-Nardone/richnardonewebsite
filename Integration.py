@@ -30,10 +30,10 @@ def contact():
     return flask.render_template("contact.html")
 
 # =======================================================================================
-@app.route("/main_chat.html")
+@app.route("/home.html")
 def main():
     """ main chat window """
-    return flask.render_template("main_chat.html")
+    return flask.render_template("home.html")
 
 
 # =======================================================================================
