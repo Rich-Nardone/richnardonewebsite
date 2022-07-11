@@ -15,7 +15,7 @@ export function NavBar() {
         <div>
         <Head />
         <ul>
-            <li><button id='main_chat' onClick={goToPage} >Home</button></li>
+            <li><button id='home' onClick={goToPage} >Home</button></li>
             <li><button id='resume' onClick={goToPage} >Resume</button></li>
             <li><button id='projects' onClick={goToPage} >Projects</button></li>
             <li><button id='contact' onClick={goToPage} >Contact</button></li>
