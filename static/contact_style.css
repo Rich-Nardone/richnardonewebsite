@@ -1,8 +1,8 @@
 body{
-    background-image: url('/static/sea-edge.png'),url('/static/sea-edge2.png');
-    background-repeat: no-repeat, repeat;
-    background-size: cover;
-}
+
+    background: rgb(80,74,168);
+background: linear-gradient(90deg, rgba(80,74,168,1) 0%, rgba(159,109,47,1) 53%, rgba(76,255,0,1) 100%);
+    }
 ul {
     list-style-type: none;
     margin: 0;

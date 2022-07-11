@@ -14,10 +14,13 @@ const button = {
 };
 
 const div ={
+    textAlign: 'center',
+    fontStyle:'bold',
+    fontSize:32,
     marginLeft: 'auto',
     marginRight: 'auto',
     verticalAlign: 'middle',
-    width: '500px',
+    width: '800px',
     display: 'block',
 }
 const resumeOutline = {
@@ -30,13 +33,23 @@ const resumeOutline = {
     clear: 'left',
   };
 
+  const color = {
+    fontColor:'red'
+  }
 
 export function Contact() {
 
   return (
     <div>
       <NavBar />
-      
+      <div style={div}>
+        <br />
+        <h2>Contact Information</h2>
+        <p>Email: richardmnardone@gmail.com</p>
+        <p>Phone Number: (908) 358 - 6664</p>
+        <p>   LinkedIn: <a style={color}href='https://www.linkedin.com/in/richardmnardone/'>https://www.linkedin.com/in/richardmnardone/</a></p>
+        <p>   Github: <a style={color}href='https://github.com/Rich-Nardone'>https://github.com/Rich-Nardone</a></p>
+      </div>
     </div>
   );
 }
