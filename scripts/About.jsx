@@ -42,7 +42,7 @@ const p = {
 
 export function About() {
   function toEnter() {
-    window.location = 'main_chat.html';
+    window.location = 'home.html';
     return window.location;
   }
 
