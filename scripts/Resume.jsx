@@ -47,7 +47,7 @@ export function Resume() {
       <NavBar />
       <br />
       <h2 style = {h}>Resume</h2>
-      <embed src="/static/RichardNardoneResume.pdf" width="100%" height="2100px" />
+      <embed src="/static/Richard_Nardone_Resume.pdf" width="100%" height="2100px" />
       
     </div>
   );
